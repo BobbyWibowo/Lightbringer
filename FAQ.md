@@ -61,14 +61,7 @@ Once you're done, you will just have to restart the bot and it will automaticall
 > This issue happens on Windows when you haven't configured the required tools for `node-gyp` module. Please refer to [this page](https://github.com/nodejs/node-gyp#on-windows) for more information about what you have to prepare beforehand.
 
 - `SyntaxError: Unexpected token (`
-> If this error occurred on any line which contains `async` in it, then it must because you're running a Node.js installation which doesn't have `async/await` feature enabled by default. This feature is enabled by default in Node.js >=7.6 and 8.0.  
-> 
-> If upgrading Node.js is not possible due to any circumstances, some versions older than 7.6 can enable the feature through a flag. You can try to edit `gulpfile.js` then replace:  
-> ```js
-> bot = spawn('node', ['src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] > })
-> ```
-> with:
-> ```js
-> bot = spawn('node', ['--harmony-async-await', 'src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] })
-> ```
-> If you're running Node.js 6.x though, it's probably better to just upgrade to 8.x.
+> If this error occurred on any line which contains `async` in it, then it must be because you're running a node installation which doesn't have `async/await` feature enabled by default.  
+This feature is enabled by default in node `>= 7.6`.  
+For node with versions `>= 7.0 & < 7.6`, the bot will attempt to automatically enable the flag.  
+As for node older than that, such as `6.x`, you have no other options but to upgrade your node to either `7.x` or `8.x`.
