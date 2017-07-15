@@ -4,6 +4,8 @@ exports.run = async (bot, msg, args) => {
   const action = args[0]
 
   if (COMMANDS.test(action)) {
+    await msg.edit('🔄')
+
     let count = 0
     const formatted = {}
     const commands = bot.commands._commands
@@ -48,7 +50,7 @@ exports.run = async (bot, msg, args) => {
     }
 
     const url = await bot.utils.gists(content)
-    return msg.success(`<${url}>`, -1)
+    return msg.success(`<${url}>`, { timeout: -1 })
   } else {
     throw new Error('That action is not valid!')
   }

@@ -10,7 +10,7 @@ exports.run = async (bot, msg, args) => {
     const prunable = messages.filter(m => m.author.id === bot.user.id)
     await Promise.all(prunable.map(m => m.delete()))
     const m = await msg.channel.send(`${SUCCESS}Pruned \`${prunable.size}\` messages.`)
-    return m.delete(2000)
+    return m.delete({ timeout: 2000 })
   } catch (err) {
     console.error(err)
   }

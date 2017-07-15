@@ -7,7 +7,7 @@ exports.run = async (bot, msg, args) => {
 
   await msg.edit(`${PROGRESS}Uploading...`)
   const url = await bot.utils.haste(parsed.leftover.join(' '), parsed.options.s || '', parsed.options.r)
-  return msg.success(`<${url}>`, -1)
+  return msg.success(`<${url}>`, { timeout: -1 })
 }
 
 exports.info = {

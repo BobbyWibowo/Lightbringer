@@ -26,7 +26,7 @@ exports.run = async (bot, msg, args) => {
           }
         )
       })
-      return msg.delete(60000)
+      return msg.delete({ timeout: 60000 })
     } else {
       throw new Error('That action is not valid!')
     }
@@ -49,7 +49,7 @@ exports.run = async (bot, msg, args) => {
     await msg.edit('👌\u2000I will log mentions from this guild!')
   }
 
-  return msg.delete(8000)
+  return msg.delete({ timeout: 8000 })
 }
 
 exports.info = {

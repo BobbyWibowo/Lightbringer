@@ -11,7 +11,7 @@ exports.run = async (bot, msg, args) => {
     suffix: parsed.options.s,
     public: parsed.options.p
   })
-  return msg.success(`<${url}>`, -1)
+  return msg.success(`<${url}>`, { timeout: -1 })
 }
 
 exports.info = {

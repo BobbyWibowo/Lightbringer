@@ -10,7 +10,7 @@ exports.run = async (bot, msg, args, auto) => {
 
     const parsed = bot.utils.parseArgs(args, ['c'])
     const channel = (msg && bot.utils.getChannel(parsed.leftover[1], msg.guild)) ||
-    (auto && auto.channel) || msg.channel
+      (auto && auto.channel) || msg.channel
 
     let m
     if (auto) {
@@ -20,11 +20,11 @@ exports.run = async (bot, msg, args, auto) => {
       m = await bot.utils.getMsg(channel, parsed.leftover[0], msg.id)
     }
 
+    const avatarURL = m.author.displayAvatarURL({ size: 2048 })
     const options = {
-      thumbnail: m.author.displayAvatarURL,
       color: m.member ? m.member.displayColor : 0,
       timestamp: m.editedTimestamp || m.createdTimestamp,
-      author: { name: `${m.author.tag} (ID: ${m.author.id})`, icon: m.author.displayAvatarURL },
+      author: { name: `${m.author.tag} (ID: ${m.author.id})`, icon: avatarURL },
       footer: `ID: ${m.id}${m.edits.length > 1 ? ` - Edits: #${m.edits.length - 1}` : ''}`
     }
 
@@ -43,6 +43,12 @@ exports.run = async (bot, msg, args, auto) => {
         name: 'Channel',
         value: bot.utils.channelName(channel)
       })
+    }
+
+    if (!channel.guild || channel.guild.id !== (auto ? auto.target.guild.id : msg.guild.id)) {
+      // NOTE: Add user thumbnail only when the
+      // message is from a different guild
+      options.thumbnail = avatarURL
     }
 
     if (fields.length) {

@@ -113,7 +113,7 @@ bot.on('userUpdate', (oldUser, newUser) => {
 })
 
 const parseCommand = async msg => {
-  const DELETE = 8000
+  const DELETE = { timeout: 8000 }
   const prefix = config.prefix.toLowerCase()
   const split = msg.content.substr(prefix.length).split(' ')
 

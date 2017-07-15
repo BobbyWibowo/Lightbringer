@@ -25,6 +25,8 @@ exports.run = async (bot, msg, args) => {
   const res = await bot.utils.fetchGuildMembers(guild, !parsed.options.r)
   const textChannels = guild.channels.filter(c => c.type === 'text')
   const voiceChannels = guild.channels.filter(c => c.type === 'voice')
+  const iconURL = guild.iconURL({ size: 2048 })
+  const splashURL = guild.splashURL({ size: 2048 })
 
   let gists, embed
   if (parsed.leftover.length) {
@@ -45,18 +47,18 @@ exports.run = async (bot, msg, args) => {
       const sortPos = (a, b) => a.position - b.position
       children = [].concat(
         textChannels.sort(sortPos).map(c => {
-          return `•\u2000#${c.name}${!c.permissionsFor(guild.me).has(['READ_MESSAGES', 'READ_MESSAGE_HISTORY'])
+          return `#${c.name}${!c.permissionsFor(guild.me).has(['READ_MESSAGES', 'READ_MESSAGE_HISTORY'])
             ? ' `[HIDDEN]`'
             : ''}`
         }),
         voiceChannels.sort(sortPos).map(c => {
-          return `•\u2000${c.name}${!c.permissionsFor(guild.me).has('CONNECT')
+          return `${c.name}${!c.permissionsFor(guild.me).has('CONNECT')
             ? ' `[LOCKED]`'
             : ''}`
         })
       )
 
-      delimeter = '\n'
+      delimeter = ', '
     } else {
       throw new Error('That action is not valid!')
     }
@@ -67,7 +69,7 @@ exports.run = async (bot, msg, args) => {
       embed = bot.utils.formatLargeEmbed('', '', { delimeter, children }, {
         author: {
           name: title,
-          icon: guild.iconURL
+          icon: iconURL
         }
       })
     }
@@ -129,18 +131,18 @@ exports.run = async (bot, msg, args) => {
       }
     ]
 
-    if (guild.splashURL) {
+    if (splashURL) {
       nestedFields[0].fields.push({
         name: 'Splash image',
-        value: `[${bot.utils.getHostName(guild.splashURL) || 'Click here'}](${guild.splashURL})`
+        value: `[${bot.utils.getHostName(splashURL) || 'Click here'}](${splashURL})`
       })
     }
 
     const myRoles = guild.me.roles.size - 1
     embed = bot.utils.formatEmbed('', `_I have **${myRoles} role${myRoles !== 1 ? 's' : ''}** in this guild\u2026_`,
       nestedFields, {
-        thumbnail: guild.iconURL,
-        author: { name: guild.name, icon: guild.iconURL }
+        thumbnail: iconURL,
+        author: { name: guild.name, icon: iconURL }
       }
     )
   }
@@ -151,7 +153,7 @@ exports.run = async (bot, msg, args) => {
 
   if (parsed.options.g && gists) {
     const r = await bot.utils.gists(gists)
-    return msg.success(`<${r}>`, -1)
+    return msg.success(`<${r}>`, { timeout: -1 })
   } else {
     const color = await bot.utils.getGuildColor(guild)
     const message = parsed.options.f

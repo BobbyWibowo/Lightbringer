@@ -13,7 +13,7 @@ exports.run = async (bot, msg, args) => {
     privacy: parsed.options.p,
     expiration: parsed.options.e
   })
-  return msg.success(`<${url}>`, -1)
+  return msg.success(`<${url}>`, { timeout: -1 })
 }
 
 exports.info = {

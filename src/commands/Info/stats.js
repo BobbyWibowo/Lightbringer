@@ -29,7 +29,7 @@ exports.run = async (bot, msg) => {
               fields: [
                 {
                   name: 'OS',
-                  value: `${res.os === 'linux' ? `${res.dist} ${res.release}` : res.os}`
+                  value: res.os === 'linux' ? res.dist : res.os
                 },
                 {
                   name: 'CPU load',
@@ -113,6 +113,10 @@ exports.run = async (bot, msg) => {
                 {
                   name: 'Node.js',
                   value: `[${process.versions.node}](${process.release.sourceUrl})`
+                },
+                {
+                  name: 'Prefix',
+                  value: `\`${config.prefix}\``
                 }
               ]
             }

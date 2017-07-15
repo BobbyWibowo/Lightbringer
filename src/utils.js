@@ -108,15 +108,15 @@ exports.embed = (title = '', description = '', fields = [], options = {}) => {
     description = this.truncate(description, description.length, '\n')
   }
 
-  return new Discord.RichEmbed({ fields, video: options.video || url })
+  return new Discord.MessageEmbed({ fields, video: options.video || url })
     .setTitle(title)
     .setColor(color)
     .setDescription(description)
     .setImage(options.image || url)
-    .setTimestamp(timestampToDate(options.timestamp) || null)
-    .setFooter(footer, options.avatarFooter ? bot.user.avatarURL : (options.footerIcon || null))
+    .setTimestamp(timestampToDate(options.timestamp) || '')
+    .setFooter(footer, options.avatarFooter ? bot.user.avatarURL : (options.footerIcon || ''))
     .setAuthor(author.name, author.icon, author.url)
-    .setThumbnail(options.thumbnail || null)
+    .setThumbnail(options.thumbnail || '')
 }
 
 const timestampToDate = timestamp => {
@@ -141,7 +141,7 @@ const timestampToDate = timestamp => {
  * @param {Object} nestedFields
  * @param {Object} [options={}]
  *
- * @returns {Discord.RichEmbed}
+ * @returns {Discord.MessageEmbed}
  */
 exports.formatEmbed = (title = '', description = '', nestedFields, options = {}) => {
   if (!nestedFields || typeof nestedFields !== 'object') {

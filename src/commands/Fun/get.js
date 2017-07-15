@@ -112,7 +112,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   await msg.channel.send(result.image
-    ? { file: { attachment: result.content } }
+    ? { files: [{ attachment: result.content }] }
     : bot.utils.truncate(result.content, 2000))
   return msg.delete()
 }

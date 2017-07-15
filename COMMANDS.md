@@ -7,7 +7,7 @@
 ### `animals`  
 *Description:* `Shows you random pictures of cats or dogs`  
 *Usage:* `animals [-u] <cats|dogs>`  
-*Aliases:* `animal`  
+*Aliases:* `a`, `animal`  
 ### `binary`  
 *Description:* `Encodes/decodes your input to/from binary`  
 *Usage:* `binary <encode|decode> <input>`  

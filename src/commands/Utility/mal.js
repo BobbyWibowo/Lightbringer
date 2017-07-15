@@ -108,11 +108,11 @@ exports.run = async (bot, msg, args) => {
                 tm.delete())
             } else {
               tm.edit(`${FAIL}${formatInvalidIndex(tm.content, pageCount)}`).then(() =>
-                tm.delete(3000))
+                tm.delete({ timeout: 3000 }))
             }
           } else {
             tm.edit(`${FAIL}${formatInvalidIndex(tm.content, res.length)}`).then(() =>
-              tm.delete(3000))
+              tm.delete({ timeout: 3000 }))
           }
 
           return false
@@ -146,7 +146,7 @@ exports.run = async (bot, msg, args) => {
     await msg.edit('*This message will self-destruct in 30 seconds.*\n' +
       formatResultsList(res, 'Search Results', parsed.options.p)
     )
-    return msg.delete(30000)
+    return msg.delete({ timeout: 30000 })
   }
 
   const item = res[index]
@@ -155,7 +155,7 @@ exports.run = async (bot, msg, args) => {
   const startDate = item.start_date === INVALID ? 'N/A' : moment(item.start_date).format(bot.consts.shortDateFormat)
   const endDate = item.end_date === INVALID ? 'N/A' : moment(item.end_date).format(bot.consts.shortDateFormat)
 
-  const embed = bot.utils.formatEmbed('', stripIndents`
+  const embed = bot.utils.formatEmbed(item.title, stripIndents`
     ${item.english ? `**Alternative Title:** ${item.english}` : ''}
 
     ${bbCodeToMarkdown(new XmlEntities().decode(item.synopsis.replace(/\r\n/g, '')))}`,
@@ -200,11 +200,7 @@ exports.run = async (bot, msg, args) => {
           : ''}`
         : ''}`,
       footerIcon: 'https://a.safe.moe/3NOZ3.png',
-      color: '#1d439b',
-      author: {
-        name: item.title,
-        icon: item.image
-      }
+      color: '#1d439b'
     }
   )
 

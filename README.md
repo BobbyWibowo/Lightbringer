@@ -48,6 +48,8 @@ Proceed to [COMMANDS.md](COMMANDS.md).
 - `node` ([Windows](https://nodejs.org/en/download/current/) | [Linux](https://nodejs.org/en/download/package-manager/) | [macOS](https://nodejs.org/en/download/current/))
 - `yarn` ([Windows](https://yarnpkg.com/en/docs/install#windows-tab) | [Linux](https://yarnpkg.com/en/docs/install#linux-tab) | [macOS](https://yarnpkg.com/en/docs/install#mac-tab))
 
+> This bot requires node **>= 7.0** (run `node -v` to check your node version).
+
 ### Why Yarn?
 A simple reason to use `yarn` instead of `npm` is that yarn is generally much faster (it can be ~8x as fast).  
 
@@ -80,9 +82,6 @@ yarn install
 Now run `yarn start` to start the bot. 
 
 **Note:** The first time you start the bot you will enter the setup wizard. It takes just a few seconds to enter the needed information, and it sets up the bot for you.
-
-> This bot requires Node.js >=7.6. Read [FAQ](#faq) to find out how to run this bot in versions older than 7.6.  
-To check your Node.js version, run `node -v` in your console/terminal.
 
 ### Updating
 Minor updates can be acquired by running `lbexec git pull` in Discord to run the `git pull` command on your computer, afterwards you will have to run `lbrestart` to restart the bot.  

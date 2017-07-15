@@ -1,7 +1,7 @@
 const snekfetch = require('snekfetch')
 const stripIndents = require('common-tags').stripIndents
 
-let docs = { _version: '11.1-dev' }
+let docs = { _version: 'master' }
 
 const TITLE = 'Discord.js docs'
 
@@ -254,18 +254,18 @@ const buildEmbed = (data, sub, type) => {
     parsed.description = formatDescription(data.description) || parsed.description
   }
 
-  if (data) {
+  if (parsed.meta && parsed.meta.path && parsed.meta.file && parsed.meta.line) {
     parsed.fields.push({
-      name: '❯\u2000Link to online docs',
-      value: formatLink(data.name, parsed.subname)
+      name: '❯\u2000Source',
+      value: `https://github.com/hydrabolt/discord.js/blob/${docs._version}/${parsed.meta.path}/${parsed.meta.file}` +
+        `#L${parsed.meta.line}`
     })
   }
 
-  if (parsed.meta && parsed.meta.path && parsed.meta.file && parsed.meta.line) {
+  if (data) {
     parsed.fields.push({
-      name: '❯\u2000Link to source',
-      value: `https://github.com/hydrabolt/discord.js/blob/${docs._version}/${parsed.meta.path}/${parsed.meta.file}` +
-        `#L${parsed.meta.line}`
+      name: '❯\u2000Online docs',
+      value: formatLink(data.name, parsed.subname)
     })
   }
 

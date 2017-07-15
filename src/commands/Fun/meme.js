@@ -60,12 +60,12 @@ exports.run = async (bot, msg, args) => {
 
   if (LIST.test(args[0])) {
     await msg.delete()
-    const m = await msg.channel.send('', { embed:
+    const m = await msg.channel.send({ embed:
       bot.utils.embed('Available Memes', '*This message will vanish in 30 seconds*\n\n' + templates.map(meme => {
         return `\`${meme.name}\``
       }).join(', '))
     })
-    return m.delete(30000)
+    return m.delete({ timeout: 30000 })
   }
 
   if (INFO.test(args[0])) {
@@ -79,12 +79,12 @@ exports.run = async (bot, msg, args) => {
     }
 
     await msg.delete()
-    const m = await msg.channel.send('', { embed:
+    const m = await msg.channel.send({ embed:
       bot.utils.embed(`\`${info.name}\``, `Styles: ${info.styles && info.styles.length > 1 ? info.styles.map(s => {
         return `\n- \`${s}\``
       }).join('') : 'None'}`)
     })
-    return m.delete(15000)
+    return m.delete({ timeout: 15000 })
   }
 
   const input = args.join(' ')
@@ -99,11 +99,11 @@ exports.run = async (bot, msg, args) => {
   if (parts[3]) url += `?alt=${parts[3]}`
 
   await msg.edit('🔄')
-  await msg.channel.send('', {
-    file: {
+  await msg.channel.send({
+    files: [{
       attachment: url,
       name: parts[0] + '.jpg'
-    }
+    }]
   })
   return msg.delete()
 }

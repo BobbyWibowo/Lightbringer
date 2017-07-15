@@ -65,10 +65,11 @@ exports.run = async (bot, msg, args) => {
     }
   }
 
+  const avatarURL = user.displayAvatarURL({ size: 2048 })
   nestedFields[0].fields.push({
     name: 'Avatar',
-    value: user.displayAvatarURL
-      ? `[${bot.utils.getHostName(user.displayAvatarURL) || 'Click here'}](${user.displayAvatarURL})`
+    value: avatarURL
+      ? `[${bot.utils.getHostName(avatarURL) || 'Click here'}](${avatarURL})`
       : 'N/A'
   })
 
@@ -117,11 +118,11 @@ exports.run = async (bot, msg, args) => {
     : (mention ? `Information of ${keyword}:` : `Information of the user who matched the keyword \`${keyword}\`:`)
   return msg.edit(message, { embed:
     bot.utils.formatEmbed('', description, nestedFields, {
-      thumbnail: user.displayAvatarURL,
+      thumbnail: avatarURL,
       color: member ? member.displayColor : 0,
       author: {
         name: user.tag,
-        icon: user.displayAvatarURL
+        icon: avatarURL
       }
     })
   })

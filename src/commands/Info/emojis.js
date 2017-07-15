@@ -22,7 +22,7 @@ exports.run = async (bot, msg, args) => {
     const r = await bot.utils.gists(require('util').inspect(emojis.map(e => {
       return { name: e.name, url: e.url }
     })), { suffix: 'js' })
-    return msg.success(`<${r}>`, -1)
+    return msg.success(`<${r}>`, { timeout: -1 })
   } else {
     const color = await bot.utils.getGuildColor(guild)
     return msg.edit(msg.content, { embed:

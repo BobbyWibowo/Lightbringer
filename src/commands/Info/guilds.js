@@ -21,7 +21,7 @@ exports.run = async (bot, msg) => {
       }
     )
   })
-  return msg.delete(240000)
+  return msg.delete({ timeout: 240000 })
 }
 
 exports.info = {
