@@ -1,4 +1,4 @@
-# Commands (74)  
+# Commands (75)  
   
 ## Fun – 26 commands  
 ### `anim`  
@@ -135,7 +135,7 @@
 *Usage:* `userinfo <user>`  
 *Aliases:* `info`  
   
-## Moderation – 8 commands  
+## Moderation – 9 commands  
 ### `clone`  
 *Description:* `Clones the message with the given ID (may optionally set a channel)`  
 *Usage:* `clone [id] [channel]`  
@@ -149,6 +149,9 @@
 ### `getids`  
 *Description:* `Gets a list of message IDs`  
 *Usage:* `getids [amount] [channel]`  
+### `kick`  
+*Description:* `Kick a user`  
+*Usage:* `kick <user>`  
 ### `prune`  
 *Description:* `Deletes a certain number of messages sent by you`  
 *Usage:* `prune [amount]`  
