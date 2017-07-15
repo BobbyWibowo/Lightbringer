@@ -17,12 +17,13 @@ Afterwards, edit `.../Lightbringer/data/configs/config.json` file, then add the 
 > ```
 > "mentionLogChannel": "CHANNEL_ID"
 > ```
-> Once you're done, you'll have to restart the bot.
+> Replace `CHANNEL_ID` with the ID that you had copied before.  
+Once you're done, you'll have to restart the bot.
 >
-> Please note that by default it won't monitor any servers. To whitelist a server, you have to use `lbtmention` command. It's a toggle command, so you will just have to use the command again to blacklist the server.
+> Please note that by default it won't monitor any servers. To whitelist a particular server, you have to use `lbtmention` command in the said server (it doesn't matter in which channel you use it on). It's a toggle command, so you will just have to use the command again to blacklist the server.
 
 - How to enable auto Last.fm playing status updater?
-> This feature will automatically poll Last.fm server every few seconds (7.5 seconds) to find whether your Last.fm account is currently scrobbling anything or not. When it's scrobbling, it will automatically update your Discord game status with the title of the currently scrobbling song.  
+> This feature will automatically poll Last.fm server every 5 seconds to check whether your Last.fm account is currently scrobbling anything or not. When it's scrobbling, it will automatically update your Discord game status with the title of the currently scrobbling song.  
 >
 > To enable this feature, first you will need to get your Last.fm API key.  
 To get an API key, submit the form in this page: https://www.last.fm/api/account/create.  
@@ -33,9 +34,10 @@ Afterwards, edit `.../Lightbringer/data/configs/config.json` file, then add the 
 > "lastFmApiKey": "YOUR_LASTFM_API_KEY",
 > "lastFmUsername": "YOUR_LASTFM_USERNAME"
 > ```
-> Once you're done, you will just have to restart the bot and it will automatically update your game status whenever you're scrobbling anything to Last.fm.  
+> Replace `YOUR_LASTFM_API_KEY` with the API key and `YOUR_LASTFM_USERNAME` with your Last.fm username.  
+Once you're done, you will just have to restart the bot and it will automatically update your game status whenever you're scrobbling anything to Last.fm.  
 >
-> Please note that when it's scrobbling, you won't be able to manually change your game using `lbsetgame`. And if you want to temporarily disable this feature, you can simply use `lblastfm toggle`. Since it's a toggle command, you simply have to use it again to re-enable it.
+> Please note that when it's scrobbling, you won't be able to manually change your game using `lbsetgame`. And if you want to temporarily disable this feature, you can simply use `lblastfm toggle` (since it's a toggle command, you will simply have to use it again to re-enable it).
 
 - How to enable MyAnimeList command (`lbmal`)?
 > Edit `.../Lightbringer/data/configs/config.json` file, then add the following:

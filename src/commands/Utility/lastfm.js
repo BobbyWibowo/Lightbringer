@@ -3,7 +3,7 @@ const dotProp = require('dot-prop')
 
 const SUPPRESS_ERROR = true
 const STAT_ID = 'lastfm_timeout'
-const DELAY = 7500
+const DELAY = 5000
 const TOGGLE = /^t(oggle)?$/i
 
 exports.nowPlaying = ''
