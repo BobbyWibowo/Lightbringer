@@ -1,0 +1,72 @@
+# Frequently Asked Questions
+If your question/problem is not answered here, feel free to send messages to my Discord account: **Bobby#4400**.
+
+## Index
+- [Questions](#questions)
+- [Common errors](#common-errors)
+
+### Questions
+- My game isn't showing after using `lbsetgame`?
+> This isn't a bug, it's just how Discord works. It can't be fixed. Don't worry, your game shows for everyone else. If you want to check your game, just use `lbuserinfo`.
+
+- How to enable mention log?
+> This feature will automatically log any messages which have you mentioned in them (either through direct mention, role mention, @everyone or @here).  
+>
+> To enable it, you simply have to make a private channel in your own server to hold all the logs. Once you have made one, get its channel ID by right-clicking on the channel name then click on `Copy ID` menu.  
+Afterwards, edit `.../Lightbringer/data/configs/config.json` file, then add the following:
+> ```
+> "mentionLogChannel": "CHANNEL_ID"
+> ```
+> Once you're done, you'll have to restart the bot.
+>
+> Please note that by default it won't monitor any servers. To whitelist a server, you have to use `lbtmention` command. It's a toggle command, so you will just have to use the command again to blacklist the server.
+
+- How to enable auto Last.fm playing status updater?
+> This feature will automatically poll Last.fm server every few seconds (7.5 seconds) to find whether your Last.fm account is currently scrobbling anything or not. When it's scrobbling, it will automatically update your Discord game status with the title of the currently scrobbling song.  
+>
+> To enable this feature, first you will need to get your Last.fm API key.  
+To get an API key, submit the form in this page: https://www.last.fm/api/account/create.  
+You can leave `Callback URL` field empty. As for `Application homepage` field, feel free to use this repo URL.  
+Once you have submitted the form and got your API key, save them somewhere safe since you wouldn't be able to see them again later from Last.fm website.  
+Afterwards, edit `.../Lightbringer/data/configs/config.json` file, then add the following:
+> ```
+> "lastFmApiKey": "YOUR_LASTFM_API_KEY",
+> "lastFmUsername": "YOUR_LASTFM_USERNAME"
+> ```
+> Once you're done, you will just have to restart the bot and it will automatically update your game status whenever you're scrobbling anything to Last.fm.  
+>
+> Please note that when it's scrobbling, you won't be able to manually change your game using `lbsetgame`. And if you want to temporarily disable this feature, you can simply use `lblastfm toggle`. Since it's a toggle command, you simply have to use it again to re-enable it.
+
+- How to enable MyAnimeList command (`lbmal`)?
+> Edit `.../Lightbringer/data/configs/config.json` file, then add the following:
+> ```
+> "malUser": "YOUR_MYANIMELIST_USERNAME",
+> "malPassword": "YOUR_MYANIMELIST_PASSWORD",
+> ```
+> Afterwards, restart the bot and try the command again.
+
+### Common errors
+- `ERROR: There are no scenarios; must have at least one.`
+> This occurs if you install Yarn incorrectly on Linux. Please read the [official Yarn installation instructions for Linux](http://yarnpkg.com/en/docs/install#linux-tab).
+
+- `Error: Cannot find module './config.json'`
+> This means you did not set up the `config.json` for the bot. Please read the [Lightbringer installation instructions](https://github.com/BobbyWibowo/Lightbringer#installing).
+
+- `Error: Cannot find module './docs'`
+> This is a bug with `mathjs` module, though it's still unclear whether it's caused by `yarn` or the module itself. To solve this, you'll have to download the files in `https://github.com/josdejong/mathjs/tree/4e1142a1/lib/expression/docs`. You can use [this tool](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/josdejong/mathjs/tree/4e1142a1/lib/expression/docs) to download them. Once you have downloaded the archived file, extract its content to `.../Lightbringer/node_modules/mathjs/lib/expression/docs`.
+
+- `TRACKER : error TRK0005: Failed to locate: "CL.exe". The system cannot find the file specified. [...\Lightbringer\node_modules\leveldown\deps\snappy\snappy.vcxproj]`
+> This issue happens on Windows when you haven't configured the required tools for `node-gyp` module. Please refer to [this page](https://github.com/nodejs/node-gyp#on-windows) for more information about what you have to prepare beforehand.
+
+- `SyntaxError: Unexpected token (`
+> If this error occurred on any line which contains `async` in it, then it must because you're running a Node.js installation which doesn't have `async/await` feature enabled by default. This feature is enabled by default in Node.js >=7.6 and 8.0.  
+> 
+> If upgrading Node.js is not possible due to any circumstances, some versions older than 7.6 can enable the feature through a flag. You can try to edit `gulpfile.js` then replace:  
+> ```js
+> bot = spawn('node', ['src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] > })
+> ```
+> with:
+> ```js
+> bot = spawn('node', ['--harmony-async-await', 'src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] })
+> ```
+> If you're running Node.js 6.x though, it's probably better to just upgrade to 8.x.
