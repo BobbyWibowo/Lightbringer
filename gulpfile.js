@@ -3,6 +3,9 @@ const moduleError = /Error: Cannot find module '([a-zA-Z0-9+_-]+)'/g
 const gulp = require('gulp')
 const standard = require('gulp-standard')
 const spawn = require('child_process').spawn
+const version = process.versions.v8.match(/^([0-9]+)\.([0-9]+)\./)
+const major = parseInt(version[1], 10)
+const minor = parseInt(version[2], 10)
 
 let bot
 
@@ -33,7 +36,18 @@ gulp.task('standard', () => {
 })
 
 gulp.task('main', ['kill', 'standard'], () => {
-  bot = spawn('node', ['src/bot.js'], { 'stdio': ['inherit', 'inherit', 'pipe'] })
+  // NOTE: Experimental handler to check async/await compatibility
+  if (major < 5 || (major === 5 && minor < 4)) {
+    console.error('async/await is not supported in v8 versions before 5.4 (node.js <7.0)')
+    process.exit(0)
+  }
+
+  const options = { 'stdio': ['inherit', 'inherit', 'pipe'] }
+  if (major > 5 || (major === 5 && minor > 4)) {
+    bot = spawn('node', ['src/bot.js'], options)
+  } else {
+    bot = spawn('node', ['--harmony-async-await', 'src/bot.js'], options)
+  }
 
   bot.stderr.on('data', data => {
     process.stderr.write(data)
