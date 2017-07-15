@@ -93,8 +93,9 @@ const buildEmbed = (data, sub, type) => {
     const delimeter = '\n**---**\n'
     const props = data.map(p => {
       return stripIndents`
-        **Parameter:** \`${p.optional ? `[${p.name}]` : p.name}\`
+        **Parameter:** \`${p.name}\`
         **Types:** ${formatTypeInline(p.type)}
+        **Optional:** ${bot.utils.formatYesNo(p.optional)}
         **Default:** ${p.hasOwnProperty('default') ? `\`${p.default.toString()}\`` : '*none*'}
         **Description:** ${formatDescription(p.description)}`
     })
@@ -152,9 +153,11 @@ const buildEmbed = (data, sub, type) => {
         if (found.params) {
           if (found._type !== 'events') {
             parsed.name += `(${found.params.map(p => {
+              if (p.name.includes('.')) return null
               return `${p.variable ? '...' : ''}${p.optional ? `[${p.name}]` : p.name}`
-            }).join(', ')})`
+            }).filter(p => p).join(', ')})`
           }
+
           const formattedFields = formatPropFields(found.params, 'Parameters')
           for (const f of formattedFields) {
             parsed.fields.push(f)
@@ -199,9 +202,7 @@ const buildEmbed = (data, sub, type) => {
           if (data[key.prop]) {
             // NOTE: Values can be empty after being filtered with the "startsWith('_')"
             // code, so it is necessary to double-check its content before adding the field
-            const value = data[key.prop].filter(v => {
-              return !v.name.startsWith('_')
-            }).map(v => {
+            const value = data[key.prop].filter(v => !v.name.startsWith('_')).map(v => {
               return `\`${v.name}${v.deprecated ? ' [D]' : ''}\``
             }).join(', ')
             if (value) {
@@ -211,7 +212,6 @@ const buildEmbed = (data, sub, type) => {
         }
       }
 
-      // parsed.options.footer = 'Class'
       break
     }
     case 1: {
@@ -229,7 +229,6 @@ const buildEmbed = (data, sub, type) => {
         }
       }
 
-      // parsed.options.footer = 'Typedef'
       break
     }
     case 2: {
@@ -269,13 +268,7 @@ const buildEmbed = (data, sub, type) => {
     })
   }
 
-  return bot.utils.embed(
-    parsed.name,
-    // type !== 2 ? bot.utils.formatCode(parsed.name, '', true) : parsed.name,
-    parsed.description,
-    parsed.fields,
-    parsed.options
-  )
+  return bot.utils.embed(parsed.name, parsed.description, parsed.fields, parsed.options)
 }
 
 const fetchDocs = async version => {
