@@ -262,7 +262,7 @@ const buildEmbed = (data, sub, type) => {
     })
   }
 
-  if (data) {
+  if (data.name) {
     parsed.fields.push({
       name: '❯\u2000Online docs',
       value: formatLink(data.name, parsed.subname)
