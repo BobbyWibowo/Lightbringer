@@ -122,12 +122,7 @@ class CommandManager {
 
       msg.error = async (message, options = {}) => {
         this.bot.logger.severe(message.stack || message)
-
-        message = message.toString().startsWith('DiscordAPIError: ')
-          ? `Error:\n${bot.utils.formatCode(message)}`
-          : message.toString()
-
-        await msg.edit(`❌\u2000${message || 'Something failed!'}`)
+        await msg.edit(`❌\u2000${message.toString() || 'Something failed!'}`)
         options.timeout = options.timeout || DELETE
         return msg.delete(options)
       }
