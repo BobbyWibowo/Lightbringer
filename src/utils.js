@@ -108,15 +108,21 @@ exports.embed = (title = '', description = '', fields = [], options = {}) => {
     description = this.truncate(description, description.length, '\n')
   }
 
-  return new Discord.MessageEmbed({ fields, video: options.video || url })
+  const embed = new Discord.MessageEmbed({ fields, video: options.video || url })
     .setTitle(title)
     .setColor(color)
     .setDescription(description)
     .setImage(options.image || url)
-    .setTimestamp(timestampToDate(options.timestamp) || '')
     .setFooter(footer, options.avatarFooter ? bot.user.avatarURL : (options.footerIcon || ''))
     .setAuthor(author.name, author.icon, author.url)
     .setThumbnail(options.thumbnail || '')
+
+  const timestamp = timestampToDate(options.timestamp)
+  if (timestamp) {
+    embed.setTimestamp(timestamp)
+  }
+
+  return embed
 }
 
 const timestampToDate = timestamp => {

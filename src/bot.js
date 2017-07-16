@@ -82,6 +82,8 @@ bot.on('ready', async () => {
     prompt: ''
   }).on('line', line => {
     try {
+      const restart = () => process.exit(42) // eslint-disable-line no-unused-vars
+      const exit = () => process.exit(1) // eslint-disable-line no-unused-vars
       console.log(eval(line) || 'undefined') // eslint-disable-line no-eval
     } catch (err) {
       console.error(err)
