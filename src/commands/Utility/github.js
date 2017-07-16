@@ -1,5 +1,7 @@
 const snekfetch = require('snekfetch')
 
+const MY_GIT = 'BobbyWibowo/Lightbringer'
+
 exports.run = async (bot, msg, args) => {
   if (msg.guild) {
     bot.utils.assertEmbedPermission(msg.channel, msg.member)
@@ -59,6 +61,9 @@ const safeRepo = input => {
 }
 
 const buildEmbedFromJson = json => {
+  // NOTE: Special treatment
+  const isMyGit = json.full_name === MY_GIT
+
   return bot.utils.formatEmbed('', json.description || 'No description provided.',
     [
       {
@@ -114,7 +119,7 @@ const buildEmbedFromJson = json => {
         title: 'Clone',
         fields: [
           {
-            value: `\`git clone ${json.clone_url}\``
+            value: bot.utils.formatCode(`git clone ${json.clone_url}`)
           }
         ]
       }
@@ -125,7 +130,8 @@ const buildEmbedFromJson = json => {
         icon: 'https://a.safe.moe/cxwFp.png',
         url: json.html_url
       },
-      color: '#4078c0'
+      color: isMyGit ? '#ff0000' : '#4078c0',
+      thumbnail: isMyGit ? 'https://a.safe.moe/pM9Ov.png' : ''
     }
   )
 }
