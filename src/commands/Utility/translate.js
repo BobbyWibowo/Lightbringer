@@ -1,5 +1,5 @@
 const translate = require('google-translate-api')
-const stripIndents = require('common-tags').stripIndents
+const { stripIndents } = require('common-tags')
 
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['e', 'f:'])

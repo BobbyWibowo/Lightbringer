@@ -113,16 +113,17 @@ exports.run = async (bot, msg, args) => {
     })
   }
 
+  const thumbAvatarURL = avatarURL.replace(/\?size=\d+?$/i, '')
   const message = !keyword.length
     ? 'My information:'
     : (mention ? `Information of ${keyword}:` : `Information of the user who matched the keyword \`${keyword}\`:`)
   return msg.edit(message, { embed:
     bot.utils.formatEmbed('', description, nestedFields, {
-      thumbnail: avatarURL,
+      thumbnail: thumbAvatarURL,
       color: member ? member.displayColor : 0,
       author: {
         name: user.tag,
-        icon: avatarURL
+        icon: thumbAvatarURL
       }
     })
   })

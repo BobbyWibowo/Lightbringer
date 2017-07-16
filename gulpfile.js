@@ -11,16 +11,17 @@ let bot
 
 const paths = {
   srcFiles: 'src/**/!(_)*.js',
-  configFiles: 'data/configs/config.json',
   gulpFile: 'gulpfile.js'
 }
 
-const killBot = () => {
-  if (bot) bot.kill()
+const kill = () => {
+  if (bot) {
+    bot.kill()
+  }
 }
 
 gulp.task('kill', () => {
-  killBot()
+  kill()
 })
 
 gulp.task('standard', () => {
@@ -69,7 +70,7 @@ Node has failed to load a module! If you just updated, you may need to run 'yarn
 
   bot.on('close', code => {
     if (code === null) {
-      // NOTE: Killed by killBot()
+      // NOTE: Killed by kill()
       return
     }
 
@@ -88,5 +89,5 @@ Node has failed to load a module! If you just updated, you may need to run 'yarn
 gulp.task('default', ['main'])
 
 process.on('exit', () => {
-  killBot()
+  kill()
 })

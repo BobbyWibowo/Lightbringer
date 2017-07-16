@@ -1,6 +1,6 @@
 const prompt = require('prompt')
 const chalk = require('chalk')
-const stripIndents = require('common-tags').stripIndents
+const { stripIndents } = require('common-tags')
 const moment = require('moment')
 
 const fse = require('fs-extra')

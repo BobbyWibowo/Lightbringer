@@ -1,4 +1,4 @@
-const stripIndents = require('common-tags').stripIndents
+const { stripIndents } = require('common-tags')
 
 const CATEGORY = /^c(ategory)?$|^type$/i
 const ALL = /^a(ll)?$|^full$|^every$/i

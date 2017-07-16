@@ -1,5 +1,5 @@
 const Roll = require('roll')
-const stripIndents = require('common-tags').stripIndents
+const { stripIndents } = require('common-tags')
 
 exports.run = async (bot, msg, args) => {
   if (!args.length) {

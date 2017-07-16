@@ -1,5 +1,5 @@
 const booru = require('booru')
-const stripIndents = require('common-tags').stripIndents
+const { stripIndents } = require('common-tags')
 
 const DEFAULT = 'gelbooru.com'
 const ratings = {

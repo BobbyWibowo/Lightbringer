@@ -1,6 +1,6 @@
 const popura = require('popura')
 const paginate = require('paginate-array')
-const stripIndents = require('common-tags').stripIndents
+const { stripIndents } = require('common-tags')
 const { XmlEntities } = require('html-entities')
 const bbCodeToMarkdown = require('bbcode-to-markdown')
 const moment = require('moment')

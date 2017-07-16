@@ -7,7 +7,7 @@ const fse = require('fs-extra')
 const Discord = require('discord.js')
 const readline = require('readline')
 const didYouMean = require('didyoumean2')
-const stripIndents = require('common-tags').stripIndents
+const { stripIndents } = require('common-tags')
 
 const Managers = require('./managers')
 
