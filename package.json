@@ -29,7 +29,7 @@
     "cheerio": "^1.0.0-rc.2",
     "common-tags": "^1.4.0",
     "didyoumean2": "^1.2.0",
-    "discord.js": "hydrabolt/discord.js#b7bbd395e8892982d47ef018e45dd38589df9efc",
+    "discord.js": "hydrabolt/discord.js#111fa2da9312930b43dba25fbeafaca13fac1908",
     "dot-prop": "^4.1.1",
     "emoji-regex": "^6.4.3",
     "encodeurl": "^1.0.1",
