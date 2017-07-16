@@ -275,9 +275,9 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-booru@AtlasTheBot/booru#4ef66c57:
+booru@^0.3.3:
   version "0.3.3"
-  resolved "https://codeload.github.com/AtlasTheBot/booru/tar.gz/4ef66c57"
+  resolved "https://registry.yarnpkg.com/booru/-/booru-0.3.3.tgz#5e770bb36f53c301d637fe16109fc30d15b1bf3b"
   dependencies:
     request "^2.79.0"
     request-promise-native "^1.0.3"
@@ -687,15 +687,15 @@ didyoumean2@^1.2.0:
     leven "^2.0.0"
     lodash "^4.17.2"
 
-discord.js@hydrabolt/discord.js#85615aa3:
-  version "11.2.0"
-  resolved "https://codeload.github.com/hydrabolt/discord.js/tar.gz/85615aa3"
+discord.js@hydrabolt/discord.js#b7bbd395e8892982d47ef018e45dd38589df9efc:
+  version "12.0.0-dev"
+  resolved "https://codeload.github.com/hydrabolt/discord.js/tar.gz/b7bbd395e8892982d47ef018e45dd38589df9efc"
   dependencies:
     long "^3.2.0"
     prism-media "^0.0.1"
-    snekfetch "^3.1.0"
-    tweetnacl "^0.14.0"
-    ws "^2.0.0"
+    snekfetch "^3.2.0"
+    tweetnacl "^1.0.0"
+    ws "^3.0.0"
 
 doctrine@1.5.0, doctrine@^1.2.2:
   version "1.5.0"
@@ -1280,9 +1280,9 @@ fs-exists-sync@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/fs-exists-sync/-/fs-exists-sync-0.1.0.tgz#982d6893af918e72d08dec9e8673ff2b5a8d6add"
 
-fs-extra@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-3.0.1.tgz#3794f378c58b342ea7dbbb23095109c4b3b62291"
+fs-extra@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.0.tgz#414fb4ca2d2170ba0014159d3a8aec3303418d9e"
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^3.0.0"
@@ -1478,9 +1478,9 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
-google-translate-api@arthurlacoste/google-translate-api#022246c:
-  version "2.2.2"
-  resolved "https://codeload.github.com/arthurlacoste/google-translate-api/tar.gz/022246c"
+google-translate-api@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/google-translate-api/-/google-translate-api-2.3.0.tgz#626730a123da0d57af3735dd707cda71cee919c7"
   dependencies:
     configstore "^2.0.0"
     google-translate-token latest
@@ -3274,13 +3274,13 @@ slide@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
 
-snekfetch@^3.0.1, snekfetch@^3.1.0:
+snekfetch@^3.0.1:
   version "3.1.11"
   resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.1.11.tgz#552e4ad3a817bab343981a6d527e174df19b6d1d"
 
-snekfetch@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.2.3.tgz#63c6fe27e44f1303c5d95cfb7642f840813cc334"
+snekfetch@^3.2.0, snekfetch@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.2.4.tgz#74fed1f0530e312e5b08ecb189a529c14727afaf"
 
 sntp@1.x.x:
   version "1.0.9"
@@ -3540,9 +3540,13 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tweetnacl@^0.14.0, tweetnacl@^0.14.3, tweetnacl@~0.14.0:
+tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
+
+tweetnacl@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.0.tgz#713d8b818da42068740bf68386d0479e66fc8a7b"
 
 txtgen@^2.0.1:
   version "2.0.1"
@@ -3766,9 +3770,9 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
-ws@^2.0.0:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-2.3.1.tgz#6b94b3e447cb6a363f785eaf94af6359e8e81c80"
+ws@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-3.0.0.tgz#98ddb00056c8390cb751e7788788497f99103b6c"
   dependencies:
     safe-buffer "~5.0.1"
     ultron "~1.1.0"

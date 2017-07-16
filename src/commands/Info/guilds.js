@@ -3,25 +3,18 @@ exports.run = async (bot, msg) => {
     bot.utils.assertEmbedPermission(msg.channel, msg.member)
   }
 
-  await msg.edit(msg.content, { embed:
-    bot.utils.formatLargeEmbed('', '*This message will self-destruct in 240 seconds.*',
+  return msg.edit('My guilds:', { embed:
+    bot.utils.formatLargeEmbed('', `**Total:** ${bot.guilds.size}`,
       {
         delimeter: '\n',
         children: bot.guilds.sort((a, b) => b.memberCount - a.memberCount).map(g => {
-          return `•\u2000**${g.name}** - ${g.memberCount} member${g.memberCount !== 1 ? 's' : ''}, ` +
+          return `•\u2000**${g.name}** – ${g.memberCount} member${g.memberCount !== 1 ? 's' : ''}, ` +
             `${g.channels.size} channel${g.channels.size ? 's' : ''}`
         })
       },
-      {
-        inline: false,
-        author: {
-          name: `${bot.user.username}'s guilds [${bot.guilds.size}]`,
-          icon: bot.user.displayAvatarURL
-        }
-      }
+      { inline: false }
     )
   })
-  return msg.delete({ timeout: 240000 })
 }
 
 exports.info = {

@@ -487,7 +487,30 @@ exports.getMsg = async (channel, msgId, curMsg) => {
   }
 }
 
-exports.getGuildMember = (guild, keyword, fallback, indirect = false) => {
+const formatFoundList = (collection, props, name) => {
+  const MAX = 20
+  const isMoreThanMax = collection.size > 20
+  const leftover = isMoreThanMax && collection.size - 20
+
+  const _get = (object, props) => {
+    let last = object
+    for (let i = 0; i < props.length; i++) {
+      last = last[props[i]] || undefined
+      if (!last) break
+    }
+    return last
+  }
+
+  const array = collection.sort((a, b) => _get(a, props).localeCompare(_get(b, props))).array()
+  array.length = Math.min(MAX, array.length)
+
+  return new Error(`Found \`${collection.size}\` ${name}${collection.size !== 1 ? 's' : ''} with that keyword. ` +
+    'Please use a more specific keywords!\n' +
+    bot.utils.formatCode(`${array.map(i => _get(i, props)).join(', ')}` +
+    `${isMoreThanMax ? `, and ${leftover} more\u2026` : ''}`))
+}
+
+exports.getGuildMember = (guild, keyword, fallback, indirect) => {
   if (keyword) {
     if (!(guild instanceof Discord.Guild)) {
       throw new Error('An instance of Discord.Guild is required!')
@@ -527,7 +550,7 @@ exports.getGuildMember = (guild, keyword, fallback, indirect = false) => {
     if (filter.size === 1) {
       return [filter.first(), false]
     } else if (filter.size !== 0) {
-      throw new Error(`Found ${filter.size} guild members with that keyword. Please use a more specific keywords!`)
+      throw formatFoundList(filter, ['user', 'tag'], 'guild member')
     }
   }
 
@@ -581,7 +604,7 @@ exports.getUser = (guild, keyword, fallback) => {
     if (filter.size === 1) {
       return [filter.first(), false]
     } else if (filter.size !== 0) {
-      throw new Error(`Found ${filter.size} users with that keyword. Please use a more specific keywords!`)
+      throw formatFoundList(filter, ['tag'], 'user')
     }
   }
 
@@ -626,7 +649,7 @@ exports.getGuildRole = (guild, keyword) => {
   if (filter.size === 1) {
     return [filter.first(), false]
   } else if (filter.size !== 0) {
-    throw new Error(`Found ${filter.size} guild roles with that keyword. Please use a more specific keywords!`)
+    throw formatFoundList(filter, ['name'], 'guild role')
   }
 
   throw new Error('Guild role with that keyword could not be found!')
@@ -649,7 +672,7 @@ exports.getGuild = keyword => {
   if (filter.size === 1) {
     return filter.first()
   } else if (filter.size !== 0) {
-    throw new Error(`Found ${filter.size} guilds with that keyword. Please use a more specific keywords!`)
+    throw formatFoundList(filter, ['name'], 'guild')
   }
 
   throw new Error('Guild with that keyword could not be found!')
@@ -675,7 +698,7 @@ exports.getChannel = (keyword, guild, strict = false) => {
     if (filter.size === 1) {
       return filter.first()
     } else if (filter.size !== 0) {
-      throw new Error(`Found ${filter.size} channels with that keyword. Please use a more specific keywords!`)
+      throw formatFoundList(filter, ['name'], 'guild channel')
     }
   }
 
@@ -702,7 +725,7 @@ exports.getChannel = (keyword, guild, strict = false) => {
     if (filter.size === 1) {
       return filter.first()
     } else if (filter.size !== 0) {
-      throw new Error(`Found ${filter.size} DM channels with that keyword. Please use a more specific keywords!`)
+      throw formatFoundList(filter, ['recipient', 'tag'], 'DM channel')
     }
   }
 

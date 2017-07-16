@@ -16,7 +16,8 @@ exports.run = async (bot, msg, args) => {
   const options = {
     content,
     max: parseInt(parsed.options.l) || 25,
-    excludes: [msg.id]
+    excludes: [msg.id],
+    nsfw: true
   }
 
   if (parsed.options.c) {
