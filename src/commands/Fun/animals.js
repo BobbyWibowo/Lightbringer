@@ -17,7 +17,7 @@ exports.run = async (bot, msg, args) => {
     throw new Error('That type is not available!')
   }
 
-  await msg.edit('🔄')
+  await msg.edit(`🔄\u2000Fetching a random ${cats ? 'cat' : 'dog'} image\u2026`)
   const res = await snekfetch.get(cats ? 'http://www.random.cat/meow' : 'http://random.dog/woof')
   const image = cats ? res.body.file : `http://random.dog/${res.body}`
 

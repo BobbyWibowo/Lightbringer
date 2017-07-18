@@ -65,7 +65,7 @@ exports.run = async (bot, msg, args) => {
     }
   }
 
-  await msg.edit('🔄')
+  await msg.edit('🔄\u2000Getting a fortune cookie\u2026')
   const res = await snekfetch.get(`http://yerkee.com/api/fortune/${selected}`)
 
   if (!res || !res.body) {

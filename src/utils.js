@@ -1034,3 +1034,8 @@ exports.formatTimeNs = ns => {
 exports.cleanCustomEmojis = text => {
   return text ? text.replace(/<(:\w+?:)\d+?>/g, '$1') : ''
 }
+
+exports.capitalizeFirstLetter = input => {
+  const sentences = input.split('. ')
+  return sentences.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ')
+}
