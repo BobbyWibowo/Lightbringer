@@ -288,20 +288,10 @@ exports.parseArgs = (args, options) => {
 
 exports.multiSend = async (channel, messages, delay) => {
   try {
-    return new Promise((resolve, reject) => {
-      const send = async i => {
-        if (!messages[i]) {
-          return resolve()
-        }
-        try {
-          await channel.send(messages[i])
-          setTimeout((send, i) => send(i), delay || 200, send, i + 1)
-        } catch (err) {
-          return reject(err)
-        }
-      }
-      send(0)
-    })
+    for (const m of messages) {
+      await channel.send(m)
+      await this.sleep(delay || 200)
+    }
   } catch (err) {
     throw err
   }
@@ -1038,4 +1028,8 @@ exports.cleanCustomEmojis = text => {
 exports.capitalizeFirstLetter = input => {
   const sentences = input.split('. ')
   return sentences.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('. ')
+}
+
+exports.sleep = duration => {
+  return new Promise(resolve => setTimeout(() => resolve(), duration))
 }

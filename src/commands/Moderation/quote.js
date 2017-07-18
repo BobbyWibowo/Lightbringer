@@ -31,7 +31,7 @@ exports.run = async (bot, msg, args, auto) => {
     const nestedFields = []
     const fields = []
 
-    if (channel.type === 'text' && channel.guild.id !== (auto ? auto.target.guild.id : msg.guild.id)) {
+    if (channel.type === 'text' && channel.guild !== (auto ? auto.target.guild : msg.guild)) {
       fields.push({
         name: 'Guild',
         value: `${channel.guild.name} (ID: ${channel.guild.id})`

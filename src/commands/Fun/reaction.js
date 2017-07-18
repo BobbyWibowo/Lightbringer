@@ -1,5 +1,3 @@
-const DELAY = 500
-
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['m:', 'c:', 's'])
   const reactions = parsed.leftover.join(' ')
@@ -27,23 +25,18 @@ exports.run = async (bot, msg, args) => {
     await msg.edit(`${PROGRESS}Reacting...`)
   }
 
-  const sendReact = async i => {
-    if (!emojis[i]) {
-      return parsed.options.s ? true : msg.success('Done!')
+  try {
+    for (const e of emojis) {
+      await m.react(e)
+      await bot.utils.sleep(500)
     }
-
-    try {
-      await m.react(emojis[i])
-      setTimeout(() => sendReact(i + 1), DELAY)
-    } catch (err) {
-      if (parsed.options.s) {
-        console.error(err)
-      } else {
-        throw err
-      }
+  } catch (err) {
+    if (parsed.options.s) {
+      console.error(err)
+    } else {
+      throw err
     }
   }
-  return sendReact(0)
 }
 
 exports.info = {

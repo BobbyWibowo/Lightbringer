@@ -41,6 +41,7 @@ exports.run = async (bot, msg, args) => {
     })
 
     await msg.edit('https://github.com/BobbyWibowo/Lightbringer/blob/master/COMMANDS.md')
+    await bot.utils.sleep(200)
     return bot.utils.sendLarge(msg.channel,
       filtered.map(c => {
         return `${bot.utils.pad(' '.repeat(maxLength), c.info.name)} : ${c.info.description || '<no description>'}`

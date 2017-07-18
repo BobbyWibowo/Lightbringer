@@ -47,18 +47,18 @@ exports.run = async (bot, msg, args) => {
       const sortPos = (a, b) => a.position - b.position
       children = [].concat(
         textChannels.sort(sortPos).map(c => {
-          return `#${c.name}${!c.permissionsFor(guild.me).has(['READ_MESSAGES', 'READ_MESSAGE_HISTORY'])
-            ? ' `[HIDDEN]`'
-            : ''}`
+          const isHidden = !c.permissionsFor(guild.me).has(['READ_MESSAGES', 'READ_MESSAGE_HISTORY'])
+          const isDefault = c === guild.defaultChannel
+          return `•\u2000# ${c.name}${isDefault ? ' **`[DEFAULT]`**' : ''}${isHidden ? ' **`[HIDDEN]`**' : ''}`
         }),
         voiceChannels.sort(sortPos).map(c => {
-          return `${c.name}${!c.permissionsFor(guild.me).has('CONNECT')
-            ? ' `[LOCKED]`'
-            : ''}`
+          const isLocked = !c.permissionsFor(guild.me).has('CONNECT')
+          const isAFK = c.id === guild.afkChannelID
+          return `•\u2000${c.name}${isAFK ? ' **`[AFK]`**' : ''}${isLocked ? ' **`[LOCKED]`**' : ''}`
         })
       )
 
-      delimeter = ', '
+      delimeter = '\n'
     } else {
       throw new Error('That action is not valid!')
     }
@@ -152,6 +152,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (parsed.options.g && gists) {
+    await msg.edit('🔄\u2000Uploading to GitHub Gists\u2026')
     const r = await bot.utils.gists(gists)
     return msg.success(`<${r}>`, { timeout: -1 })
   } else {

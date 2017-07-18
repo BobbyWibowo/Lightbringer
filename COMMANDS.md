@@ -1,6 +1,6 @@
-# Commands (77)  
+# Commands (79)  
   
-## Fun – 28 commands  
+## Fun – 29 commands  
 ### `8ball`  
 *Description:* `Uses 8ball.delegator.com to ask the magic 8-ball for a question`  
 *Usage:* `8ball <question>`  
@@ -97,6 +97,9 @@
 ### `today`  
 *Description:* `Gives a random thing that happened today in history from http://history.muffinlabs.com/date`  
 *Usage:* `today <events|births|deaths>`  
+### `weave`  
+*Description:* `Weave an input text with a certain emoji`  
+*Usage:* `weave <emoji> <text>`  
 ### `xkcd`  
 *Description:* `Shows you random xkcd comics`  
 *Usage:* `xkcd`  
@@ -175,7 +178,7 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 29 commands  
+## Utility – 30 commands  
 ### `apidocs`  
 *Description:* `Fetch info from the API docs`  
 *Usage:* `apidocs [query]|[version <new version>]`  
@@ -226,6 +229,10 @@
 *Description:* `Search for anime info from MyAnimeList`  
 *Usage:* `mal [options] <query>`  
 *Aliases:* `anime`, `myanimelist`  
+### `markasread`  
+*Description:* `Mark this guild, a certain guild or all guilds as read`  
+*Usage:* `markasread [guild|all]`  
+*Aliases:* `mar`  
 ### `paste`  
 *Description:* `Uploads some text to Pastebin`  
 *Usage:* `paste [options] <text>`  

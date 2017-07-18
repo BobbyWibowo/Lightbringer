@@ -19,6 +19,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (parsed.options.g) {
+    await msg.edit('🔄\u2000Uploading to GitHub Gists\u2026')
     const r = await bot.utils.gists(require('util').inspect(emojis.map(e => {
       return { name: e.name, url: e.url }
     })), { suffix: 'js' })
