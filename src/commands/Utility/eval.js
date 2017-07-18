@@ -14,7 +14,7 @@ exports.run = async (bot, msg, args) => {
 
   const input = parsed.leftover.join(' ')
 
-  let beginTime = process.hrtime()
+  const beginTime = process.hrtime()
 
   let result
   try {

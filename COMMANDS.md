@@ -1,4 +1,4 @@
-# Commands (81)  
+# Commands (82)  
   
 ## Fun – 29 commands  
 ### `8ball`  
@@ -181,7 +181,7 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 31 commands  
+## Utility – 32 commands  
 ### `apidocs`  
 *Description:* `Fetch info from the API docs`  
 *Usage:* `apidocs [query]|[version <new version>]`  
@@ -236,6 +236,10 @@
 *Description:* `Mark this guild, a certain guild or all guilds as read`  
 *Usage:* `markasread [guild|all]`  
 *Aliases:* `mar`  
+### `math`  
+*Description:* `Evaluate math expressions using mathjs library (separate individual expression by new line)`  
+*Usage:* `math [options] <expressions>`  
+*Aliases:* `calc`, `calculate`  
 ### `paste`  
 *Description:* `Uploads some text to Pastebin`  
 *Usage:* `paste [options] <text>`  
@@ -267,7 +271,7 @@
 *Aliases:* `terminate`  
 ### `tags`  
 *Description:* `Controls or lists your tags`  
-*Usage:* `tags [-e] <name>|[-v] list|add <name> <contents>|delete <name>`  
+*Usage:* `tags [-e] <name>|[-v] list|add <name> [contents]|delete <name>`  
 *Aliases:* `t`, `tag`  
 ### `thesaurus`  
 *Description:* `Looks up a word on Thesaurus.com (showing synonyms by default)`  
