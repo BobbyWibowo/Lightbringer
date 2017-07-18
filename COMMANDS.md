@@ -1,4 +1,4 @@
-# Commands (80)  
+# Commands (81)  
   
 ## Fun – 29 commands  
 ### `8ball`  
@@ -146,7 +146,10 @@
 *Usage:* `userinfo <user>`  
 *Aliases:* `info`  
   
-## Moderation – 9 commands  
+## Moderation – 10 commands  
+### `ban`  
+*Description:* `Bans a user`  
+*Usage:* `ban <user>`  
 ### `clone`  
 *Description:* `Clones the message with the given ID (may optionally set a channel)`  
 *Usage:* `clone [id] [channel]`  
@@ -161,7 +164,7 @@
 *Description:* `Gets a list of message IDs`  
 *Usage:* `getids [amount] [channel]`  
 ### `kick`  
-*Description:* `Kick a user`  
+*Description:* `Kicks a user`  
 *Usage:* `kick <user>`  
 ### `prune`  
 *Description:* `Deletes a certain number of messages sent by you`  
