@@ -133,7 +133,7 @@ exports.run = async (bot, msg, args) => {
     await tm.delete()
 
     if (isCancelRequested(tm.content)) {
-      throw new Error('The command was cancelled.')
+      return msg.success('The command was cancelled!')
     } else {
       index = parseInt(tm.content) - 1
     }

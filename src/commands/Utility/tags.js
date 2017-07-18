@@ -39,20 +39,47 @@ exports.run = async (bot, msg, args) => {
               return `•\u2000**${tag.name}** – ${tag.used}x`
             }
           })
-        }
+        },
+        { inline: true }
       )
     })
     return msg.delete({ timeout: 60000 })
   } else if (ADD.test(action)) {
-    if (parsed.leftover.length < 3) {
-      throw new Error(`Usage: \`${config.prefix}tags add <name> <contents>\``)
+    if (parsed.leftover.length < 2) {
+      throw new Error(`Usage: \`${config.prefix}tags add <name> [contents]\``)
     }
 
     const name = parsed.leftover[1]
-    const contents = parsed.leftover.slice(2).join(' ')
-
     if (this.storage.get(name)) {
       throw new Error(`The tag \`${name}\` already exists!`)
+    }
+
+    let contents = parsed.leftover.slice(2).join(' ')
+    if (!contents) {
+      const AWAIT_TIMEOUT = 30
+      await msg.edit(`Adding tag with name \`${name}\`. What content would you like to add?\n\n` +
+        `Please respond with your desired content within ${AWAIT_TIMEOUT} ` +
+        `second${AWAIT_TIMEOUT !== 1 ? 's' : ''} or say \`cancel\` to cancel.`)
+
+      let m
+      try {
+        const collected = await msg.channel.awaitMessages(tm => tm.author === msg.author, {
+          max: 1,
+          time: AWAIT_TIMEOUT * 1000,
+          errors: ['time']
+        })
+        m = collected.first()
+      } catch (err) {
+        throw new Error(`You did not specify your desired content within ${AWAIT_TIMEOUT} ` +
+          `second${AWAIT_TIMEOUT !== 1 ? 's' : ''}.`)
+      }
+
+      contents = m.content
+      await m.delete()
+
+      if (contents === 'cancel') {
+        return msg.success('The command was cancelled!')
+      }
     }
 
     this.storage.set(name, { name, contents, used: 0 })
@@ -100,7 +127,7 @@ exports.run = async (bot, msg, args) => {
 
 exports.info = {
   name: 'tags',
-  usage: 'tags [-e] <name>|[-v] list|add <name> <contents>|delete <name>',
+  usage: 'tags [-e] <name>|[-v] list|add <name> [contents]|delete <name>',
   description: 'Controls or lists your tags',
   aliases: ['t', 'tag'],
   options: [
