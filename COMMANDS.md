@@ -1,4 +1,4 @@
-# Commands (79)  
+# Commands (80)  
   
 ## Fun – 29 commands  
 ### `8ball`  
@@ -178,7 +178,7 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 30 commands  
+## Utility – 31 commands  
 ### `apidocs`  
 *Description:* `Fetch info from the API docs`  
 *Usage:* `apidocs [query]|[version <new version>]`  
@@ -286,6 +286,9 @@
 *Description:* `Looks up a word on Urban Dictionary (leave query blank to get a random definition)`  
 *Usage:* `urban [options] [query]`  
 *Aliases:* `u`, `urbandictionary`  
+### `weather`  
+*Description:* `Shows you weather information of a particular city`  
+*Usage:* `weather <city>`  
 ### `wiki`  
 *Description:* `Returns the summary of the first matching search result from Wikipedia`  
 *Usage:* `wiki <query>`  

@@ -2,18 +2,31 @@ const snekfetch = require('snekfetch')
 const dotProp = require('dot-prop')
 const { stripIndents } = require('common-tags')
 
+const WEATHER_ICONS = [
+  { icon: '⛅', regex: /partly (cloudy|sunny)/i },
+  { icon: '☁', regex: /cloudy/i },
+  { icon: '☀', regex: /clear|sunny/i },
+  { icon: '⛈', regex: /thunderstorms/i },
+  { icon: '🌦', regex: /scattered showers/i },
+  { icon: '🌧', regex: /rain/i }
+]
+const DAYS = {
+  'Mon': 'Monday',
+  'Tue': 'Tuesday',
+  'Wed': 'Wednesday',
+  'Thu': 'Thursday',
+  'Fri': 'Friday',
+  'Sat': 'Saturday',
+  'Sun': 'Sunday'
+}
+
 exports.run = async (bot, msg, args) => {
   if (msg.guild) {
     bot.utils.assertEmbedPermission(msg.channel, msg.member)
   }
 
   const parsed = bot.utils.parseArgs(args, ['i'])
-
-  if (!parsed.leftover.length) {
-    throw new Error('You must specify a location!')
-  }
-
-  const keyword = parsed.leftover.join(' ')
+  const keyword = parsed.leftover.join(' ') || config.defaultTimeZone
 
   await msg.edit('🔄\u2000Fetching weather information from Yahoo! Weather\u2026')
   const res = await snekfetch.get('https://query.yahooapis.com/v1/public/yql?q=' +
@@ -25,6 +38,28 @@ exports.run = async (bot, msg, args) => {
   }
 
   const weather = res.body.query.results.channel
+
+  const _location = []
+  for (const k of ['city', 'region', 'country']) {
+    if (weather.location[k]) _location.push(weather.location[k].trim())
+  }
+  const location = _location.join(', ')
+
+  const flag = weather.title.slice(-2).split('').map(i => {
+    const e = bot.consts.emojiMap[i.toLowerCase()]
+    return typeof e === 'object' ? e[0] : e
+  }).join('')
+
+  const formatCondition = text => {
+    let icon = ''
+    for (const wi of WEATHER_ICONS) {
+      if (wi.regex.test(text)) {
+        icon = `\u2000${wi.icon}`
+        break
+      }
+    }
+    return `**${text}**${icon}`
+  }
 
   const formatTemp = value => {
     if (weather.units.temperature === 'F' && !parsed.options.i) {
@@ -46,59 +81,40 @@ exports.run = async (bot, msg, args) => {
     }
   }
 
+  const formatClock = clock => {
+    const matches = clock.match(/(\d{1,2}):(\d{1,2}) (am|pm)/i)
+    const _ = i => i.length === 1 ? `0${i}` : i
+    return `${_(matches[1])}:${_(matches[2])} ${matches[3].toUpperCase()}`
+  }
+
   return msg.edit(`Weather information for the location which matched the keyword \`${keyword}\`:`, { embed:
     bot.utils.formatEmbed('', stripIndents`
-      **Current conditions:** ${weather.item.condition.text} (${weather.item.pubDate})
-      **Sunrise:** ${weather.astronomy.sunrise}
-      **Sunset:** ${weather.astronomy.sunset}
-      **Coordinates:** ${weather.item.lat}, ${weather.item.long}
+      ${flag}\u2000|\u2000**${location}**
 
-      **Forecasts:**
-      ${weather.item.forecast.map(f =>
-        `${f.day}, ${f.date} – ${f.text} – ${formatTemp(f.low)} ~ ${formatTemp(f.high)}`
-      ).join('\n')}`, [
+      ${formatCondition(weather.item.condition.text)}
+
+      **Temperature:** ${formatTemp(weather.item.condition.temp)}
+      **Wind:** ${weather.wind.direction}° / ${formatSpeed(weather.wind.speed)}
+      **Humidity:** ${weather.atmosphere.humidity}%
+      **Pressure:** ${weather.atmosphere.pressure} hPa
+      **Visibility:** ${weather.atmosphere.visibility}%
+      **Sunrise:** ${formatClock(weather.astronomy.sunrise)} / **Sunset:** ${formatClock(weather.astronomy.sunset)}
+      **Coordinates:** ${weather.item.lat}, ${weather.item.long}
+      **Last update:** ${weather.item.pubDate}`, [
         {
-          title: 'Wind',
-          fields: [
-            {
-              name: 'Chill',
-              value: formatTemp(weather.wind.chill)
-            },
-            {
-              name: 'Direction',
-              value: `${weather.wind.direction}°`
-            },
-            {
-              name: 'Speed',
-              value: formatSpeed(weather.wind.speed)
+          title: 'Forecasts',
+          fields: weather.item.forecast.map(f => {
+            return {
+              name: '',
+              value: `${DAYS[f.day]} – ${f.text} – ${formatTemp(f.low)} ~ ${formatTemp(f.high)}`
             }
-          ]
-        },
-        {
-          title: 'Atmosphere',
-          fields: [
-            {
-              name: 'Humidity',
-              value: `${weather.atmosphere.humidity}%`
-            },
-            {
-              name: 'Pressure',
-              value: `${weather.atmosphere.pressure} hPa`
-            },
-            {
-              name: 'Visibility',
-              value: `${weather.atmosphere.visibility}%`
-            }
-          ]
+          })
         }
       ],
       {
-        author: {
-          name: weather.title,
-          icon: 'https://a.safe.moe/RElH8.png'
-        },
         color: '#410093',
-        inline: true
+        footer: 'Yahoo! Weather – Provided by The Weather Channel',
+        footerIcon: 'https://a.safe.moe/RElH8.png'
       }
     )
   })
