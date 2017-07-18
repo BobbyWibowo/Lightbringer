@@ -1,6 +1,6 @@
-# Commands (75)  
+# Commands (76)  
   
-## Fun – 26 commands  
+## Fun – 27 commands  
 ### `anim`  
 *Description:* `"Animates" a series of emojis`  
 *Usage:* `anim [-d <delay>] <emoji> [emoji2] [...]`  
@@ -29,6 +29,10 @@
 *Description:* `Flip text`  
 *Usage:* `flip <text>`  
 *Credits:* `1Computer1`  
+### `fortune`  
+*Description:* `Shows a random fortune cookie`  
+*Usage:* `fortune [category|list]`  
+*Aliases:* `fortunecookie`  
 ### `get`  
 *Description:* `Gets random thing from various APIs`  
 *Usage:* `get [type]`  
