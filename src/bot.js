@@ -45,8 +45,8 @@ const setTitle = title => {
 bot.on('ready', async () => {
   logger.info('Bot successfully logged in! Loading modules\u2026 (this may take a few seconds)')
 
-  bot.user.setAFK(true)
-  // bot.user.setStatus('invisible');
+  await bot.user.setAFK(true)
+  // await bot.user.setStatus('invisible');
 
   bot.parentDir = path.resolve(__dirname, '../..')
   bot.srcDir = __dirname
