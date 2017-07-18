@@ -1,6 +1,10 @@
-# Commands (76)  
+# Commands (77)  
   
-## Fun – 27 commands  
+## Fun – 28 commands  
+### `8ball`  
+*Description:* `Uses 8ball.delegator.com to ask the magic 8-ball for a question`  
+*Usage:* `8ball <question>`  
+*Aliases:* `8b`  
 ### `anim`  
 *Description:* `"Animates" a series of emojis`  
 *Usage:* `anim [-d <delay>] <emoji> [emoji2] [...]`  

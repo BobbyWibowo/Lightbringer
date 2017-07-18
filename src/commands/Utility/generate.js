@@ -4,7 +4,7 @@ exports.run = async (bot, msg, args) => {
   const action = args[0]
 
   if (COMMANDS.test(action)) {
-    await msg.edit('🔄')
+    await msg.edit('🔄\u2000Generating content for `COMMANDS.md`\u2026')
 
     let count = 0
     const formatted = {}
