@@ -1,12 +1,11 @@
 const moment = require('moment')
 
 exports.run = async (bot, msg, args) => {
-  const parsed = bot.utils.parseArgs(args, ['m'])
-
   if (msg.guild) {
     bot.utils.assertEmbedPermission(msg.channel, msg.member)
   }
 
+  const parsed = bot.utils.parseArgs(args, ['m'])
   const keyword = parsed.leftover.join(' ')
 
   const get = bot.utils.getUser(msg.guild, keyword, msg.author)
