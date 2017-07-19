@@ -1,4 +1,4 @@
-# Commands (82)  
+# Commands (83)  
   
 ## Fun – 29 commands  
 ### `8ball`  
@@ -181,7 +181,7 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 32 commands  
+## Utility – 33 commands  
 ### `apidocs`  
 *Description:* `Fetch info from the API docs`  
 *Usage:* `apidocs [query]|[version <new version>]`  
@@ -190,6 +190,10 @@
 *Description:* `Gets yours or another user's avatar`  
 *Usage:* `avatar [user]`  
 *Aliases:* `ava`  
+### `currency`  
+*Description:* `Convert currency using exchange rates from http://fixer.io/`  
+*Usage:* `currency [<value> <from> <to>|refresh]`  
+*Aliases:* `curr`  
 ### `dictionary`  
 *Description:* `Looks up a word on Dictionary.com`  
 *Usage:* `dictionary <query>`  

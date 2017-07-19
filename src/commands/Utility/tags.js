@@ -46,7 +46,7 @@ exports.run = async (bot, msg, args) => {
     return msg.delete({ timeout: 60000 })
   } else if (ADD.test(action)) {
     if (parsed.leftover.length < 2) {
-      throw new Error(`Usage: \`${config.prefix}tags add <name> [contents]\``)
+      throw new Error(`Usage: \`${config.prefix}${this.info.name} add <name> [contents]\``)
     }
 
     const name = parsed.leftover[1]
@@ -88,7 +88,7 @@ exports.run = async (bot, msg, args) => {
     return msg.success(`The tag \`${name}\` was added!`)
   } else if (REMOVE.test(action)) {
     if (parsed.leftover.length < 2) {
-      throw new Error(`Usage: \`${config.prefix}tags delete <name>\``)
+      throw new Error(`Usage: \`${config.prefix}${this.info.name} delete <name>\``)
     }
 
     const name = parsed.leftover[1]

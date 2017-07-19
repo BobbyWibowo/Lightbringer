@@ -25,7 +25,7 @@ exports.run = async (bot, msg, args) => {
     } else {
       const command = bot.commands.get(args[0])
       if (!command) {
-        throw new Error(`The command '${args[0]}' does not exist!`)
+        throw new Error(`The command \`${args[0]}\` does not exist!`)
       }
 
       commands = [command]
