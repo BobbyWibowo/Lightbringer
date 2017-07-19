@@ -1,7 +1,5 @@
 'use strict'
 
-const beginTime = process.hrtime()
-
 const path = require('path')
 const fse = require('fs-extra')
 const Discord = require('discord.js')
@@ -35,9 +33,11 @@ const settings = global.settings = {
 if (!fse.existsSync(settings.dataFolder)) fse.mkdirSync(settings.dataFolder)
 if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolder)
 
+let beginTime
 let loaded = false
 
-const setTitle = title => {
+const updateTitle = () => {
+  const title = `Lightbringer - ${bot.user.tag}`
   process.title = title
   process.stdout.write(`\u001B]0;${title}\u0007`)
 }
@@ -57,8 +57,7 @@ bot.on('ready', async () => {
   bot.commandsDir = path.resolve(__dirname, 'commands')
   await commands.loadCommands(bot.commandsDir)
 
-  setTitle(`Lightbringer - ${bot.user.tag}`)
-
+  updateTitle()
   logger.info(stripIndents`
     Stats:
     - User: ${bot.user.tag} (ID: ${bot.user.id})
@@ -106,12 +105,20 @@ bot.on('ready', async () => {
 })
 
 bot.on('userUpdate', (oldUser, newUser) => {
-  if (!oldUser || !newUser || newUser !== bot.user || newUser.user.tag === oldUser.user.tag) {
+  if (!oldUser || !newUser) {
+    return
+  }
+
+  if (newUser !== bot.user) {
+    return
+  }
+
+  if (!newUser.tag || !oldUser.tag || newUser.user.tag === oldUser.user.tag) {
     return
   }
 
   // NOTE: Update title of console/terminal on the bot's username change
-  setTitle(`Lightbringer - ${bot.user.tag}`)
+  updateTitle()
 })
 
 const parseCommand = async msg => {
@@ -230,7 +237,6 @@ bot.on('disconnect', event => {
     logger.info('Disconnected from Discord (4004: invalid token)')
   } else {
     logger.warn(`Disconnected from Discord ${event.code === 1000 ? 'cleanly' : `with code ${event.code}`}`)
-
     // NOTE: Restart bot on disconnect
     process.exit(42)
   }
@@ -249,6 +255,7 @@ const init = async () => {
     await Managers.Migrator.migrate(bot, __dirname)
 
     if (config) {
+      beginTime = process.hrtime()
       logger.info('Logging in\u2026')
       await bot.login(config.botToken)
     }
