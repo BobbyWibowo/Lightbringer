@@ -679,13 +679,13 @@ exports.getChannel = (keyword, guild, strict = false) => {
 
   keyword = keyword.trim()
 
-  if (guild) {
-    const testId = /^\d+$/.test(keyword)
-    if (testId) {
-      const get = guild.channels.get(keyword)
-      if (get) return get
-    }
+  const testId = /^\d+$/.test(keyword)
+  if (testId) {
+    const get = bot.channels.get(keyword)
+    if (get) return get
+  }
 
+  if (guild) {
     const find = guild.channels.find(c => c.name === keyword)
     if (find) return find
 
