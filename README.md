@@ -16,7 +16,8 @@ Lightbringer makes full use of ES2017's `async/await` functionality for clear, c
 ## Index
 - [Heads up!](#heads-up)
 - [FAQ](#faq)
-- [Commands](#commands)
+- [Commands](COMMANDS.md)
+- [To-do](TODO.md)
 - [Requirements](#requirements)
 - [Why Yarn?](#why-yarn)
 - [Installing](#installing)
@@ -39,9 +40,6 @@ IF, and only if you accept the above rules of self-bots, then you may proceed.
 ### FAQ
 Proceed to [FAQ.md](FAQ.md).
 > Information on how to enable some features such as ***Last.fm auto status updater***, *MyAnimeList command*, *mention logger*, etc. is also available in the FAQ.
-
-### Commands
-Proceed to [COMMANDS.md](COMMANDS.md).
 
 ### Requirements
 - `git` ([Windows](https://git-scm.com/download/win) | [Linux](https://git-scm.com/download/linux) | [macOS](https://git-scm.com/download/mac))
