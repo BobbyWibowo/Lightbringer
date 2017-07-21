@@ -200,14 +200,8 @@ const buildEmbed = (data, sub, type) => {
 
         for (const key of find) {
           if (data[key.prop]) {
-            // NOTE: Values can be empty after being filtered with the "startsWith('_')"
-            // code, so it is necessary to double-check its content before adding the field
-            const value = data[key.prop].filter(v => !v.name.startsWith('_')).map(v => {
-              return `\`${v.name}${v.deprecated ? ' [D]' : ''}\``
-            }).join(', ')
-            if (value) {
-              parsed.fields.push({ name: `❯\u2000${key.title}`, value })
-            }
+            const value = data[key.prop].map(v => `\`${v.name}${v.deprecated ? ' [D]' : ''}\``).join(', ')
+            parsed.fields.push({ name: `❯\u2000${key.title}`, value })
           }
         }
       }
