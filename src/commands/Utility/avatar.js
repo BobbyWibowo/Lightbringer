@@ -1,5 +1,7 @@
+const snekfetch = require('snekfetch')
+
 exports.run = async (bot, msg, args) => {
-  const parsed = bot.utils.parseArgs(args, ['e', 'np', 'ng'])
+  const parsed = bot.utils.parseArgs(args, ['u', 'np'])
 
   if (msg.guild && parsed.options.e) {
     bot.utils.assertEmbedPermission(msg.channel, msg.member)
@@ -21,33 +23,41 @@ exports.run = async (bot, msg, args) => {
     avatarURL = avatarURL.replace('cdn.discordapp.com', 'images.discordapp.net')
   }
 
-  let options = {}
-  if (parsed.options.e) {
-    options.embed = bot.utils.embed('', `[Direct link](${avatarURL})`, [], { image: avatarURL })
-  }
+  const message = `${get[1] ? user : user.tag}'s avatar:${parsed.options.e ? '' : `\n${avatarURL}`}` +
+    `${member || !msg.guild ? '' : '\n*This user is not a member of the current guild.*'}`
 
-  return msg.edit(
-    `${get[1] ? user : user.tag}'s avatar:${parsed.options.e ? '' : `\n${avatarURL}`}` +
-    `${member || !msg.guild ? '' : '\n*This user is not a member of the current guild.*'}`,
-    options
-  )
+  if (parsed.options.u) {
+    await msg.delete(`${PROGRESS}Fetching avatar of the specified user\u2026`)
+    const res = await snekfetch.get(avatarURL)
+    if (!res || !res.body) {
+      throw new Error('Failed to download avatar of the specified user!')
+    }
+    await msg.channel.send(message.replace(avatarURL, `<${avatarURL}>`), { files: [{
+      attachment: res.body,
+      name: avatarURL.match(/\/([^/?]+)(\?size=\d+)?$/)[1]
+    }] })
+    return msg.delete()
+  } else {
+    return msg.edit(message)
+  }
 }
 
 exports.info = {
   name: 'avatar',
-  usage: 'avatar [user]',
+  usage: 'avatar [options] [user]',
   description: 'Gets yours or another user\'s avatar',
   aliases: ['ava'],
   options: [
     {
-      name: '-e',
-      usage: '-e',
-      description: 'Shows avatar in embed'
+      name: '-u',
+      usage: '-u',
+      description: 'Attempts to upload avatar as an attachment instead (workaround for GIF not playing)'
     },
     {
       name: '-np',
       usage: '-np',
-      description: 'Attempts to use the direct URL instead of the proxy URL'
+      description: 'Attempts to use the direct URL instead of the proxy URL ' +
+        '(workaround for image sometimes not loading)'
     }
   ]
 }

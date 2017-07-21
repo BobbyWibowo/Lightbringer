@@ -188,7 +188,7 @@
 *Aliases:* `docs`  
 ### `avatar`  
 *Description:* `Gets yours or another user's avatar`  
-*Usage:* `avatar [user]`  
+*Usage:* `avatar [options] [user]`  
 *Aliases:* `ava`  
 ### `currency`  
 *Description:* `Convert currency using exchange rates from http://fixer.io/`  
