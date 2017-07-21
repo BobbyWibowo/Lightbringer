@@ -46,7 +46,10 @@ bot.on('ready', async () => {
   logger.info('Bot successfully logged in! Loading modules\u2026 (this may take a few seconds)')
 
   await bot.user.setAFK(true)
-  // await bot.user.setStatus('invisible');
+
+  // NOTE: Syncing status, otherwise bot will have broken status
+  // and sometimes can't be set to invisible from the Discord client
+  await bot.user.setPresence({ status: bot.user.settings.status })
 
   bot.parentDir = path.resolve(__dirname, '../..')
   bot.srcDir = __dirname
@@ -93,9 +96,13 @@ bot.on('ready', async () => {
 
   loaded = true
 
-  const elapsedTime = process.hrtime(beginTime)
-  const elapsedTimeS = Math.floor((elapsedTime[0] * 1e9 + elapsedTime[1]) / 1e9)
-  const readyMessage = `Bot is ready! - Time taken: **${elapsedTimeS}s**`
+  let elapsedTimeS
+  if (beginTime) {
+    const elapsedTime = process.hrtime(beginTime)
+    elapsedTimeS = Math.floor((elapsedTime[0] * 1e9 + elapsedTime[1]) / 1e9)
+    beginTime = null
+  }
+  const readyMessage = `Bot is ready!${elapsedTimeS ? ` - Time taken: **${elapsedTimeS}s**` : ''}`
 
   logger.info(readyMessage.replace(/\*/g, ''))
 
@@ -235,10 +242,10 @@ bot.on('warn', logger.warn)
 bot.on('disconnect', event => {
   if (event.code === 4004) {
     logger.info('Disconnected from Discord (4004: invalid token)')
+    // NOTE: Shutdown bot
+    process.exit(1)
   } else {
-    logger.warn(`Disconnected from Discord ${event.code === 1000 ? 'cleanly' : `with code ${event.code}`}`)
-    // NOTE: Restart bot on disconnect
-    process.exit(42)
+    logger.severe(`Disconnected from Discord ${event.code === 1000 ? 'cleanly' : `with code ${event.code}`}`)
   }
 })
 
