@@ -27,7 +27,7 @@ exports.run = async (bot, msg, args) => {
     `${member || !msg.guild ? '' : '\n*This user is not a member of the current guild.*'}`
 
   if (parsed.options.u) {
-    await msg.delete(`${PROGRESS}Fetching avatar of the specified user\u2026`)
+    await msg.edit(`${PROGRESS}Fetching avatar of the specified user\u2026`)
     const res = await snekfetch.get(avatarURL)
     if (!res || !res.body) {
       throw new Error('Failed to download avatar of the specified user!')
