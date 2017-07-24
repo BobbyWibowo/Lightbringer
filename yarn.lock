@@ -695,9 +695,9 @@ didyoumean2@^1.2.0:
     leven "^2.0.0"
     lodash "^4.17.2"
 
-discord.js@hydrabolt/discord.js#edfd50d003a7168000ed10b01f8e3817d58439ca:
+discord.js@hydrabolt/discord.js#57b69803132355b506f9919f37a55915ccdf86d3:
   version "12.0.0-dev"
-  resolved "https://codeload.github.com/hydrabolt/discord.js/tar.gz/edfd50d003a7168000ed10b01f8e3817d58439ca"
+  resolved "https://codeload.github.com/hydrabolt/discord.js/tar.gz/57b69803132355b506f9919f37a55915ccdf86d3"
   dependencies:
     long "^3.2.0"
     prism-media "^0.0.1"
