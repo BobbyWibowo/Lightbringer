@@ -246,6 +246,8 @@ bot.on('disconnect', event => {
     process.exit(1)
   } else {
     logger.severe(`Disconnected from Discord ${event.code === 1000 ? 'cleanly' : `with code ${event.code}`}`)
+    // NOTE: Restart bot
+    process.exit(42)
   }
 })
 
