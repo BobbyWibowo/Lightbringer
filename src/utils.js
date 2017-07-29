@@ -979,7 +979,7 @@ exports.getGuildColor = async guild => {
 
   try {
     return new Promise((resolve, reject) => {
-      pixelAverage(guild.iconURL, (err, avgs) => {
+      pixelAverage(guild.iconURL({ format: 'png' }), (err, avgs) => {
         if (err) {
           return reject(err)
         }
