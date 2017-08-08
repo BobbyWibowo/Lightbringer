@@ -23,7 +23,7 @@ exports.run = async (bot, msg, args) => {
     avatarURL = avatarURL.replace('cdn.discordapp.com', 'images.discordapp.net')
   }
 
-  const message = `${get[1] ? user : user.tag}'s avatar:${parsed.options.e ? '' : `\n${avatarURL}`}` +
+  let message = `${get[1] ? user : user.tag}'s avatar:${parsed.options.e ? '' : `\n${avatarURL}`}` +
     `${member || !msg.guild ? '' : '\n*This user is not a member of the current guild.*'}`
 
   if (parsed.options.u) {
@@ -38,6 +38,11 @@ exports.run = async (bot, msg, args) => {
     }] })
     return msg.delete()
   } else {
+    if (/\.gif\?size=\d*?$/.test(avatarURL)) {
+      // NOTE: Only show warning if the size paramater is appended to
+      // the URL. If that part isn't in the link, it will play after all.
+      message += '\n*This user\'s avatar is a GIF. Consider using the `-u` option if it doesn\'t play.*'
+    }
     return msg.edit(message)
   }
 }
