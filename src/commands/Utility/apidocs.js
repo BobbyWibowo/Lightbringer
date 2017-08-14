@@ -93,11 +93,11 @@ const buildEmbed = (data, sub, type) => {
     const delimeter = '\n**---**\n'
     const props = data.map(p => {
       return stripIndents`
-        **Parameter:** \`${p.name}\`
+        **Param:** \`${p.name}\`
         **Types:** ${formatTypeInline(p.type)}
         **Optional:** ${bot.utils.formatYesNo(p.optional)}
         **Default:** ${p.hasOwnProperty('default') ? `\`${p.default.toString()}\`` : '*none*'}
-        **Description:** ${formatDescription(p.description)}`
+        **Desc:** ${formatDescription(p.description)}`
     })
     return formatSections(title, props, delimeter)
   }
