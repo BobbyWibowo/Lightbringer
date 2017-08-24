@@ -48,8 +48,7 @@ exports.run = async (bot, msg, args) => {
       children = [].concat(
         textChannels.sort(sortPos).map(c => {
           const isHidden = !c.permissionsFor(guild.me).has(['READ_MESSAGES', 'READ_MESSAGE_HISTORY'])
-          const isDefault = c === guild.defaultChannel
-          return `•\u2000# ${c.name}${isDefault ? ' **`[DEFAULT]`**' : ''}${isHidden ? ' **`[HIDDEN]`**' : ''}`
+          return `•\u2000# ${c.name}${isHidden ? ' **`[HIDDEN]`**' : ''}`
         }),
         voiceChannels.sort(sortPos).map(c => {
           const isLocked = !c.permissionsFor(guild.me).has('CONNECT')
@@ -88,10 +87,6 @@ exports.run = async (bot, msg, args) => {
           {
             name: guild.owner ? 'Owner' : 'Owner ID',
             value: guild.owner ? `${guild.owner.user.tag} (ID: ${guild.owner.id})` : guild.ownerID
-          },
-          {
-            name: 'Default',
-            value: `#${guild.defaultChannel.name} (ID: ${guild.defaultChannel.id})`
           },
           {
             name: 'Created',
