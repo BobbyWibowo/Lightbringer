@@ -1,7 +1,34 @@
 const snekfetch = require('snekfetch')
 
-const CATS = /^c(at(s)?)?$/i
-const DOGS = /^d(og(s)?)?$/i
+const animals = [
+  {
+    name: 'cat',
+    regex: /^c(at(s)?)?$/i,
+    api: 'http://thecatapi.com/api/images/get?format=xml&type=jpg,png,gif',
+    action: {
+      type: 'regex',
+      data: /<url>\s*(.+?)\s*<\/url>/i
+    }
+  },
+  {
+    name: 'dog',
+    regex: /^d(og(s)?)?$/i,
+    api: 'http://random.dog/woof',
+    action: {
+      type: 'append',
+      data: 'http://random.dog/'
+    }
+  },
+  {
+    name: 'bird',
+    regex: /^b(ird(s)?)?$/i,
+    api: 'http://random.birb.pw/tweet/',
+    action: {
+      type: 'append',
+      data: 'http://random.birb.pw/img/'
+    }
+  }
+]
 
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['u'])
@@ -11,15 +38,29 @@ exports.run = async (bot, msg, args) => {
   }
 
   const type = parsed.leftover[0]
-  const cats = (CATS.test(type) ? true : (DOGS.test(type) ? false : null))
 
-  if (cats === null) {
-    throw new Error('That type is not available!')
+  let image
+  for (const animal of animals) {
+    if (animal.regex.test(type)) {
+      await msg.edit(`🔄\u2000Fetching a random ${animal.name} image\u2026`)
+      const res = await snekfetch.get(animal.api)
+      if (animal.action && animal.action.type === 'regex') {
+        const exec = animal.action.data.exec(res.body)
+        if (exec && exec[1]) {
+          image = exec[1]
+        }
+      } else if (animal.action && animal.action.type === 'append') {
+        image = animal.action.data + res.body
+      } else {
+        image = res.body
+      }
+      break
+    }
   }
 
-  await msg.edit(`🔄\u2000Fetching a random ${cats ? 'cat' : 'dog'} image\u2026`)
-  const res = await snekfetch.get(cats ? 'http://www.random.cat/meow' : 'http://random.dog/woof')
-  const image = cats ? res.body.file : `http://random.dog/${res.body}`
+  if (!image) {
+    throw new Error('Failed to fetch image or that type is possibly not available!')
+  }
 
   if (parsed.options.u) {
     await msg.channel.send({ files: [ image ] })
