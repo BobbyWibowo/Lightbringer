@@ -29,9 +29,7 @@ exports.run = async (bot, msg, args) => {
   const keyword = parsed.leftover.join(' ') || config.defaultTimeZone
 
   await msg.edit('🔄\u2000Fetching weather information from Yahoo! Weather\u2026')
-  const res = await snekfetch.get('https://query.yahooapis.com/v1/public/yql?q=' +
-    'select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where' +
-    `%20text%3D%22${keyword}%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys`)
+  const res = await snekfetch.get(`https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22${keyword}%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys`)
 
   if (!res || !dotProp.has(res, 'body.query.results.channel')) {
     throw new Error(`Could not get weather information of \`${keyword}\`!`)

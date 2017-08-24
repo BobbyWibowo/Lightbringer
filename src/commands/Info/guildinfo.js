@@ -38,23 +38,15 @@ exports.run = async (bot, msg, args) => {
       delimeter = ', '
     } else if (MEMBERS.test(parsed.leftover[0])) {
       title = `Members in ${guild.name} [${guild.memberCount}]`
-      children = guild.members.map(m => `${bot.utils.escapeMarkdown(m.user.tag)}${(m.user.bot ? ' **`[BOT]`**' : '')}`)
-        .sort()
+      children = guild.members.map(m => `${bot.utils.escapeMarkdown(m.user.tag)}${(m.user.bot ? ' **`[BOT]`**' : '')}`).sort()
       delimeter = ', '
     } else if (CHANNELS.test(parsed.leftover[0])) {
       title = `Channels in ${guild.name} [${guild.channels.size}]`
 
       const sortPos = (a, b) => a.position - b.position
       children = [].concat(
-        textChannels.sort(sortPos).map(c => {
-          const isHidden = !c.permissionsFor(guild.me).has(['READ_MESSAGES', 'READ_MESSAGE_HISTORY'])
-          return `•\u2000# ${c.name}${isHidden ? ' **`[HIDDEN]`**' : ''}`
-        }),
-        voiceChannels.sort(sortPos).map(c => {
-          const isLocked = !c.permissionsFor(guild.me).has('CONNECT')
-          const isAFK = c.id === guild.afkChannelID
-          return `•\u2000${c.name}${isAFK ? ' **`[AFK]`**' : ''}${isLocked ? ' **`[LOCKED]`**' : ''}`
-        })
+        textChannels.sort(sortPos).map(c => `•\u2000# ${c.name}${!c.permissionsFor(guild.me).has(['READ_MESSAGES', 'READ_MESSAGE_HISTORY']) ? ' **`[HIDDEN]`**' : ''}`),
+        voiceChannels.sort(sortPos).map(c => `•\u2000${c.name}${c.id === guild.afkChannelID ? ' **`[AFK]`**' : ''}${c.permissionsFor(guild.me).has('CONNECT') ? ' **`[LOCKED]`**' : ''}`)
       )
 
       delimeter = '\n'
@@ -90,8 +82,7 @@ exports.run = async (bot, msg, args) => {
           },
           {
             name: 'Created',
-            value: `${moment(guild.createdAt).format(bot.consts.mediumDateFormat)} ` +
-              `(${bot.utils.fromNow(guild.createdAt)})`
+            value: `${moment(guild.createdAt).format(bot.consts.mediumDateFormat)} (${bot.utils.fromNow(guild.createdAt)})`
           },
           {
             name: 'Region',
