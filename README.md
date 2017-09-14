@@ -1,3 +1,5 @@
+**NOTICE:** A lot of this bot's functionalities are currently broken. I'm planning to re-write everything from scratch. It'll most likely have less features later on as I'll try to use as less dependencies as possible, but oh well, it's better than this current train-wreck.
+
 <p align="center">
 <img align="center" title="Lightbringer" src="https://a.safe.moe/pM9Ov.png">
 </p>
