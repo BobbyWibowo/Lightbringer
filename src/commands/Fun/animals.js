@@ -13,10 +13,10 @@ const animals = [
   {
     name: 'dog',
     regex: /^d(og(s)?)?$/i,
-    api: 'http://random.dog/woof',
+    api: 'https://random.dog/woof',
     action: {
       type: 'append',
-      data: 'http://random.dog/'
+      data: 'https://random.dog/'
     }
   },
   {
