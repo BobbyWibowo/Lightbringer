@@ -1,6 +1,6 @@
-# Commands (83)  
+# Commands (74)  
   
-## Fun – 29 commands  
+## Fun – 28 commands  
 ### `8ball`  
 *Description:* `Uses 8ball.delegator.com to ask the magic 8-ball for a question`  
 *Usage:* `8ball <question>`  
@@ -60,9 +60,10 @@
 *Description:* `Kills some users`  
 *Usage:* `kill <user-1> [user-2] ... [user-n]`  
 *Credits:* `illusorum#8235 (286011141619187712)`  
-### `meme`  
-*Description:* `N/A`  
-*Usage:* `meme list | info <name> | [<name> | [<line 1>] | [<line 2>] | [style]]`  
+### `nekos`  
+*Description:* `Uses nekos.life to get random nekos image`  
+*Usage:* `nekos [lewd]`  
+*Aliases:* `neko`  
 ### `reaction`  
 *Description:* `Sends reaction to the previous message`  
 *Usage:* `reaction [options] <text|emoji|both>`  
@@ -100,25 +101,15 @@
 ### `weave`  
 *Description:* `Weave an input text with a certain emoji`  
 *Usage:* `weave <emoji> <text>`  
-### `xkcd`  
-*Description:* `Shows you random xkcd comics`  
-*Usage:* `xkcd`  
   
-## Info – 11 commands  
+## Info – 9 commands  
 ### `emojis`  
 *Description:* `Gets the emojis of the current guild`  
 *Usage:* `emojis [options]`  
-### `getos`  
-*Description:* `Gets the name of the OS the bot is running on`  
-*Usage:* `getos`  
 ### `guildinfo`  
 *Description:* `Shows info of the server you are in`  
 *Usage:* `guildinfo [options] [roles|members|channels]`  
 *Aliases:* `guild`, `server`, `serverinfo`  
-### `guilds`  
-*Description:* `Lists all guilds that you're a member of`  
-*Usage:* `guilds`  
-*Aliases:* `servers`  
 ### `help`  
 *Description:* `Shows you help for all commands or just a single command`  
 *Usage:* `help all|[command]|[category <name>]`  
@@ -181,11 +172,7 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 33 commands  
-### `apidocs`  
-*Description:* `Fetch info from the API docs`  
-*Usage:* `apidocs [query]|[version <new version>]`  
-*Aliases:* `docs`  
+## Utility – 27 commands  
 ### `avatar`  
 *Description:* `Gets yours or another user's avatar`  
 *Usage:* `avatar [options] [user]`  
@@ -194,10 +181,6 @@
 *Description:* `Convert currency using exchange rates from http://fixer.io/`  
 *Usage:* `currency [<value> <from> <to>|refresh]`  
 *Aliases:* `curr`  
-### `dictionary`  
-*Description:* `Looks up a word on Dictionary.com`  
-*Usage:* `dictionary <query>`  
-*Aliases:* `dict`  
 ### `embed`  
 *Description:* `Sends a message via embeds`  
 *Usage:* `embed [options] <text>`  
@@ -219,9 +202,6 @@
 *Description:* `Links to a GitHub repository`  
 *Usage:* `github <user/repo>`  
 *Aliases:* `git`  
-### `google`  
-*Description:* `Searches Google using magic`  
-*Usage:* `google <search>`  
 ### `haste`  
 *Description:* `Uploads some text to Hastebin`  
 *Usage:* `haste [options] <text>`  
@@ -232,10 +212,6 @@
 ### `lmgtfy`  
 *Description:* `Links to LMGTFY with the given search text`  
 *Usage:* `lmgtfy [search text]`  
-### `mal`  
-*Description:* `Search for anime info from MyAnimeList`  
-*Usage:* `mal [options] <query>`  
-*Aliases:* `anime`, `myanimelist`  
 ### `markasread`  
 *Description:* `Mark this guild, a certain guild or all guilds as read`  
 *Usage:* `markasread [guild|all]`  
@@ -265,6 +241,7 @@
 ### `setgame`  
 *Description:* `Sets your game (shows for other people)`  
 *Usage:* `setgame <game>`  
+*Aliases:* `setactivity`  
 ### `shortcuts`  
 *Description:* `Controls or lists your shortcuts`  
 *Usage:* `shortcuts [<create> <id> <commands>|<delete|info> <id>]`  
@@ -281,18 +258,10 @@
 *Description:* `Looks up a word on Thesaurus.com (showing synonyms by default)`  
 *Usage:* `thesaurus [options] <query>`  
 *Aliases:* `syn`, `synonyms`  
-### `timezone`  
-*Description:* `Converts between timezones using DuckDuckGo searches`  
-*Usage:* `timezone <time> to <time>`  
-*Credits:* `Abyss#0473 (136641861073764352)`  
 ### `tmention`  
 *Description:* `Toggle mentions logger in this guild`  
 *Usage:* `tmention [list]`  
 *Aliases:* `togglemention`  
-### `translate`  
-*Description:* `Translates text from/to any language`  
-*Usage:* `translate <lang> <text>`  
-*Credits:* `Carbowix`  
 ### `urban`  
 *Description:* `Looks up a word on Urban Dictionary (leave query blank to get a random definition)`  
 *Usage:* `urban [options] [query]`  
