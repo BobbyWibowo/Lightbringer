@@ -120,17 +120,16 @@ class CommandManager {
     if (msg instanceof Discord.Message) {
       const DELETE = 8000
 
-      msg.error = async (message, options = {}) => {
-        this.bot.logger.severe(message.stack || message)
+      msg.error = async (message, timeout = DELETE) => {
+        // this.bot.logger.severe(message.stack || message)
+        this.bot.logger.severe(message)
         await msg.edit(`❌\u2000${message.toString() || 'Something failed!'}`)
-        options.timeout = options.timeout || DELETE
-        return msg.delete(options)
+        return msg.delete(timeout)
       }
 
-      msg.success = async (message, options = {}) => {
+      msg.success = async (message, timeout = DELETE) => {
         await msg.edit(`✅\u2000${message || 'Success!'}`)
-        options.timeout = options.timeout || DELETE
-        if (options.timeout >= 0) return msg.delete(options)
+        if (timeout >= 0) return msg.delete(timeout)
       }
 
       this.bot.managers.stats.increment('commands')

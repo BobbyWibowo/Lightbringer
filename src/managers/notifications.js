@@ -1,3 +1,4 @@
+/*
 const nn = require('node-notifier')
 const opn = require('opn')
 
@@ -16,3 +17,4 @@ class NotificationManager {
 }
 
 module.exports = NotificationManager
+*/

@@ -5,7 +5,7 @@ exports.run = async (bot, msg, args) => {
     throw new Error('You must provide something to ask!')
   }
 
-  const m = await msg.edit('🔄\u2000Asking 8-ball\u2026')
+  await msg.edit('🔄\u2000Asking 8-ball\u2026')
   const res = await snekfetch.get(`https://8ball.delegator.com/magic/JSON/${args.join(' ')}`)
 
   if (!res || !res.body || !res.body.magic) {
@@ -14,7 +14,7 @@ exports.run = async (bot, msg, args) => {
 
   const magic = res.body.magic
   return msg.edit(`🎱\u2000|\u2000**Question:** ${bot.utils.capitalizeFirstLetter(magic.question)}?\n\n` +
-    `${magic.answer}, **${m.member.displayName}**.`)
+    `${magic.answer}, **${msg.member.displayName}**.`)
 }
 
 exports.info = {

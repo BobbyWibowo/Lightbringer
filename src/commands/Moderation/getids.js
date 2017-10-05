@@ -10,16 +10,17 @@ exports.run = async (bot, msg, args) => {
     }
   }
 
-  const msgs = await channel.fetchMessages({
+  let msgs = await channel.fetchMessages({
     limit: amount - 1,
     before: msg.id
-  }).array()
+  })
+  msgs = msgs.array()
 
   msgs.unshift(msg)
   msgs.length = Math.min(amount, msgs.length)
 
   let i = 0
-  const content = msgs.map(m => `${bot.utils.pad('  ', ++i)} : ${m.id}`)
+  const content = msgs.map(m => `${bot.utils.pad('  ', ++i)} : ${m.id}${m.id === msg.id ? ' [this]' : ''}`)
 
   return msg.edit(`IDs of the latest \`${amount}\` messages in \`${bot.utils.channelName(channel)}\`:` +
     `\n${bot.utils.formatCode(content.join('\n'))}`)

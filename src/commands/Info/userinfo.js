@@ -23,10 +23,14 @@ exports.run = async (bot, msg, args) => {
     profile = await user.fetchProfile()
   } catch (err) {}
 
-  const avatarURL = user.displayAvatarURL({ size: 2048 })
+  const avatarURL = user.displayAvatarURL
   if (parsed.options.m) {
-    if (!profile.mutualGuilds.size) {
-      throw new Error(`You and ${user.tag} have no mutual guilds!`)
+    if (user.bot) {
+      throw new Error('Can not get mutual guilds information from bot accounts!')
+    }
+
+    if (!profile.mutualGuilds || !profile.mutualGuilds.size) {
+      throw new Error(`You and \`${user.tag}\` have no mutual guilds!`)
     }
 
     const thumbAvatarURL = avatarURL.replace(/\?size=\d+?$/i, '')

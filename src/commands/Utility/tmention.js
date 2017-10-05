@@ -3,6 +3,8 @@ exports.init = async bot => {
 }
 
 exports.run = async (bot, msg, args) => {
+  let guild = msg.guild
+
   if (args.length) {
     if (/^l(ist)?$/i.test(args[0])) {
       const mentions = this.storage.keys
@@ -26,9 +28,9 @@ exports.run = async (bot, msg, args) => {
           }
         )
       })
-      return msg.delete({ timeout: 60000 })
+      return msg.delete(60000)
     } else {
-      throw new Error('That action is not valid!')
+      guild = bot.utils.getGuild(args.join(' '))
     }
   }
 
@@ -36,20 +38,19 @@ exports.run = async (bot, msg, args) => {
     throw new Error('This command is only available in guilds!')
   }
 
-  const id = msg.guild.id
-  const stored = this.storage.get(id)
+  const stored = this.storage.get(guild.id)
 
   if (stored) {
-    this.storage.set(id)
+    this.storage.set(guild.id)
     this.storage.save()
-    await msg.edit('👍\u2000I will stop logging mentions from this guild!')
+    await msg.edit(`👍\u2000I will stop logging mentions from guild: \`${guild.name}\`!`)
   } else {
-    this.storage.set(id, true)
+    this.storage.set(guild.id, true)
     this.storage.save()
-    await msg.edit('👌\u2000I will log mentions from this guild!')
+    await msg.edit(`👌\u2000I will log mentions from guild: \`${guild.name}\`!`)
   }
 
-  return msg.delete({ timeout: 8000 })
+  return msg.delete(8000)
 }
 
 exports.info = {

@@ -3,6 +3,7 @@ exports.run = async (bot, msg) => {
     bot.utils.assertEmbedPermission(msg.channel, msg.member)
   }
 
+  /*
   return msg.edit('My guilds:', { embed:
     bot.utils.formatLargeEmbed('', `**Total:** ${bot.guilds.size}`,
       {
@@ -15,6 +16,14 @@ exports.run = async (bot, msg) => {
       { inline: false }
     )
   })
+  */
+
+  return bot.utils.sendLarge(msg.channel,
+    bot.guilds.sort((a, b) => b.memberCount - a.memberCount).map(g => `•\u2000**${g.name}** – ${g.memberCount} member${g.memberCount !== 1 ? 's' : ''}, ${g.channels.size} channel${g.channels.size ? 's' : ''}`),
+    {
+      cutOn: '\n'
+    }
+  )
 }
 
 exports.info = {

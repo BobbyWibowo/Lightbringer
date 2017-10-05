@@ -65,7 +65,7 @@ exports.run = async (bot, msg, args) => {
 
   const result = (from === base ? value : value / rates[from]) * (to === base ? 1 : rates[to])
   return msg.edit(`💸\u2000|\u2000${mathjs.round(value, 2).toLocaleString()} ${from} = ` +
-    `**${mathjs.round(result, 2).toLocaleString()} ${to}**`)
+    `**${mathjs.round(result, 2).toLocaleString()} ${to}** - *source: http://fixer.io/*`)
 }
 
 exports.info = {

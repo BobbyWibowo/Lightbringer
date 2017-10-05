@@ -18,7 +18,7 @@ exports.run = async (bot, msg, args) => {
 
   const x = tags.map(t => `\`${t}\``).join(' and ')
   const searchMessage = tags.length
-    ? `${PROGRESS}Searching for \`${x}\`\u2026`
+    ? `${PROGRESS}Searching for ${x}\u2026`
     : `${PROGRESS}Searching for random image\u2026`
 
   await msg.edit(searchMessage)
@@ -41,11 +41,10 @@ exports.run = async (bot, msg, args) => {
 
     return msg.edit(stripIndents`
       ${title}
-      ${imageUrl}
-      ---
       •\u2000**Score:** ${image.common.score}
       •\u2000**Rating:** ${ratings[image.common.rating]}
-      •\u2000**Source:** \`${image.common.source || 'N/A'}\``)
+      •\u2000**Source:** \`${image.common.source || 'N/A'}\`
+      ${imageUrl}`)
   } catch (err) {
     if (err.name === 'booruError') {
       if (new RegExp('You didn\'t give any images', 'i').test(err.message)) {

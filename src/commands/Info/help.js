@@ -57,7 +57,7 @@ exports.run = async (bot, msg, args) => {
     await msg.edit(msg.content, { embed:
       bot.utils.embed(help.name, `*This message will self-destruct in 60 seconds.*\n\n${help.value}`)
     })
-    return msg.delete({ timeout: 60000 })
+    return msg.delete(60000)
   } else {
     const categories = bot.commands.categories().sort()
     await msg.edit(msg.content, { embed:
@@ -72,7 +72,7 @@ exports.run = async (bot, msg, args) => {
         •\u2000Do \`${config.prefix}help all\` for a list of every command available in this bot.
         •\u2000Do \`${config.prefix}help <command>\` for help with a specific command.`)
     })
-    return msg.delete({ timeout: 30000 })
+    return msg.delete(30000)
   }
 }
 

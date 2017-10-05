@@ -1,6 +1,5 @@
 const snekfetch = require('snekfetch')
 const txtgen = require('txtgen')
-const dotProp = require('dot-prop')
 const { XmlEntities } = require('html-entities')
 
 const apis = [
@@ -85,8 +84,8 @@ exports.run = async (bot, msg, args) => {
         }
         const body = a.parseJson ? JSON.parse(res.body) : res.body
         if (a.prop) {
-          if (dotProp.has(body, a.prop)) {
-            result.content = dotProp.get(body, a.prop)
+          if (body[a.prop]) {
+            result.content = body[a.prop]
           } else {
             throw new Error('Could not fetch data')
           }

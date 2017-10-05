@@ -10,7 +10,7 @@ exports.run = async (bot, msg, args) => {
     const flushable = messages.filter(m => m.author.bot)
     await Promise.all(flushable.map(m => m.delete()))
     const m = await msg.channel.send(`${SUCCESS}Flushed \`${flushable.size}\` messages.`)
-    return m.delete({ timeout: 2000 })
+    return m.delete(2000)
   } catch (err) {
     console.error(err)
   }

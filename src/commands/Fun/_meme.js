@@ -65,7 +65,7 @@ exports.run = async (bot, msg, args) => {
         return `\`${meme.name}\``
       }).join(', '))
     })
-    return m.delete({ timeout: 30000 })
+    return m.delete(30000)
   }
 
   if (INFO.test(args[0])) {
@@ -84,7 +84,7 @@ exports.run = async (bot, msg, args) => {
         return `\n- \`${s}\``
       }).join('') : 'None'}`)
     })
-    return m.delete({ timeout: 15000 })
+    return m.delete(15000)
   }
 
   const input = args.join(' ')

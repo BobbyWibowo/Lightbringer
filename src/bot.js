@@ -17,7 +17,7 @@ const configManager = bot.managers.config = new Managers.Config(bot, __dirname)
 global.config = bot.config = configManager.load()
 bot.storage = new Managers.Storage()
 
-bot.managers.notifications = new Managers.Notifications()
+// bot.managers.notifications = new Managers.Notifications()
 
 const logger = bot.logger = new Managers.Logger(bot)
 const commands = bot.commands = new Managers.CommandManager(bot)
@@ -46,10 +46,7 @@ bot.on('ready', async () => {
   logger.info('Bot successfully logged in! Loading modules\u2026 (this may take a few seconds)')
 
   await bot.user.setAFK(true)
-
-  // NOTE: Syncing status, otherwise bot will have broken status
-  // and sometimes can't be set to invisible from the Discord client
-  await bot.user.setPresence({ status: bot.user.settings.status })
+  await bot.user.setStatus(bot.user.settings.status)
 
   bot.parentDir = path.resolve(__dirname, '../..')
   bot.srcDir = __dirname
@@ -110,25 +107,8 @@ bot.on('ready', async () => {
   }
 })
 
-bot.on('userUpdate', (oldUser, newUser) => {
-  if (!oldUser || !newUser) {
-    return
-  }
-
-  if (newUser !== bot.user) {
-    return
-  }
-
-  if (!newUser.tag || !oldUser.tag || newUser.user.tag === oldUser.user.tag) {
-    return
-  }
-
-  // NOTE: Update title of console/terminal on the bot's username change
-  updateTitle()
-})
-
 const parseCommand = async msg => {
-  const DELETE = { timeout: 8000 }
+  const DELETE = 8000
   const prefix = config.prefix.toLowerCase()
   const split = msg.content.substr(prefix.length).split(' ')
 
@@ -179,7 +159,7 @@ const parseCommand = async msg => {
 }
 
 const logMention = msg => {
-  if (!msg.mentions.has(msg.guild ? msg.guild.me : bot.user)) {
+  if (!(msg.mentions.members.get(msg.guild.me.id) || msg.mentions.users.get(bot.user.id))) {
     return
   }
 

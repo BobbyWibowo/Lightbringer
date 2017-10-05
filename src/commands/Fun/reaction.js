@@ -37,6 +37,10 @@ exports.run = async (bot, msg, args) => {
       throw err
     }
   }
+
+  if (!parsed.options.s) {
+    await msg.success('Done!')
+  }
 }
 
 exports.info = {

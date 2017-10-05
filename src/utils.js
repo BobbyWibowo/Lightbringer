@@ -108,7 +108,7 @@ exports.embed = (title = '', description = '', fields = [], options = {}) => {
     description = this.truncate(description, description.length, '\n')
   }
 
-  const embed = new Discord.MessageEmbed({ fields, video: options.video || url })
+  const embed = new Discord.RichEmbed({ fields, video: options.video || url })
     .setTitle(title)
     .setColor(color)
     .setDescription(description)
@@ -147,7 +147,7 @@ const timestampToDate = timestamp => {
  * @param {Object} nestedFields
  * @param {Object} [options={}]
  *
- * @returns {Discord.MessageEmbed}
+ * @returns {Discord.RichEmbed}
  */
 exports.formatEmbed = (title = '', description = '', nestedFields, options = {}) => {
   if (!nestedFields || typeof nestedFields !== 'object') {
@@ -215,7 +215,7 @@ exports.buildSections = (children, delimeter, maxSections = 25) => {
   }
   sections.push(temp)
 
-  sections.length = Math.min(maxSections, sections.length)
+  sections.length = Math.min(25, Math.min(maxSections, sections.length))
   // NOTE: Truncate sections one last time as a failsafe in case there
   // were instances of children that were longer than 1024 characters
   return sections.map(section => {
@@ -289,6 +289,7 @@ exports.parseArgs = (args, options) => {
 exports.multiSend = async (channel, messages, delay) => {
   try {
     for (const m of messages) {
+      console.log(m.length)
       await channel.send(m)
       await this.sleep(delay || 200)
     }
@@ -979,7 +980,7 @@ exports.getGuildColor = async guild => {
 
   try {
     return new Promise((resolve, reject) => {
-      pixelAverage(guild.iconURL({ format: 'png' }), (err, avgs) => {
+      pixelAverage(guild.iconURL, (err, avgs) => {
         if (err) {
           return reject(err)
         }

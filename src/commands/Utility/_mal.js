@@ -108,11 +108,11 @@ exports.run = async (bot, msg, args) => {
                 tm.delete())
             } else {
               tm.edit(`${FAIL}${formatInvalidIndex(tm.content, pageCount)}`).then(() =>
-                tm.delete({ timeout: 3000 }))
+                tm.delete(3000))
             }
           } else {
             tm.edit(`${FAIL}${formatInvalidIndex(tm.content, res.length)}`).then(() =>
-              tm.delete({ timeout: 3000 }))
+              tm.delete(3000))
           }
 
           return false
@@ -146,7 +146,7 @@ exports.run = async (bot, msg, args) => {
     await msg.edit('*This message will self-destruct in 30 seconds.*\n' +
       formatResultsList(res, 'Search Results', parsed.options.p)
     )
-    return msg.delete({ timeout: 30000 })
+    return msg.delete(30000)
   }
 
   const item = res[index]

@@ -8,6 +8,7 @@ exports.run = async (bot, msg, args) => {
   const nestedFields = []
   for (let i = 0; i < m.edits.length; i++) {
     nestedFields.push({
+      icon: '•',
       title: `${i === m.edits.length - 1 ? 'Original' : (i === 0 ? 'Latest' : `Edit #${m.edits.length - i - 1}`)}`,
       fields: [
         {

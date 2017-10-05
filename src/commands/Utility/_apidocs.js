@@ -1,7 +1,7 @@
 const snekfetch = require('snekfetch')
 const { stripIndents } = require('common-tags')
 
-let docs = { _version: 'master' }
+let docs = { _version: 'stable' }
 
 const TITLE = 'Discord.js docs'
 

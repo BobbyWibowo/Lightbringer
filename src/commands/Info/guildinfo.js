@@ -25,8 +25,8 @@ exports.run = async (bot, msg, args) => {
   const res = await bot.utils.fetchGuildMembers(guild, !parsed.options.r)
   const textChannels = guild.channels.filter(c => c.type === 'text')
   const voiceChannels = guild.channels.filter(c => c.type === 'voice')
-  const iconURL = guild.iconURL({ size: 2048 })
-  const splashURL = guild.splashURL({ size: 2048 })
+  const iconURL = guild.iconURL
+  const splashURL = guild.splashURL
 
   let gists, embed
   if (parsed.leftover.length) {

@@ -34,7 +34,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['u'])
 
   if (!parsed.leftover.length) {
-    throw new Error('You must specify a type! Available types: `cats`, `dogs`.')
+    throw new Error(`You must specify a type! Available types: ${animals.map(a => `\`${a.name}\``).join(', ')}.`)
   }
 
   const type = parsed.leftover[0]
