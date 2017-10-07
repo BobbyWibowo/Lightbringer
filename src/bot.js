@@ -159,7 +159,7 @@ const parseCommand = async msg => {
 }
 
 const logMention = msg => {
-  if (!((msg.guild && msg.isMemberMentioned(msg.guild.me)) || (!msg.guild && msg.isMentioned(bot.user)))) {
+  if (!((msg.guild && msg.isMemberMentioned(msg.guild.me)) || msg.isMentioned(bot.user))) {
     return
   }
 
