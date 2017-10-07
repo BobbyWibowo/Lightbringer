@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const moment = require('moment')
 
 const verificationLevels = ['None', 'Low', 'Medium', '(╯°□°）╯︵ ┻━┻', '┻━┻ ﾐヽ(ಠ益ಠ)ノ彡┻━┻']
@@ -32,6 +33,10 @@ exports.run = async (bot, msg, args) => {
   if (parsed.leftover.length) {
     let title, delimeter, children
 
+    const hasPerm = (c, perms) => c.permissionsFor(guild.me).has(perms)
+    const f = t => ` **\`[${t}]\`**`
+    const displayPerms = c => `${!hasPerm(c, 'SEND_MESSAGES') && c instanceof Discord.TextChannel ? f('NO_SEND') : ''}${!hasPerm(c, 'CONNECT') && c instanceof Discord.VoiceChannel ? f('NO_CONNECT') : ''}${!hasPerm(c, 'VIEW_CHANNEL') ? f('NO_VIEW') : ''}`
+
     if (ROLES.test(parsed.leftover[0])) {
       title = `Roles in ${guild.name} [${guild.roles.size}]`
       children = guild.roles.sort((a, b) => b.position - a.position).map(r => r.name)
@@ -42,13 +47,14 @@ exports.run = async (bot, msg, args) => {
       delimeter = ', '
     } else if (CHANNELS.test(parsed.leftover[0])) {
       title = `Channels in ${guild.name} [${guild.channels.size}]`
-
       const sortPos = (a, b) => a.position - b.position
       children = [].concat(
-        textChannels.sort(sortPos).map(c => `•\u2000# ${c.name}${!c.permissionsFor(guild.me).has(['READ_MESSAGES', 'READ_MESSAGE_HISTORY']) ? ' **`[HIDDEN]`**' : ''}`),
-        voiceChannels.sort(sortPos).map(c => `•\u2000${c.name}${c.id === guild.afkChannelID ? ' **`[AFK]`**' : ''}${c.permissionsFor(guild.me).has('CONNECT') ? ' **`[LOCKED]`**' : ''}`)
+        `**Text channels [${textChannels.size}]:**`,
+        textChannels.sort(sortPos).map(c => `•\u2000${c.name}${displayPerms(c)}`),
+        '\n',
+        `**Voice channels [${voiceChannels.size}]:**`,
+        voiceChannels.sort(sortPos).map(c => `•\u2000${c.name}${displayPerms(c)}`)
       )
-
       delimeter = '\n'
     } else {
       throw new Error('That action is not valid!')
