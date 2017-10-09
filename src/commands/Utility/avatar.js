@@ -1,5 +1,3 @@
-const snekfetch = require('snekfetch')
-
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, 'np')
 
