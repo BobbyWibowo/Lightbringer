@@ -48,7 +48,7 @@ Proceed to [FAQ.md](FAQ.md).
 - `node` ([Windows](https://nodejs.org/en/download/current/) | [Linux](https://nodejs.org/en/download/package-manager/) | [macOS](https://nodejs.org/en/download/current/))
 - `yarn` ([Windows](https://yarnpkg.com/en/docs/install#windows-tab) | [Linux](https://yarnpkg.com/en/docs/install#linux-tab) | [macOS](https://yarnpkg.com/en/docs/install#mac-tab))
 
-> This bot requires node `>= 7.0` (run `node -v` to check your node version).
+> This bot requires node `>= 7.6.0` (run `node -v` to check your node version).
 
 ### Why Yarn?
 A simple reason to use `yarn` instead of `npm` is that yarn is generally much faster (it can be ~8x as fast).  
