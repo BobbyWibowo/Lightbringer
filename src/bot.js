@@ -17,8 +17,6 @@ const configManager = bot.managers.config = new Managers.Config(bot, __dirname)
 global.config = bot.config = configManager.load()
 bot.storage = new Managers.Storage()
 
-// bot.managers.notifications = new Managers.Notifications()
-
 const logger = bot.logger = new Managers.Logger(bot)
 const commands = bot.commands = new Managers.CommandManager(bot)
 const stats = bot.managers.stats = new Managers.Stats(bot)
@@ -241,8 +239,6 @@ process.on('unhandledRejection', err => {
 
 const init = async () => {
   try {
-    await Managers.Migrator.migrate(bot, __dirname)
-
     if (config) {
       beginTime = process.hrtime()
       logger.info('Logging in\u2026')

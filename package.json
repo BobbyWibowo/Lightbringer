@@ -56,8 +56,7 @@
     "snekfetch": "^3.5.1",
     "txtgen": "^2.0.1",
     "wikijs": "^4.2.0",
-    "xml2js": "^0.4.19",
-    "xpdb": "^1.0.1"
+    "xml2js": "^0.4.19"
   },
   "resolutions": {
     "discord.js/snekfetch": "^3.5.1"
