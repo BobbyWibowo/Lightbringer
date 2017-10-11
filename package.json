@@ -58,5 +58,8 @@
     "wikijs": "^4.2.0",
     "xml2js": "^0.4.19",
     "xpdb": "^1.0.1"
+  },
+  "resolutions": {
+    "discord.js/snekfetch": "^3.5.1"
   }
 }

@@ -105,7 +105,7 @@ yarn start
 ```
 
 > If you have PM2 installed, you may use `yarn pm2` to start the bot with PM2.  
-> If you simply want to run the bot in background, you may try Linux screen feature with `yarn background`.
+> If you simply want to run the bot in background, you can try (screen)[https://www.gnu.org/software/screen/], which is usually available by default in most Linux distros, with `yarn background`.
 
 ### Getting your user-token
 1. Hit `CTRL+SHIFT+I` (`CMD+ALT+I` on macOS) to bring up the Developers Console
