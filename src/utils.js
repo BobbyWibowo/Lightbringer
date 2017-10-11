@@ -289,7 +289,7 @@ exports.parseArgs = (args, options) => {
 exports.multiSend = async (channel, messages, delay) => {
   try {
     for (const m of messages) {
-      console.log(m.length)
+      // console.log(m.length)
       await channel.send(m)
       await this.sleep(delay || 200)
     }
@@ -507,7 +507,7 @@ const formatFoundList = (collection, props, name) => {
     `${isMoreThanMax ? `, and ${leftover} more\u2026` : ''}`))
 }
 
-exports.getGuildMember = (guild, keyword, fallback, indirect) => {
+exports.getGuildMember = (guild, keyword, fallback, suppress) => {
   if (keyword) {
     if (!(guild instanceof Discord.Guild)) {
       throw new Error('An instance of Discord.Guild is required!')
@@ -555,7 +555,7 @@ exports.getGuildMember = (guild, keyword, fallback, indirect) => {
     return [fallback, false]
   }
 
-  if (!indirect) {
+  if (!suppress) {
     throw new Error('Guild member with that keyword could not be found!')
   }
 }
@@ -652,7 +652,7 @@ exports.getGuildRole = (guild, keyword) => {
   throw new Error('Guild role with that keyword could not be found!')
 }
 
-exports.getGuild = keyword => {
+exports.getGuild = (keyword, suppress) => {
   keyword = keyword.trim()
 
   const testId = /^\d+$/.test(keyword)
@@ -672,7 +672,9 @@ exports.getGuild = keyword => {
     throw formatFoundList(filter, ['name'], 'guild')
   }
 
-  throw new Error('Guild with that keyword could not be found!')
+  if (!suppress) {
+    throw new Error('Guild with that keyword could not be found!')
+  }
 }
 
 exports.getChannel = (keyword, guild, strict = false) => {

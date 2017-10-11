@@ -81,7 +81,8 @@ yarn install
 
 Now run `yarn start` to start the bot. 
 
-**Note:** The first time you start the bot you will enter the setup wizard. It takes just a few seconds to enter the needed information, and it sets up the bot for you.
+> The first time you start the bot you will enter the setup wizard.  
+> It takes just a few seconds to enter the needed information, and it sets up the bot for you.
 
 ### Updating
 Minor updates can be acquired by running `lbexec git pull` in Discord to run the `git pull` command on your computer, afterwards you will have to run `lbrestart` to restart the bot.  
@@ -102,6 +103,9 @@ cd path/to/Lightbringer
 # Start the bot up
 yarn start
 ```
+
+> If you have PM2 installed, you may use `yarn pm2` to start the bot with PM2.  
+> If you simply want to run the bot in background, you may try Linux screen feature with `yarn background`.
 
 ### Getting your user-token
 1. Hit `CTRL+SHIFT+I` (`CMD+ALT+I` on macOS) to bring up the Developers Console

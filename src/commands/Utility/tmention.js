@@ -3,7 +3,8 @@ exports.init = async bot => {
 }
 
 exports.run = async (bot, msg, args) => {
-  let guild = msg.guild
+  let id
+  let name
 
   if (args.length) {
     if (/^l(ist)?$/i.test(args[0])) {
@@ -14,9 +15,7 @@ exports.run = async (bot, msg, args) => {
       }
 
       await msg.edit(msg.content, { embed:
-        bot.utils.formatLargeEmbed(
-          'Logging mentions from these guilds:',
-          '*This message will self-destruct in 60 seconds.*',
+        bot.utils.formatLargeEmbed('Logging mentions from these guilds:', '',
           {
             delimeter: '\n',
             children: mentions.map(m => {
@@ -28,26 +27,32 @@ exports.run = async (bot, msg, args) => {
           }
         )
       })
+
       return msg.delete(60000)
-    } else {
-      guild = bot.utils.getGuild(args.join(' '))
+    } else if (args.length) {
+      const _args = args.join(' ')
+      const guild = bot.utils.getGuild(_args, true)
+      if (guild) {
+        id = guild.id
+        name = guild.name
+      } else if (/^\d+?$/.test(_args)) {
+        id = name = _args
+      }
+    } else if (!msg.guild) {
+      throw new Error('This command is only available in guilds when no arguments are provided!')
     }
   }
 
-  if (!msg.guild) {
-    throw new Error('This command is only available in guilds!')
-  }
-
-  const stored = this.storage.get(guild.id)
+  const stored = this.storage.get(id)
 
   if (stored) {
-    this.storage.set(guild.id)
+    this.storage.set(id)
     this.storage.save()
-    await msg.edit(`👍\u2000I will stop logging mentions from guild: \`${guild.name}\`!`)
+    await msg.edit(`👍\u2000I will stop logging mentions from guild: \`${name}\`!`)
   } else {
-    this.storage.set(guild.id, true)
+    this.storage.set(id, true)
     this.storage.save()
-    await msg.edit(`👌\u2000I will log mentions from guild: \`${guild.name}\`!`)
+    await msg.edit(`👌\u2000I will log mentions from guild: \`${name}\`!`)
   }
 
   return msg.delete(8000)
