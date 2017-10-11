@@ -45,8 +45,9 @@ const updateTitle = () => {
 bot.on('ready', async () => {
   logger.info('Bot successfully logged in! Loading modules\u2026 (this may take a few seconds)')
 
+  await bot.user.setStatus('online')
+  await bot.user.settings.update(Discord.Constants.UserSettingsMap.status, 'online')
   await bot.user.setAFK(true)
-  await bot.user.setStatus(bot.user.settings.status)
 
   bot.parentDir = path.resolve(__dirname, '../..')
   bot.srcDir = __dirname

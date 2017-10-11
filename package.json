@@ -9,8 +9,8 @@
   "main": "src/bot.js",
   "scripts": {
     "start": "node src/bot.js",
-    "background": "screen -dmS lightbringer node src/bot.js",
-    "pm2": "pm2 start --name lightbringer src/bot.js"
+    "background": "screen -dmS lb node src/bot.js",
+    "pm2": "pm2 start --name lb src/bot.js"
   },
   "engines": {
     "node": ">=7.6.0"
