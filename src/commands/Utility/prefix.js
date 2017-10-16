@@ -6,8 +6,7 @@ exports.run = async (bot, msg, args) => {
   const prefix = args.join(' ')
   bot.managers.config.set('prefix', prefix)
 
-  await msg.edit('Prefix set, rebooting! 👋')
-  return process.exit(42)
+  return msg.success('Prefix saved! You will have to relaunch the bot for the change to take effect!')
 }
 
 exports.info = {

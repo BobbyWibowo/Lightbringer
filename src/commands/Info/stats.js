@@ -132,7 +132,7 @@ exports.run = async (bot, msg) => {
           url: GIT
         },
         color: '#ff0000',
-        footer: 'Users count is based on the bot\'s cache'
+        footer: 'Ps. "Users" is the amount of users cached by the bot'
       }
     )
   })

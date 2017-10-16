@@ -117,7 +117,7 @@ const parseCommand = async msg => {
   }
 
   if (bot.managers.stats.get('RELOADING')) {
-    await msg.edit(`⛔\u2000The bot is still in the middle of reloading modules\u2026`)
+    await msg.edit(`⛔\u2000The bot is still in the middle of reloading modules!`)
     return msg.delete(DELETE)
   }
 
@@ -220,13 +220,12 @@ bot.on('warn', logger.warn)
 bot.on('disconnect', event => {
   if (event.code === 4004) {
     logger.info('Disconnected from Discord (4004: invalid token)')
-    // NOTE: Shutdown bot
-    process.exit(1)
   } else {
     logger.severe(`Disconnected from Discord ${event.code === 1000 ? 'cleanly' : `with code ${event.code}`}`)
-    // NOTE: Restart bot
-    process.exit(42)
   }
+
+  // NOTE: Shutdown bot
+  process.exit(1)
 })
 
 process.on('uncaughtException', err => {

@@ -54,7 +54,7 @@ class ConfigManager {
           if (err) {
             console.error(err)
           }
-          process.exit(666)
+          process.exit(1)
         }
 
         res.blacklistedServers = res.blacklistedServers || [
@@ -76,7 +76,7 @@ class ConfigManager {
         res.githubGistsToken = ''
 
         fse.outputJsonSync(this._configPath, res, { spaces: 2 })
-        process.exit(42)
+        process.exit(1)
       })
       return null
     }
