@@ -17,7 +17,7 @@ exports.run = async (bot, msg, args) => {
     throw new Error(`Use \`${config.prefix}guilds\` command to if you want to list your own guilds!`)
   }
 
-  await msg.edit(`${PROGRESS}Fetching profile\u2026`)
+  await msg.edit(`${PROGRESS}Fetching ${mention ? `${user}'s ` : ''}profile\u2026`)
   let profile = {}
   try {
     profile = await user.fetchProfile()
@@ -36,7 +36,7 @@ exports.run = async (bot, msg, args) => {
     const thumbAvatarURL = avatarURL.replace(/\?size=\d+?$/i, '')
     const message = mention
       ? `List of mutual guilds with ${keyword}:`
-      : `List of mutual guilds with the user who matched the keyword \`${keyword}\`:`
+      : `List of mutual guilds with the user which matched the keyword \`${keyword}\`:`
     return msg.edit(message, { embed:
       bot.utils.formatLargeEmbed('', `**Total:** ${profile.mutualGuilds.size}`,
         {
@@ -152,7 +152,7 @@ exports.run = async (bot, msg, args) => {
     const thumbAvatarURL = avatarURL.replace(/\?size=\d+?$/i, '')
     const message = !keyword.length
       ? 'My information:'
-      : (mention ? `Information of ${keyword}:` : `Information of the user who matched the keyword \`${keyword}\`:`)
+      : (mention ? `${keyword}'s information:` : `Information of the user which matched the keyword \`${keyword}\`:`)
     return msg.edit(message, { embed:
       bot.utils.formatEmbed('', description, nestedFields, {
         thumbnail: thumbAvatarURL,
