@@ -17,6 +17,7 @@ Lightbringer makes full use of ES2017's `async/await` functionality for clear, c
 
 ## Index
 - [Heads up!](#heads-up)
+- [Gallery](#gallery)
 - [FAQ](#faq)
 - [Commands](COMMANDS.md)
 - [To-do](TODO.md)
@@ -38,6 +39,9 @@ Please remember that self-bots aren't fully supported by Discord and that it sho
 IF, and only if you accept the above rules of self-bots, then you may proceed.
 
 > Taken from [TheRacingLion/Discord-SelfBot](https://github.com/TheRacingLion/Discord-SelfBot). There is also [this quote](https://github.com/hammerandchisel/discord-api-docs/issues/69#issuecomment-223898291) for further confirmation.
+
+## Gallery
+[Click here](https://imgur.com/a/ik6zf) to see an Imgur gallery of some random screenshots of the bot in action.
 
 ### FAQ
 Proceed to [FAQ.md](FAQ.md).
