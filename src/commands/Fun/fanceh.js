@@ -5,7 +5,8 @@ exports.run = async (bot, msg, args) => {
 
   const emojis = bot.utils.buildEmojisArray(args.join(' '), {
     guild: msg.guild,
-    preserve: true
+    preserve: true,
+    external: msg.guild ? msg.channel.permissionsFor(msg.guild.me).has('USE_EXTERNAL_EMOJIS') : true
   })
 
   if (!emojis.length) {
