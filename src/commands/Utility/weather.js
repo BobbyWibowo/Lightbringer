@@ -84,8 +84,8 @@ exports.run = async (bot, msg, args) => {
     return `${_(matches[1])}:${_(matches[2])} ${matches[3].toUpperCase()}`
   }
 
-  return msg.edit(`Weather information for the location which matched the keyword \`${keyword}\`:`, { embed:
-    bot.utils.formatEmbed('', stripIndents`
+  return msg.edit(`Weather information for the location which matched the keyword \`${keyword}\`:`, {
+    embed: bot.utils.formatEmbed('', stripIndents`
       ${flag}\u2000|\u2000**${location}**
 
       ${formatCondition(weather.item.condition.text)}

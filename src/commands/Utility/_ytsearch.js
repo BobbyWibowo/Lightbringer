@@ -17,8 +17,8 @@ exports.run = async (bot, msg, args) => {
 
   if (data && data.results && data.results[0]) {
     const result = data.results[0]
-    await msg.channel.send({ embed:
-      bot.utils.embed('', `[${result.title}](${result.link})`, [
+    await msg.channel.send({
+      embed: bot.utils.embed('', `[${result.title}](${result.link})`, [
         {
           name: '👀\u2000Views',
           value: bot.utils.formatNumber(result.views)

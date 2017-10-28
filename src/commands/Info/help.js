@@ -54,14 +54,14 @@ exports.run = async (bot, msg, args) => {
     )
   } else if (commands.length) {
     const help = getHelp(commands[0])
-    await msg.edit(msg.content, { embed:
-      bot.utils.embed(help.name, `*This message will self-destruct in 60 seconds.*\n\n${help.value}`)
+    await msg.edit(msg.content, {
+      embed: bot.utils.embed(help.name, `*This message will self-destruct in 60 seconds.*\n\n${help.value}`)
     })
     return msg.delete(60000)
   } else {
     const categories = bot.commands.categories().sort()
-    await msg.edit(msg.content, { embed:
-      bot.utils.embed(title, stripIndents`
+    await msg.edit(msg.content, {
+      embed: bot.utils.embed(title, stripIndents`
         '*This message will self-destruct in 30 seconds.*'
 
         ❯\u2000**Available categories:**
@@ -77,10 +77,12 @@ exports.run = async (bot, msg, args) => {
 }
 
 const getHelp = (command) => {
+  let aliases = '<no aliases>'
+  if (command.info.aliases) {
+    aliases = command.info.aliases.map(a => `\`${config.prefix}${a}\``).join(', ')
+  }
   let description = stripIndents`
-    •\u2000**Aliases:** ${command.info.aliases
-      ? command.info.aliases.map(a => `\`${config.prefix}${a}\``).join(', ')
-      : '<no aliases>'}
+    •\u2000**Aliases:** ${aliases}
     •\u2000**Usage:** \`${config.prefix}${command.info.usage || command.info.name}\`
     •\u2000**Category:** ${command.info.category}
     •\u2000**Description:** ${command.info.description || '<no description>'}`

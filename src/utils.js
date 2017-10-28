@@ -871,8 +871,27 @@ exports.buildEmojisArray = (source, options = {}) => {
   const result = []
   const matches = source.match(allEmojiRegex)
 
-  const isCustomEmojiUsable = e => !(options.unique && result.includes(e) &&
-  !(!bot.user.premium && !e.managed && !(e.guild === options.guild)))
+  const isCustomEmojiUsable = e => {
+    // If the array must return an array of unique individual emojis and the said emoji is already within the array
+    if (options.unique && result.includes(e)) {
+      return false
+    }
+
+    // If the emoji is an object (meaning it is most likely an instance of Discord.Emoji instead of regular string)
+    if (typeof e === 'object') {
+      // If the user is NOT Nitro, the emoji is NOT global and the emoji is NOT the guild's local emoji
+      if (!bot.user.premium && !e.managed && e.guild !== options.guild) {
+        return false
+      }
+      // If the array must NOT include external emojis and the emoji is NOT the guild's local emoji
+      if (!options.external && e.guild !== options.guild) {
+        return false
+      }
+    }
+
+    // Otherwise ...
+    return true
+  }
 
   if (matches && matches.length) {
     for (const m of matches) {
@@ -999,9 +1018,13 @@ exports.getGuildColor = async guild => {
 }
 
 exports.channelName = channel => {
-  return channel.type === 'dm' ? `DM with ${channel.recipient.tag}` : (channel.type === 'text'
-    ? `#${channel.name} (ID: ${channel.id})`
-    : `${channel.type.toUpperCase()} - ${channel.name}`)
+  if (channel.type === 'dm') {
+    return `DM with ${channel.recipient.tag}`
+  } else if (channel.type === 'text') {
+    return `#${channel.name} (ID: ${channel.id})`
+  } else {
+    return `${channel.type.toUpperCase()} - ${channel.name}`
+  }
 }
 
 exports.cleanUrl = url => {
@@ -1009,11 +1032,19 @@ exports.cleanUrl = url => {
 }
 
 exports.formatYesNo = bool => {
-  return bool ? 'yes' : 'no'
+  if (bool) {
+    return 'yes'
+  } else {
+    return 'no'
+  }
 }
 
 exports.formatCode = (text, lang = '', inline = false) => {
-  return inline ? `\`${text}\`` : `\`\`\`${lang}\n${text}\n\`\`\``
+  if (inline) {
+    return `\`${text}\`` // `${text}`
+  } else {
+    return `\`\`\`${lang}\n${text}\n\`\`\`` // ```${lang}${text}\n```
+  }
 }
 
 exports.escapeMarkdown = content => {
@@ -1021,11 +1052,19 @@ exports.escapeMarkdown = content => {
 }
 
 exports.formatTimeNs = ns => {
-  return ns < 1e9 ? `${(ns / 1e6).toFixed(3)} ms` : `${(ns / 1e9).toFixed(3)} s`
+  if (ns < 1e9) {
+    return `${(ns / 1e6).toFixed(3)} ms`
+  } else {
+    return `${(ns / 1e9).toFixed(3)} s`
+  }
 }
 
 exports.cleanCustomEmojis = text => {
-  return text ? text.replace(/<(:\w+?:)\d+?>/g, '$1') : ''
+  if (text) {
+    return text.replace(/<(:\w+?:)\d+?>/g, '$1')
+  } else {
+    return ''
+  }
 }
 
 exports.capitalizeFirstLetter = input => {

@@ -18,8 +18,8 @@ exports.run = async (bot, msg, args) => {
     })
   }
 
-  return msg.edit(msg.content, { embed:
-    bot.utils.formatEmbed('', '', nestedFields, {
+  return msg.edit(msg.content, {
+    embed: bot.utils.formatEmbed('', '', nestedFields, {
       footer: `Edit history | ID: ${m.id}`
     })
   })

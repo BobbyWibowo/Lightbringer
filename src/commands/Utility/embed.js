@@ -27,8 +27,8 @@ exports.run = async (bot, msg, args) => {
     }
   }
 
-  await msg.channel.send({ embed:
-    bot.utils.embed(parsed.options.t || '', parsed.leftover.join(' '), [], {
+  await msg.channel.send({
+    embed: bot.utils.embed(parsed.options.t || '', parsed.leftover.join(' '), [], {
       footer: parsed.options.ft,
       color,
       image: parsed.options.i,

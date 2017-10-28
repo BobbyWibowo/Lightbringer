@@ -30,8 +30,8 @@ exports.run = async (bot, msg, args) => {
   const message = mention
     ? `Members of ${keyword}:`
     : `Members of the role which matched the keyword \`${keyword}\`:`
-  return msg.edit(message, { embed:
-    bot.utils.formatLargeEmbed(`${role.name} (ID: ${role.id})`, `**Guild:** ${msg.guild.name} (ID: ${msg.guild.id})`,
+  return msg.edit(message, {
+    embed: bot.utils.formatLargeEmbed(`${role.name} (ID: ${role.id})`, `**Guild:** ${msg.guild.name} (ID: ${msg.guild.id})`,
       {
         delimeter: ', ',
         children: members.sort((a, b) => a.user.tag.localeCompare(b.user.tag)).map(m => {

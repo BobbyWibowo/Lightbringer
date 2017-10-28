@@ -5,9 +5,12 @@ exports.run = async (bot, msg, args) => {
 
   const parsed = bot.utils.parseArgs(args, ['r', 'f:', 'g'])
 
-  const guild = parsed.options.f
-    ? bot.utils.getGuild(parsed.options.f)
-    : (parsed.options.r ? bot.guilds.random() : msg.guild)
+  let guild = msg.guild
+  if (parsed.options.f) {
+    guild = bot.utils.getGuild(parsed.options.f)
+  } else if (parsed.options.r) {
+    guild = bot.guilds.random()
+  }
 
   if (!guild) {
     throw new Error('This command can only be used in a guild!')
@@ -26,8 +29,8 @@ exports.run = async (bot, msg, args) => {
     return msg.success(`<${r}>`, { timeout: -1 })
   } else {
     const color = await bot.utils.getGuildColor(guild)
-    return msg.edit(msg.content, { embed:
-      bot.utils.formatLargeEmbed('', '',
+    return msg.edit(msg.content, {
+      embed: bot.utils.formatLargeEmbed('', '',
         {
           delimeter: ' ',
           children: emojis.map(e => e.toString())

@@ -27,6 +27,13 @@ exports.run = async (bot, msg, args) => {
         bot.utils.assertEmbedPermission(msg.channel, msg.member)
       }
 
+      let author = { name: '' }
+      if (richEmbed.author) {
+        author.name = richEmbed.author.name
+        author.icon = richEmbed.author.iconURL
+        author.url = richEmbed.author.url
+      }
+
       msgOps.embed = bot.utils.embed(richEmbed.title, richEmbed.description, [], {
         color: richEmbed.hexColor,
         footer: richEmbed.footer && richEmbed.footer.text,
@@ -34,11 +41,7 @@ exports.run = async (bot, msg, args) => {
         thumbnail: richEmbed.thumbnail && richEmbed.thumbnail.url,
         timestamp: richEmbed.createdTimestamp,
         image: richEmbed.image && richEmbed.image.url,
-        author: richEmbed.author ? {
-          name: richEmbed.author.name,
-          icon: richEmbed.author.iconURL,
-          url: richEmbed.author.url
-        } : { name: '' }
+        author
       })
 
       for (let i = 0; i < richEmbed.fields.length; i++) {

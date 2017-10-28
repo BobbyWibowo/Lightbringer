@@ -47,8 +47,8 @@ exports.run = async (bot, msg, args) => {
     ? `Search result of \`${query}\` at index \`${index + 1}${total ? `/${total}` : ''}\` on ${y}:`
     : `Random definition on ${y}:`
 
-  return msg.edit(resultMessage, { embed:
-    bot.utils.formatEmbed(`${def.word} by ${def.author}`, def.definition,
+  return msg.edit(resultMessage, {
+    embed: bot.utils.formatEmbed(`${def.word} by ${def.author}`, def.definition,
       [
         {
           title: 'Example(s)',

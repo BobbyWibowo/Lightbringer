@@ -30,8 +30,8 @@ exports.run = async (bot, msg, args) => {
 
   const y = `Wikipedia${parsed.options.v ? ' (no paragraphs limit)' : ''}`
 
-  return msg.edit(`First search result of \`${query}\` on ${y}:`, { embed:
-    bot.utils.embed(page.raw.title, paragraphs.join('\n\n'),
+  return msg.edit(`First search result of \`${query}\` on ${y}:`, {
+    embed: bot.utils.embed(page.raw.title, paragraphs.join('\n\n'),
       [
         {
           name: 'Link',

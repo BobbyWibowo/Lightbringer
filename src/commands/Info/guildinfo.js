@@ -152,7 +152,9 @@ exports.run = async (bot, msg, args) => {
     const message = parsed.options.f
       ? `Information of the guild which matched the keyword \`${parsed.options.f}\`:`
       : 'Information of the currently viewed guild:'
-    return msg.edit(message, { embed: embed.setColor(color) })
+    return msg.edit(message, {
+      embed: embed.setColor(color)
+    })
   }
 }
 

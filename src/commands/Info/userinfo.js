@@ -37,8 +37,8 @@ exports.run = async (bot, msg, args) => {
     const message = mention
       ? `List of mutual guilds with ${keyword}:`
       : `List of mutual guilds with the user which matched the keyword \`${keyword}\`:`
-    return msg.edit(message, { embed:
-      bot.utils.formatLargeEmbed('', `**Total:** ${profile.mutualGuilds.size}`,
+    return msg.edit(message, {
+      embed: bot.utils.formatLargeEmbed('', `**Total:** ${profile.mutualGuilds.size}`,
         {
           delimeter: '\n',
           children: profile.mutualGuilds.sort((a, b) => b.memberCount - a.memberCount).map(g => {
@@ -153,8 +153,8 @@ exports.run = async (bot, msg, args) => {
     const message = !keyword.length
       ? 'My information:'
       : (mention ? `${keyword}'s information:` : `Information of the user which matched the keyword \`${keyword}\`:`)
-    return msg.edit(message, { embed:
-      bot.utils.formatEmbed('', description, nestedFields, {
+    return msg.edit(message, {
+      embed: bot.utils.formatEmbed('', description, nestedFields, {
         thumbnail: thumbAvatarURL,
         color: member ? member.displayColor : 0,
         author: {

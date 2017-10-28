@@ -6,7 +6,8 @@ exports.methods = {
     return input.toString().split('').map(c => c.charCodeAt(0).toString(2))
   },
   decode: input => {
-    const _input = typeof input === 'string' ? input.split(' ') : input
+    let _input = input
+    if (typeof _input === 'string') _input = input.split(' ')
     return _input.map(c => parseInt(c, 2)).map(c => String.fromCharCode(c)).join('')
   }
 }

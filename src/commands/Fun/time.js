@@ -20,7 +20,11 @@ exports.run = async (bot, msg, args) => {
     const tMoment = moment(`${date} ${time}`, 'dddd, MMMM D, YYYY HH:mm:ss A')
     return msg.edit(`${clock} The time in '${place}' is ${tMoment.format(bot.consts.fullDateFormat)}.`)
   } catch (err) {
-    throw err.status === 404 ? new Error(`Location \`${location}\` was not found!`) : err
+    if (err.status === 404) {
+      throw new Error(`Location \`${location}\` was not found!`)
+    } else {
+      throw err
+    }
   }
 }
 

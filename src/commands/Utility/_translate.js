@@ -25,8 +25,8 @@ exports.run = async (bot, msg, args) => {
   if (parsed.options.e) {
     return msg.edit(res.text)
   } else {
-    return msg.edit('Google Translate:', { embed:
-      bot.utils.embed('', stripIndents`
+    return msg.edit('Google Translate:', {
+      embed: bot.utils.embed('', stripIndents`
         **From:** __\`${parsed.options.f || '[auto]'}\`__
         **To:** __\`${lang}\`__
 

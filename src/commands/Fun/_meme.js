@@ -60,8 +60,8 @@ exports.run = async (bot, msg, args) => {
 
   if (LIST.test(args[0])) {
     await msg.delete()
-    const m = await msg.channel.send({ embed:
-      bot.utils.embed('Available Memes', '*This message will vanish in 30 seconds*\n\n' + templates.map(meme => {
+    const m = await msg.channel.send({
+      embed: bot.utils.embed('Available Memes', '*This message will vanish in 30 seconds*\n\n' + templates.map(meme => {
         return `\`${meme.name}\``
       }).join(', '))
     })
@@ -78,11 +78,16 @@ exports.run = async (bot, msg, args) => {
       throw new Error(`That is not a valid meme! Do \`${config.prefix}${this.info.name} list\` to see available memes.`)
     }
 
+    let styles
+    if (info.styles && info.styles.length > 1) {
+      styles = info.styles.map(s => `\n- \`${s}\``).join('')
+    } else {
+      styles = 'None'
+    }
+
     await msg.delete()
-    const m = await msg.channel.send({ embed:
-      bot.utils.embed(`\`${info.name}\``, `Styles: ${info.styles && info.styles.length > 1 ? info.styles.map(s => {
-        return `\n- \`${s}\``
-      }).join('') : 'None'}`)
+    const m = await msg.channel.send({
+      embed: bot.utils.embed(`\`${info.name}\``, `Styles: ${styles}`)
     })
     return m.delete(15000)
   }

@@ -4,8 +4,8 @@ exports.run = async (bot, msg) => {
   }
 
   /*
-  return msg.edit('My guilds:', { embed:
-    bot.utils.formatLargeEmbed('', `**Total:** ${bot.guilds.size}`,
+  return msg.edit('My guilds:', {
+    embed: bot.utils.formatLargeEmbed('', `**Total:** ${bot.guilds.size}`,
       {
         delimeter: '\n',
         children: bot.guilds.sort((a, b) => b.memberCount - a.memberCount).map(g => {

@@ -14,12 +14,12 @@ exports.run = async (bot, msg, args) => {
         throw new Error('You are not logging mentions from any guilds!')
       }
 
-      await msg.edit(msg.content, { embed:
-        bot.utils.formatLargeEmbed('Logging mentions from these guilds:', '',
+      await msg.edit(msg.content, {
+        embed: bot.utils.formatLargeEmbed('Logging mentions from these guilds:', '',
           {
             delimeter: '\n',
             children: mentions.map(m => {
-              const guild = bot.guilds ? bot.guilds.get(m) : false
+              const guild = bot.guilds ? bot.guilds.get(m) : null
               return `•\u2000${guild ? `**${guild.name}:** ` : ''}\`${m}\``
             }).sort((a, b) => {
               return a.localeCompare(b)

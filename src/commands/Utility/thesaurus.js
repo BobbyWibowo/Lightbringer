@@ -28,10 +28,21 @@ exports.run = async (bot, msg, args) => {
     throw new Error(`No synonyms found for \`${query}\``)
   }
 
-  return msg.edit(`First search result of \`${query}\` on ${y}:`, { embed:
-    bot.utils.embed(
-      `${antonyms ? 'Antonyms' : 'Synonyms'} of ${query}`,
-      (antonyms ? res.antonyms : res.synonyms).join(', '), [],
+  let title = ` of ${query}`
+  let description
+  if (antonyms) {
+    title = 'Antonyms' + title
+    description = res.antonyms.join(', ')
+  } else {
+    title = 'Synonyms' + title
+    description = res.synonyms.join(', ')
+  }
+
+  return msg.edit(`First search result of \`${query}\` on ${y}:`, {
+    embed: bot.utils.embed(
+      title,
+      description,
+      [],
       {
         footer: y,
         footerIcon: 'https://a.safe.moe/VhreL.png',

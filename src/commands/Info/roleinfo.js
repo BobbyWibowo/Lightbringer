@@ -24,8 +24,8 @@ exports.run = async (bot, msg, args) => {
   const message = mention
     ? `Information of ${keyword}:`
     : `Information of the role which matched the keyword \`${keyword}\`:`
-  return msg.edit(message, { embed:
-    bot.utils.formatEmbed(`${role.name}`, `**Guild:** ${guild.name} (ID: ${guild.id})`,
+  return msg.edit(message, {
+    embed: bot.utils.formatEmbed(`${role.name}`, `**Guild:** ${guild.name} (ID: ${guild.id})`,
       [
         {
           title: 'Information',

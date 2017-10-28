@@ -1,4 +1,4 @@
-# Commands (74)  
+# Commands (73)  
   
 ## Fun – 28 commands  
 ### `8ball`  
@@ -172,9 +172,9 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 27 commands  
+## Utility – 26 commands  
 ### `avatar`  
-*Description:* `Gets yours or another user's avatar`  
+*Description:* `Display full image size of yours or another user's avatar`  
 *Usage:* `avatar [options] [user]`  
 *Aliases:* `ava`  
 ### `currency`  
@@ -189,7 +189,7 @@
 *Usage:* `eval [options] <command>`  
 ### `exec`  
 *Description:* `Executes a command in the console`  
-*Usage:* `exec [-l <lang>] <command>`  
+*Usage:* `exec [options] <command>`  
 ### `generate`  
 *Description:* `N/A`  
 *Usage:* `generate <commands>`  
@@ -234,10 +234,6 @@
 *Description:* `Reloads all modules (or optionally reload "utils" or "consts")`  
 *Usage:* `reload [utils|consts]`  
 *Aliases:* `r`  
-### `restart`  
-*Description:* `Restarts the bot`  
-*Usage:* `restart`  
-*Aliases:* `res`  
 ### `setgame`  
 *Description:* `Sets your game (shows for other people)`  
 *Usage:* `setgame <game>`  
@@ -249,7 +245,7 @@
 ### `shutdown`  
 *Description:* `Shuts down the bot (you'll have to manually start the bot later if you want to)`  
 *Usage:* `shutdown`  
-*Aliases:* `terminate`  
+*Aliases:* `terminate`, `res`, `restart`  
 ### `tags`  
 *Description:* `Controls or lists your tags`  
 *Usage:* `tags [-e] <name>|[-v] list|add <name> [contents]|delete <name>`  

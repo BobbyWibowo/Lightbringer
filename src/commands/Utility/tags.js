@@ -26,8 +26,10 @@ exports.run = async (bot, msg, args) => {
       throw new Error('You have no tags!')
     }
 
-    await msg.edit(msg.content, { embed:
-      bot.utils.formatLargeEmbed(`Tags [${tags.length}]`, '*This message will self-destruct in 60 seconds.*',
+    await msg.edit(msg.content, {
+      embed: bot.utils.formatLargeEmbed(
+        `Tags [${tags.length}]`,
+        '*This message will self-destruct in 60 seconds.*',
         {
           delimeter: '\n',
           children: tags.map(tag => {

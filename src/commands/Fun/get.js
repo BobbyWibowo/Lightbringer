@@ -110,9 +110,16 @@ exports.run = async (bot, msg, args) => {
     throw new Error('That type is not available!')
   }
 
-  await msg.channel.send(result.image
-    ? { files: [{ attachment: result.content }] }
-    : bot.utils.truncate(result.content, 2000))
+  if (result.image) {
+    await msg.channel.send({
+      file: {
+        attachment: result.content
+      }
+    })
+  } else {
+    await msg.channel.send(bot.utils.truncate(result.content, 2000))
+  }
+
   return msg.delete()
 }
 

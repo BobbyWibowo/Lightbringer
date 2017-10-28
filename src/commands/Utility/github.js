@@ -21,7 +21,9 @@ exports.run = async (bot, msg, args) => {
       if (!res || !res.body) {
         throw new Error('An unexpected error occurred!')
       }
-      return msg.edit(prev, { embed: buildEmbedFromJson(res.body) })
+      return msg.edit(prev, {
+        embed: buildEmbedFromJson(res.body)
+      })
     } catch (err) {
       if (new RegExp('404 Not Found', 'i').test(err.toString())) {
         throw new Error('That repository could not be found!')
@@ -42,7 +44,9 @@ exports.run = async (bot, msg, args) => {
       if (!res.body.items[i]) {
         return
       }
-      await msg.channel.send({ embed: buildEmbedFromJson(res.body.items[i]) })
+      await msg.channel.send({
+        embed: buildEmbedFromJson(res.body.items[i])
+      })
       await send(i + 1)
     }
     return send(0)

@@ -19,9 +19,16 @@ exports.run = async (bot, msg, args) => {
     throw new Error('You must specify a type!')
   }
 
-  const i = (EVENTS.test(args[0]) ? 'e' : (BIRTHS.test(args[0]) ? 'b' : (DEATHS.test(args[0]) ? 'd' : false)))
+  let mappingIndex
+  if (EVENTS.test(args[0])) {
+    mappingIndex = 'e'
+  } else if (BIRTHS.test(args[0])) {
+    mappingIndex = 'b'
+  } else if (DEATHS.test(args[0])) {
+    mappingIndex = 'd'
+  }
 
-  if (!i) {
+  if (!mappingIndex) {
     return new Error('That type is not available!')
   }
 
@@ -34,12 +41,12 @@ exports.run = async (bot, msg, args) => {
 
   const data = JSON.parse(res.body)
 
-  const title = mapping[i].title
-  const source = data.data[mapping[i].source]
+  const title = mapping[mappingIndex].title
+  const source = data.data[mapping[mappingIndex].source]
   const thing = source[Math.round(Math.random() * (source.length - 1))]
 
-  return msg.edit(prev, { embed:
-    bot.utils.formatEmbed(`${title} (${data.date})`, `${thing.text}`, [
+  return msg.edit(prev, {
+    embed: bot.utils.formatEmbed(`${title} (${data.date})`, `${thing.text}`, [
       {
         title: 'Information',
         fields: [

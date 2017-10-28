@@ -32,8 +32,8 @@ exports.run = async (bot, msg, args) => {
     .map(r => `**${r.link}**\n\t${r.description}\n`)
     .join('\n')
 
-  return msg.edit(`Search results of \`${args.join(' ')}\` on ${y}:`, { embed:
-    bot.utils.embed('', output, [], {
+  return msg.edit(`Search results of \`${args.join(' ')}\` on ${y}:`, {
+    embed: bot.utils.embed('', output, [], {
       footer: 'Google',
       footerIcon: 'https://a.safe.moe/F3RvU.png',
       color: '#4285f4'

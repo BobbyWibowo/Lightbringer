@@ -26,8 +26,8 @@ exports.run = async (bot, msg, args) => {
       prefix = input
     }
 
-    return msg.edit({ embed:
-      bot.utils.embed('Timezone', `${prefix} ➔\u2000${answer}`, [], {
+    return msg.edit({
+      embed: bot.utils.embed('Timezone', `${prefix} ➔\u2000${answer}`, [], {
         footer: 'Powered by DuckDuckGo',
         footerIcon: 'https://a.safe.moe/N2qMW.png',
         color: '#df4e26'
