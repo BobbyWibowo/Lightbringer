@@ -40,7 +40,7 @@ IF, and only if you accept the above rules of self-bots, then you may proceed.
 
 > Taken from [TheRacingLion/Discord-SelfBot](https://github.com/TheRacingLion/Discord-SelfBot). There is also [this quote](https://github.com/hammerandchisel/discord-api-docs/issues/69#issuecomment-223898291) for further confirmation.
 
-## Gallery
+### Gallery
 [Click here](https://imgur.com/a/ik6zf) to see an Imgur gallery of some random screenshots of the bot in action.
 
 ### FAQ
