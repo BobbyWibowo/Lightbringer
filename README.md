@@ -1,4 +1,4 @@
-**NOTICE:** This project is UNMAINTAINED.
+**NOTICE:** This project is no longer ACTIVELY MAINTAINED. Some updates will come once in a while though, but that's it.
 
 <p align="center">
 <img align="center" title="Lightbringer" src="https://a.safe.moe/pM9Ov.png">
