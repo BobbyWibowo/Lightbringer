@@ -8,7 +8,7 @@ exports.run = async (bot, msg, args) => {
       before: msg.id
     })
     await Promise.all(messages.map(m => m.delete()))
-    const m = await msg.channel.send(`${SUCCESS}Flushed \`${messages.size}\` messages.`)
+    const m = await msg.channel.send(`${SUCCESS}Purged \`${messages.size}\` messages.`)
     return m.delete(2000)
   } catch (err) {
     console.error(err)
