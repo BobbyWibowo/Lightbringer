@@ -13,5 +13,5 @@ exports.run = async (bot, msg) => {
 exports.info = {
   name: 'kiss',
   usage: 'kiss <user>',
-  description: 'Kisses someone'
+  description: 'Kisses someone (using random kiss GIF from nekos.life)'
 }

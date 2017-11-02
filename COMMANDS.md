@@ -49,7 +49,7 @@
 *Description:* `Prints current time in yours or a particular location (using Google Maps API)`  
 *Usage:* `gtime [location]`  
 ### `hug`  
-*Description:* `Hugs someone`  
+*Description:* `Hugs someone (using random hug GIF from nekos.life)`  
 *Usage:* `hug <user>`  
 ### `insult`  
 *Description:* `Insults some users`  
@@ -64,7 +64,7 @@
 *Usage:* `kill <user-1> [user-2] ... [user-n]`  
 *Credits:* `illusorum#8235 (286011141619187712)`  
 ### `kiss`  
-*Description:* `Kisses someone`  
+*Description:* `Kisses someone (using random kiss GIF from nekos.life)`  
 *Usage:* `kiss <user>`  
 ### `magik`  
 *Description:* `Makes something magik!`  
@@ -74,7 +74,7 @@
 *Usage:* `nekos [lewd]`  
 *Aliases:* `neko`  
 ### `pat`  
-*Description:* `Pats someone`  
+*Description:* `Pats someone (using random pat GIF from nekos.life)`  
 *Usage:* `pat <user>`  
 ### `reaction`  
 *Description:* `Sends reaction to the previous message`  
