@@ -195,7 +195,7 @@
 *Aliases:* `curr`  
 ### `dictionary`  
 *Description:* `Looks up a word on Merriam-Webster`  
-*Usage:* `dictionary <query>`  
+*Usage:* `dictionary [-i] <query>`  
 *Aliases:* `dict`  
 ### `embed`  
 *Description:* `Sends a message via embeds`  

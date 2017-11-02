@@ -125,7 +125,7 @@ class CommandManager {
           console.info(`${chalk.yellow(`[${command.info.name}]`)} ${message}`)
         }
 
-        await msg.edit(`❌\u2000${message.toString() || 'Something failed!'}`)
+        await msg.edit(`⛔\u2000${message.toString() || 'Something failed!'}`)
         return msg.delete(timeout)
       }
 

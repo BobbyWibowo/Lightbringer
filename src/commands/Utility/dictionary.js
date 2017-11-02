@@ -127,7 +127,7 @@ const _beautify = (m, word) => {
 
 exports.info = {
   name: 'dictionary',
-  usage: 'dictionary <query>',
+  usage: 'dictionary [-i] <query>',
   description: 'Looks up a word on Merriam-Webster',
   aliases: ['dict'],
   options: [
