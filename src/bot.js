@@ -240,9 +240,6 @@ const init = async () => {
       beginTime = process.hrtime()
       logger.info('Logging in\u2026')
       await bot.login(config.botToken)
-    } else {
-      logger.severe('Missing config!')
-      process.exit(1)
     }
   } catch (err) {
     console.error(err)
