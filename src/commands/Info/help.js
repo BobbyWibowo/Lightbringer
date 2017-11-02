@@ -55,22 +55,37 @@ exports.run = async (bot, msg, args) => {
   } else if (commands.length) {
     const help = getHelp(commands[0])
     await msg.edit(msg.content, {
-      embed: bot.utils.embed(help.name, `*This message will self-destruct in 60 seconds.*\n\n${help.value}`)
+      embed: bot.utils.embed(
+        help.name,
+        `*This message will self-destruct in 60 seconds.*\n\n${help.value}`,
+        [],
+        {
+          color: '#ff0000'
+        }
+      )
     })
     return msg.delete(60000)
   } else {
     const categories = bot.commands.categories().sort()
     await msg.edit(msg.content, {
-      embed: bot.utils.embed(title, stripIndents`
-        '*This message will self-destruct in 30 seconds.*'
+      embed: bot.utils.embed(
+        title,
+        stripIndents`
+          '*This message will self-destruct in 30 seconds.*'
 
-        ❯\u2000**Available categories:**
-        ${categories.map(c => `- __${c}__`).join('\n')}
+          ❯\u2000**Available categories:**
+          ${categories.map(c => `- __${c}__`).join('\n')}
 
-        ❯\u2000**Usage:**
-        •\u2000Do \`${config.prefix}help category <name>\` for a list of commands in a specific category.
-        •\u2000Do \`${config.prefix}help all\` for a list of every command available in this bot.
-        •\u2000Do \`${config.prefix}help <command>\` for help with a specific command.`)
+          ❯\u2000**Usage:**
+          •\u2000Do \`${config.prefix}help category <name>\` for a list of commands in a specific category.
+          •\u2000Do \`${config.prefix}help all\` for a list of every command available in this bot.
+          •\u2000Do \`${config.prefix}help <command>\` for help with a specific command.
+        `,
+        [],
+        {
+          color: '#ff0000'
+        }
+      )
     })
     return msg.delete(30000)
   }

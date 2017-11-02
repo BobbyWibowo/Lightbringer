@@ -59,5 +59,6 @@ exports.run = async (bot, msg, args) => {
 exports.info = {
   name: 'generate',
   usage: 'generate <commands>',
+  description: 'This command can be used to generate COMMANDS.md for the GitHub repository',
   aliases: ['gen']
 }

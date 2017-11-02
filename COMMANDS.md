@@ -67,7 +67,7 @@
 *Description:* `Kisses someone`  
 *Usage:* `kiss <user>`  
 ### `magik`  
-*Description:* `Make something magik!`  
+*Description:* `Makes something magik!`  
 *Usage:* `magik <user|url>`  
 ### `nekos`  
 *Description:* `Uses nekos.life to get random nekos image`  
@@ -203,7 +203,7 @@
 *Description:* `Executes a command in the console`  
 *Usage:* `exec [options] <command>`  
 ### `generate`  
-*Description:* `N/A`  
+*Description:* `This command can be used to generate COMMANDS.md for the GitHub repository`  
 *Usage:* `generate <commands>`  
 *Aliases:* `gen`  
 ### `gists`  

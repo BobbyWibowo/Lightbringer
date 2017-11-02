@@ -51,7 +51,7 @@ exports.run = async (bot, msg, args) => {
 exports.info = {
   name: 'magik',
   usage: 'magik <user|url>',
-  description: 'Make something magik!',
+  description: 'Makes something magik!',
   examples: [
     'magik @user',
     'magik https://nekos.life/static/neko/neko1.jpg'
