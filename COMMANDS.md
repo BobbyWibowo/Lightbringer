@@ -194,7 +194,7 @@
 *Usage:* `currency [<value> <from> <to>|refresh]`  
 *Aliases:* `curr`  
 ### `dictionary`  
-*Description:* `Looks up a word on Dictionary.com`  
+*Description:* `Looks up a word on Merriam-Webster`  
 *Usage:* `dictionary <query>`  
 *Aliases:* `dict`  
 ### `embed`  
@@ -280,7 +280,7 @@
 *Aliases:* `u`, `urbandictionary`  
 ### `weather`  
 *Description:* `Shows you weather information of a particular city`  
-*Usage:* `weather <city>`  
+*Usage:* `weather [city]`  
 ### `wiki`  
 *Description:* `Returns the summary of the first matching search result from Wikipedia`  
 *Usage:* `wiki <query>`  

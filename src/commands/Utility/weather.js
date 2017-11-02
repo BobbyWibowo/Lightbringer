@@ -27,6 +27,10 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['i'])
   const keyword = parsed.leftover.join(' ') || config.defaultTimeZone
 
+  if (!keyword) {
+    return msg.error('You must specify a city!')
+  }
+
   await msg.edit('🔄\u2000Fetching weather information from Yahoo! Weather\u2026')
   const res = await snekfetch.get(`https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22${keyword}%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys`)
   if (res.status !== 200) {
@@ -122,7 +126,7 @@ exports.run = async (bot, msg, args) => {
 
 exports.info = {
   name: 'weather',
-  usage: 'weather <city>',
+  usage: 'weather [city]',
   description: 'Shows you weather information of a particular city',
   options: [
     {
