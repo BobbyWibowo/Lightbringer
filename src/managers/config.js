@@ -107,7 +107,7 @@ class ConfigManager {
   }
 
   set (key, value) {
-    // NOTE: Convert to string if it's not a string already
+    // Convert to string if it's not a string already
     const realKey = `${key}`
     this._config[realKey] = value
     this.save()

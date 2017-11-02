@@ -14,7 +14,7 @@ exports.run = async (bot, msg, args) => {
 
   try {
     if (action) {
-      // NOTE: Basic check to use \\ instead of / for Windows machine
+      // Basic check to use \\ instead of / for Windows machine
       const filePath = `${bot.srcDir}${bot.srcDir.includes('\\') ? '\\' : '/'}${action}.js`
 
       try {

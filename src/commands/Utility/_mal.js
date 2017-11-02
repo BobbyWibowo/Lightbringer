@@ -88,7 +88,7 @@ exports.run = async (bot, msg, args) => {
 
     let collected
     try {
-      // NOTE: Filter function can not be async
+      // Filter function can not be async
       collected = await msg.channel.awaitMessages(tm => {
         if (tm.author !== msg.author) {
           return false
@@ -98,7 +98,7 @@ exports.run = async (bot, msg, args) => {
           return true
         }
 
-        // NOTE: Process request to set page
+        // Process request to set page
         try {
           const newPage = parsePageInput(tm.content)
 
@@ -117,7 +117,7 @@ exports.run = async (bot, msg, args) => {
 
           return false
         } catch (err) {
-          // NOTE: Only log the errors when they occurred - let everything else continue as is
+          // Only log the errors when they occurred - let everything else continue as is
           console.error(`mal.js (awaitMessages): ${err}`)
         }
       }, {
@@ -183,14 +183,7 @@ exports.run = async (bot, msg, args) => {
           }
         ]
       },
-      {
-        title: 'Link',
-        fields: [
-          {
-            value: `**https://myanimelist.net/${parsed.options.m ? 'manga' : 'anime'}/${item.id}/**`
-          }
-        ]
-      }
+      ['Link', `**https://myanimelist.net/${parsed.options.m ? 'manga' : 'anime'}/${item.id}/**`]
     ],
     {
       thumbnail: item.image,

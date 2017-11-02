@@ -60,7 +60,7 @@ class CommandManager {
         continue
       }
 
-      // NOTE: Basic check to use \\ instead of / for Windows machine
+      // Basic check to use \\ instead of / for Windows machine
       const _filePath = `${folder}${folder.includes('\\') ? '\\' : '/'}${file}`
       const command = require(_filePath)
 

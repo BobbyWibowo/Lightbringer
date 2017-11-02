@@ -167,7 +167,7 @@ const logMention = msg => {
     return
   }
 
-  // NOTE: Send to mentions log channel only if necessary
+  // Send to mentions log channel only if necessary
   const log = msg.guild ? bot.storage('mentions').get(msg.guild.id) : true
 
   if (!log) {
@@ -185,17 +185,17 @@ bot.on('message', msg => {
   stats.increment(`messages-${bot.user.id === msg.author.id ? 'sent' : 'received'}`)
   logMention(msg)
 
-  // NOTE: Ignore if the message wasn't sent by the bot's owner
+  // Ignore if the message wasn't sent by the bot's owner
   if (msg.author.id !== bot.user.id) {
     return
   }
 
-  // NOTE: Ignore if the message was sent in a blacklisted server
+  // Ignore if the message was sent in a blacklisted server
   if (msg.guild && config.blacklistedServers && config.blacklistedServers.includes(msg.guild.id)) {
     return
   }
 
-  // NOTE: Ignore if it didn't start with the bot's prefix
+  // Ignore if it didn't start with the bot's prefix
   if (!msg.content.toLowerCase().startsWith(config.prefix.toLowerCase())) {
     return
   }
@@ -222,7 +222,7 @@ bot.on('disconnect', e => {
   } else {
     logger.severe(`Disconnected from Discord ${e.code === 1000 ? 'cleanly' : `with code ${e.code}`}`)
   }
-  // NOTE: Shutdown bot
+  // Shutdown bot
   process.exit(1)
 })
 

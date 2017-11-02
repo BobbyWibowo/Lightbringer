@@ -69,25 +69,30 @@ exports.run = async (bot, msg, args) => {
   }
 
   const selected = resp[index]
-  const embed = bot.utils.embed(
-    `${selected.word} (${selected.functional_label})`,
+  const embed = bot.utils.formatEmbed(
+    `${selected.word}${selected.functional_label ? ` (${selected.functional_label})` : ''}`,
     selected.definition.map(d => {
+      // All instances of .filter(d => d) used to filter out 'false' from skipping object in line 102
       if (d.meanings) {
         return _beautify(d, selected.word)
-      } else {
+      } else if (d.senses) {
         return `**${d.number}:**\n${d.senses.map(s => {
           return `    ${_beautify(s, selected.word)}`
-        }).join('\n')}`
+        }).filter(d => d.trim() !== 'false').join('\n')}`
+      } else {
+        console.log(require('util').inspect(d))
+        return '**WARN:** Unexpected behavior for this definition. Check your console\u2026'
       }
-    }).join('\n'),
-    [],
+    }).filter(d => d).join('\n'),
+    [
+      ['Link', `**https://www.merriam-webster.com/dictionary/${selected.word.replace(/ /g, '+')}**`],
+      ['Match(es)', resp.map((l, i) => `**${i + 1}:** ${l.word}`).join('; ')]
+    ],
     {
       footer: y,
       color: '#2d5f7c'
     }
   )
-
-  embed.addField('Match(es)', resp.map((l, i) => `**${i + 1}:** ${l.word}`).join('; '))
 
   return msg.edit(
     `Search result of \`${query}\` at index \`${index + 1}/${resp.length}\` on ${y}:`,
@@ -96,7 +101,13 @@ exports.run = async (bot, msg, args) => {
 }
 
 const _beautify = (m, word) => {
-  let _temp = m.number ? `**${m.number}:** ` : ''
+  if (!m.meanings) {
+    console.log(require('util').inspect(m))
+    console.info('Skipping object for now\u2026')
+    return false
+  }
+
+  let _temp = m.number ? `**${m.number}**${m.status ? ` *${m.status}*` : ''} : ` : ''
 
   _temp += m.meanings.map((m, i, a) => {
     if (i === 0 && m.startsWith(':')) {
@@ -110,16 +121,14 @@ const _beautify = (m, word) => {
     }
 
     return m
-  }).join('')
-
-  if (m.illustrations) {
-    _temp += m.illustrations.map(i => `\u2022 ${i}`).join(' ')
-  }
+  }).join('').trim()
 
   if (m.synonyms) {
-    _temp += `\n**Synonym(s):**\n${m.synonyms.map((s, i) => {
-      return `**${i + 1}:** ${s}`
-    }).join('\n')}`
+    _temp += m.synonyms.map(s => `__${s}__`).join(', ')
+  }
+
+  if (m.illustrations) {
+    _temp += m.illustrations.map(i => ` \u2022 ${i}`).join('')
   }
 
   return _temp.replace(new RegExp(`\\b${word}\\b`), `*${word}*`).trim()

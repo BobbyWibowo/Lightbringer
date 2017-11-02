@@ -1,4 +1,4 @@
-// NOTE: This command is temporarily disabled
+// This command is temporarily disabled
 // until youtube-scrape package is fixed
 
 const yts = require('youtube-scrape')

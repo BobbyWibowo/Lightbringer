@@ -39,12 +39,12 @@ exports.run = async (bot, msg, args) => {
     return msg.error('Could not fetch timezone data from Google Maps API!')
   }
 
-  // NOTE: This check may not actually exist in timezone API (exists in geocode API)
+  // This check may not actually exist in timezone API (exists in geocode API)
   if (timezone.body.error_message) {
     throw new Error(timezone.body.error_message)
   }
 
-  // NOTE: This check may not actually exist in timezone API (exists in geocode API)
+  // This check may not actually exist in timezone API (exists in geocode API)
   if (timezone.body.status !== 'OK') {
     throw new Error(timezone.body.status)
   }

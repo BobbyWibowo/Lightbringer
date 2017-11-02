@@ -46,7 +46,7 @@ exports.run = async (bot, msg, args, auto) => {
     }
 
     if (!channel.guild || channel.guild.id !== (auto ? auto.target.guild.id : msg.guild.id)) {
-      // NOTE: Add user thumbnail only when the
+      // Add user thumbnail only when the
       // message is from a different guild
       options.thumbnail = avatarURL
     }

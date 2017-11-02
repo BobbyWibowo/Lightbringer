@@ -125,28 +125,14 @@ exports.run = async (bot, msg, args) => {
         ]
       })
 
-      // NOTE: Slice off the first item (the @everyone)
+      // Slice off the first item (the @everyone)
       const roles = member.roles.array().slice(1).sort((a, b) => a.comparePositionTo(b)).reverse().map(role => {
         return role.name
       })
 
-      nestedFields.push({
-        title: `Guild Roles [${roles.length}]`,
-        fields: [
-          {
-            value: roles.length ? roles.join(', ') : 'N/A'
-          }
-        ]
-      })
+      nestedFields.push([`Guild Roles [${roles.length}]`, roles.length ? roles.join(', ') : 'N/A'])
     } else {
-      nestedFields.push({
-        title: 'Guild Membership',
-        fields: [
-          {
-            value: '*This user is not a member of the currently viewed guild\u2026*'
-          }
-        ]
-      })
+      nestedFields.push(['Guild Membership', '*This user is not a member of the currently viewed guild\u2026*'])
     }
 
     const thumbAvatarURL = avatarURL.replace(/\?size=\d+?$/i, '')

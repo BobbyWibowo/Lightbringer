@@ -82,7 +82,7 @@ const expandEmojiMap = () => {
       continue
     }
 
-    // NOTE: Call the function again in 2.5s if the guild is not yet ready
+    // Call the function again in 2.5s if the guild is not yet ready
     if (!guild.available) {
       return setTimeout(() => {
         expandEmojiMap()

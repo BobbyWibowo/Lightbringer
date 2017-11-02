@@ -27,7 +27,7 @@ exports.updateRates = async () => {
   this.fixerIoLatest = res.body
   this.fixerIoTimestamp = new Date()
 
-  // NOTE: Next day, 17:00 UTC+1 (5PM CET)
+  // Next day, 17:00 UTC+1 (5PM CET)
   const time = moment().startOf('day').add(1, 'd').set('h', 17).valueOf() - this.fixerIoTimestamp
   this._stats.set(STAT_ID, setTimeout(self => self.updateRates(), time, this))
 }

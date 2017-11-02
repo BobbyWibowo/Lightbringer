@@ -124,6 +124,7 @@ exports.run = async (bot, msg, args) => {
     ]
 
     if (splashURL) {
+      // Push to Guild Information section
       nestedFields[0].fields.push({
         name: 'Splash image',
         value: `[${bot.utils.getHostName(splashURL) || 'Click here'}](${splashURL})`

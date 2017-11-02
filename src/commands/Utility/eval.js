@@ -35,15 +35,15 @@ exports.run = async (bot, msg, args) => {
     ? result.err.toString()
     : require('util').inspect(result.out, { depth: parsed.options.nd ? 2 : 0 })
 
-  // NOTE: Replace token
+  // Replace token
   disout = disout.replace(
     new RegExp(`${bot.token.split('').join('[^]{0,2}')}|${bot.token.split('').reverse().join('[^]{0,2}')}`, 'g'),
     '<Token>')
 
-  // NOTE: Replace path
+  // Replace path
   disout = disout.replace(new RegExp(bot.parentDir, 'g'), '<Parent>')
 
-  // NOTE: Replace quote
+  // Replace quote
   disout = disout.replace(new RegExp('`', 'g'), '\u200B`')
 
   const disint = bot.utils.truncate(input, 1500)

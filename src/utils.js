@@ -75,7 +75,7 @@ exports.embed = (title = '', description = '', fields = [], options = {}) => {
     ? options.author
     : { name: typeof options.author === 'string' ? options.author : '' }
 
-  // NOTE: Temporary countermeasure against
+  // Temporary countermeasure against
   // description length issue with Discord API
   let maxLength = 2000
 
@@ -155,6 +155,24 @@ exports.formatEmbed = (title = '', description = '', nestedFields, options = {})
   }
 
   const fields = nestedFields.map(parentField => {
+    if (parentField.constructor.name === 'Array') {
+      const temp = parentField
+      parentField = {
+        title: temp[0],
+        fields: temp[1]
+      }
+    }
+
+    switch (parentField.fields.constructor.name) {
+      case 'Object':
+        parentField.fields = [parentField.fields]
+        break
+      case 'Array':
+        break
+      default:
+        parentField.fields = [{ value: parentField.fields }]
+    }
+
     const tmp = {
       name: `${parentField.icon || '❯'}\u2000${parentField.title}`,
       value: parentField.fields.map(field => {
@@ -216,7 +234,7 @@ exports.buildSections = (children, delimeter, maxSections = 25) => {
   sections.push(temp)
 
   sections.length = Math.min(25, Math.min(maxSections, sections.length))
-  // NOTE: Truncate sections one last time as a failsafe in case there
+  // Truncate sections one last time as a failsafe in case there
   // were instances of children that were longer than 1024 characters
   return sections.map(section => {
     const s = section.join(delimeter)
@@ -546,7 +564,7 @@ exports.getGuildMember = (guild, keyword, fallback, suppress) => {
     if (execMention) {
       const get = guild.members.get(execMention[1])
       if (get) {
-        // NOTE: 2nd element in array is an indicator that the keyword was a mention
+        // 2nd element in array is an indicator that the keyword was a mention
         return [get, true]
       }
     }
@@ -602,7 +620,7 @@ exports.getUser = (guild, keyword, fallback) => {
     if (execMention) {
       const get = bot.users.get(execMention[1])
       if (get) {
-        // NOTE: 2nd element in array is an indicator that the keyword was a mention
+        // 2nd element in array is an indicator that the keyword was a mention
         return [get, true]
       }
     }
@@ -650,7 +668,7 @@ exports.getGuildRole = (guild, keyword) => {
   if (execMention) {
     const get = guild.roles.get(execMention[1])
     if (get) {
-      // NOTE: 2nd element in array is an indicator that the keyword was a mention
+      // 2nd element in array is an indicator that the keyword was a mention
       return [get, true]
     }
   }

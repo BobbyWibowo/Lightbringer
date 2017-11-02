@@ -24,7 +24,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (defs.constructor.name === 'Array') {
-    // NOTE: Results from urban.all(query)
+    // Results from urban.all(query)
     // TODO: Pull all pages then sort based on thumbs up / thumbs down ratio to find top definition
     total = Object.keys(defs).length
 
@@ -38,7 +38,7 @@ exports.run = async (bot, msg, args) => {
 
     def = defs[index]
   } else if (defs.constructor.name === 'Definition') {
-    // NOTE: Results from urban.random()
+    // Results from urban.random()
     def = defs
     index = -1
   }
@@ -50,30 +50,9 @@ exports.run = async (bot, msg, args) => {
   return msg.edit(resultMessage, {
     embed: bot.utils.formatEmbed(`${def.word} by ${def.author}`, def.definition,
       [
-        {
-          title: 'Example(s)',
-          fields: [
-            {
-              value: def.example ? def.example : 'N/A'
-            }
-          ]
-        },
-        {
-          title: 'Rating',
-          fields: [
-            {
-              value: `👍\u2000${def.thumbsUp} | 👎\u2000${def.thumbsDown}`
-            }
-          ]
-        },
-        {
-          title: 'Link',
-          fields: [
-            {
-              value: `**${def.urbanURL}**`
-            }
-          ]
-        }
+        ['Example(s)', def.example ? def.example : 'N/A'],
+        ['Rating', `👍\u2000${def.thumbsUp} | 👎\u2000${def.thumbsDown}`],
+        ['Link', `**${def.urbanURL}**`]
       ],
       {
         footer: 'Urban Dictionary',

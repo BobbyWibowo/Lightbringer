@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
   const reason = args.splice(1).join(' ')
   const rolled = roll.roll(notation)
 
-  // NOTE: Sending a new message instead of a new one
+  // Sending a new message instead of a new one
   // to ensure the message doesn't appear to be "edited"
   await msg.channel.send(stripIndents`
     🎲\u2000**${args[0]}**\u2000|\u2000Here are the rolls:

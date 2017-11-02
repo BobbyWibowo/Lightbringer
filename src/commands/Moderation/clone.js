@@ -51,7 +51,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (m.edits.length > 1 && !msgOps.files) {
-    // NOTE: Faking "edited" status whenever possible
+    // Faking "edited" status whenever possible
     return msg.edit(m.content, msgOps)
   } else {
     await msg.channel.send(m.content, msgOps)

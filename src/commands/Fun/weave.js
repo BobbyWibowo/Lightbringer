@@ -3,7 +3,7 @@ exports.run = async (bot, msg, args) => {
     return msg.error('You must provide an emoji and an input text!')
   }
 
-  // NOTE: No need to check whether the first argument is an emoji or not
+  // No need to check whether the first argument is an emoji or not
   return msg.edit(`${args[0]} ${args.slice(1).join(` ${args[0]} `)} ${args[0]}`)
 }
 

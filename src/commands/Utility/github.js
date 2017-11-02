@@ -73,7 +73,7 @@ const safeRepo = input => {
 }
 
 const buildEmbedFromJson = json => {
-  // NOTE: Special treatment
+  // Special treatment
   const isMyGit = json.full_name === MY_GIT
 
   return bot.utils.formatEmbed('', json.description || 'No description provided.',
@@ -127,14 +127,7 @@ const buildEmbedFromJson = json => {
         ],
         inline: true
       },
-      {
-        title: 'Clone',
-        fields: [
-          {
-            value: bot.utils.formatCode(`git clone ${json.clone_url}`)
-          }
-        ]
-      }
+      ['Clone', bot.utils.formatCode(`git clone ${json.clone_url}`)]
     ],
     {
       author: {

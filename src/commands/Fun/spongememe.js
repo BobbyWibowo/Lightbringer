@@ -1,4 +1,4 @@
-// NOTE: This command is cancerous!
+// This command is cancerous!
 
 exports.run = async (bot, msg, args) => {
   const emoji = bot.emojis.get('313010878196875265')
