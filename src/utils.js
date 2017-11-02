@@ -822,7 +822,7 @@ const dumpName = () => {
   return `lightbringer_${new Date().getTime()}`
 }
 
-const dumpDescription = `Uploaded with Lightbringer v${process.env.npm_package_version} – ` +
+const dumpDescription = `Uploaded with Lightbringer v${require('../package.json').version} – ` +
   'https://github.com/BobbyWibowo/Lightbringer.\nYet another Discord self-bot written with discord.js.'
 
 exports.haste = async (content, suffix = '', raw = false) => {
