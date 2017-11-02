@@ -70,5 +70,5 @@ Once you're done, you will just have to restart the bot and it will automaticall
 - `SyntaxError: Unexpected token (`
 > If this error occurred on any line which contains `async` in it, then it must be because you're running a node installation which doesn't have `async/await` feature enabled by default.  
 This feature is enabled by default in node `>= 7.6`.  
-For node with versions `>= 7.0 & < 7.6`, the bot will attempt to automatically enable the flag.  
+~~For node with versions `>= 7.0 & < 7.6`, the bot will attempt to automatically enable the flag.~~  
 As for node older than that, such as `6.x`, you have no other options but to upgrade your node to either `7.x` or `8.x`.
