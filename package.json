@@ -44,6 +44,7 @@
     "mathjs": "^3.16.5",
     "minimatch": "^3.0.4",
     "moment": "^2.19.1",
+    "mw-dict": "^1.0.4",
     "normalize-url": "^1.9.1",
     "os-toolbox": "^0.2.9",
     "path": "^0.12.7",

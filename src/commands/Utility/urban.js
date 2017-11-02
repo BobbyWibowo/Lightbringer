@@ -93,7 +93,7 @@ exports.info = {
     {
       name: '-i',
       usage: '-i <index>',
-      description: 'Sets the index of which definition to show'
+      description: 'Sets index of which definition to show'
     }
   ]
 }

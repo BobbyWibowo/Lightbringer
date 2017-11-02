@@ -76,6 +76,7 @@ class ConfigManager {
         res.pastebinApiDevKey = ''
         res.pastebinApiUserKey = ''
         res.githubGistsToken = ''
+        res.merriamWebsterDictKey = ''
 
         fse.outputJsonSync(this._configPath, res, { spaces: 2 })
         console.log('Configuration file saved. Please restart the bot!')

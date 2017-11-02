@@ -1,4 +1,4 @@
-# Commands (77)  
+# Commands (78)  
   
 ## Fun – 32 commands  
 ### `8ball`  
@@ -184,7 +184,7 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 26 commands  
+## Utility – 27 commands  
 ### `avatar`  
 *Description:* `Display full image size of yours or another user's avatar`  
 *Usage:* `avatar [options] [user]`  
@@ -193,6 +193,10 @@
 *Description:* `Convert currency using exchange rates from http://fixer.io/`  
 *Usage:* `currency [<value> <from> <to>|refresh]`  
 *Aliases:* `curr`  
+### `dictionary`  
+*Description:* `Looks up a word on Dictionary.com`  
+*Usage:* `dictionary <query>`  
+*Aliases:* `dict`  
 ### `embed`  
 *Description:* `Sends a message via embeds`  
 *Usage:* `embed [options] <text>`  

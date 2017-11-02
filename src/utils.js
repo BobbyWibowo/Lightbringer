@@ -822,9 +822,11 @@ exports.haste = async (content, suffix = '', raw = false) => {
 
 exports.paste = async (content, options = {}) => {
   const pastebinRegex = /^https?:\/\/pastebin\.com\/(\w+?)$/
+  const CONFIG_KEY_DEV = 'pastebinApiDevKey'
+  const CONFIG_KEY_USER = 'pastebinApiUserKey'
 
-  if (!config.pastebinApiDevKey) {
-    throw new Error('Pastebin API dev key is missing from config.json file!')
+  if (!config[CONFIG_KEY_DEV]) {
+    throw new Error(`Pastebin API dev key (\`${CONFIG_KEY_DEV}\`) is missing from config.json file!`)
   }
 
   const name = options.name || dumpName()
@@ -833,19 +835,19 @@ exports.paste = async (content, options = {}) => {
   const expiration = options.expiration || 'N'
 
   try {
-    const res = snekfetch.post('https://pastebin.com/api/api_post.php')
+    const res = await snekfetch.post('https://pastebin.com/api/api_post.php')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        api_dev_key: config.pastebinApiDevKey,
+        api_dev_key: config[CONFIG_KEY_DEV],
         api_option: 'paste',
         api_paste_code: content + `\n\n${dumpDescription}`,
-        api_user_key: config.pastebinApiUserKey || '',
+        api_user_key: config[CONFIG_KEY_USER] || '',
         api_paste_name: name,
         api_paste_format: format,
         api_paste_private: privacy,
         api_paste_expire_date: expiration
       })
-    if (!res.body) {
+    if (res.status !== 200) {
       throw new Error('Unexpected error occurred!')
     }
     const result = res.body.toString()
@@ -860,9 +862,10 @@ exports.paste = async (content, options = {}) => {
 
 exports.gists = async (content, options = {}) => {
   const snekpost = snekfetch.post('https://api.github.com/gists')
+  const CONFIG_TOKEN = 'githubGistsToken'
 
-  if (config.githubGistsToken) {
-    snekpost.set('Authorization', `token ${config.githubGistsToken}`)
+  if (config[CONFIG_TOKEN]) {
+    snekpost.set('Authorization', `token ${config[CONFIG_TOKEN]}`)
   }
 
   if (!options.suffix || options.suffix === 'md') {
