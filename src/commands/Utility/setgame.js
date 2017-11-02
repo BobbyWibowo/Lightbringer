@@ -2,7 +2,7 @@ const normalizeUrl = require('normalize-url')
 
 exports.run = async (bot, msg, args) => {
   if (bot.commands.get('lastfm') && bot.commands.get('lastfm').nowPlaying) {
-    throw new Error('Last.fm listener is currently handling your game message automatically.')
+    return msg.error('Last.fm listener is currently handling your game message automatically.')
   }
 
   if (!args.length) {

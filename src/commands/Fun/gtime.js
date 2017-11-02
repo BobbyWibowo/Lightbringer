@@ -4,12 +4,12 @@ const googleMapsApi = 'https://maps.googleapis.com/maps/api'
 
 exports.run = async (bot, msg, args) => {
   if (!config.googleApiKey || config.googleApiKey.length < 1) {
-    throw new Error('Google API key is missing from config.json')
+    return msg.error('Google API key is missing from config.json')
   }
 
   const location = args.join(' ') || config.defaultTimeZone || false
   if (!location) {
-    throw new Error('Please specify a location to lookup!')
+    return msg.error('Please specify a location to lookup!')
   }
 
   await msg.edit(`${SUCCESS}Fetching time info for '${location}' from Google Maps API\u2026`)
@@ -17,8 +17,8 @@ exports.run = async (bot, msg, args) => {
   const geocode = await snekfetch.get(`${googleMapsApi}/geocode/json?address=${encodeURIComponent(location)}` +
     `&key=${config.googleApiKey}`)
 
-  if (!geocode || !geocode.body) {
-    throw new Error('Could not fetch geocode data from Google Maps API!')
+  if (geocode.status !== 200) {
+    return msg.error('Could not fetch geocode data from Google Maps API!')
   }
 
   if (geocode.body.error_message) {
@@ -35,8 +35,8 @@ exports.run = async (bot, msg, args) => {
   const timezone = await snekfetch.get(`${googleMapsApi}/timezone/json?location=${geocodeloc.lat},${geocodeloc.lng}` +
     `&timestamp=${unixTimestamp}&key=${config.googleApiKey}`)
 
-  if (!timezone || !timezone.body) {
-    throw new Error('Could not fetch timezone data from Google Maps API!')
+  if (timezone.status !== 200) {
+    return msg.error('Could not fetch timezone data from Google Maps API!')
   }
 
   // NOTE: This check may not actually exist in timezone API (exists in geocode API)

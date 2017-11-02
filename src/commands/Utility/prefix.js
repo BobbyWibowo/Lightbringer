@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('Please provide a prefix to set!')
+    return msg.error('Please provide a prefix to set!')
   }
 
   const prefix = args.join(' ')

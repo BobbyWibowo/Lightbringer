@@ -8,7 +8,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!parsed.leftover.length) {
-    throw new Error('You must specify a role name!')
+    return msg.error('You must specify a role name!')
   }
 
   const keyword = parsed.leftover.join(' ')

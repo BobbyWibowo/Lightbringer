@@ -9,7 +9,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!args.length) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   await msg.edit('🔄')
@@ -31,7 +31,7 @@ exports.run = async (bot, msg, args) => {
     })
     return msg.delete()
   } else {
-    throw new Error('No matches found!')
+    return msg.error('No matches found!')
   }
 }
 

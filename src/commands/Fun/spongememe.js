@@ -4,7 +4,7 @@ exports.run = async (bot, msg, args) => {
   const emoji = bot.emojis.get('313010878196875265')
 
   if (!emoji) {
-    throw new Error('You do not have the \'spongeMyCock\' emoji!')
+    return msg.error('You do not have the \'spongeMyCock\' emoji!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['t:'])

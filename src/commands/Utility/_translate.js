@@ -9,7 +9,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (parsed.leftover.length < 2) {
-    throw new Error('You must provide a language and some text to translate!')
+    return msg.error('You must provide a language and some text to translate!')
   }
 
   const lang = parsed.leftover[0]

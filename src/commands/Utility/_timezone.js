@@ -6,13 +6,17 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!args.length) {
-    throw new Error('You must specify a time to convert')
+    return msg.error('You must specify a time to convert')
   }
 
   const input = args.join(' ')
   const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json`
 
   const res = await snekfetch.get(url)
+  if (res.status !== 200) {
+    return msg.error('Could not connect to DuckDuckGo server!')
+  }
+
   const data = JSON.parse(res.body)
   const answer = data['Answer']
 

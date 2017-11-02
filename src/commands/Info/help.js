@@ -14,7 +14,7 @@ exports.run = async (bot, msg, args) => {
   if (args.length > 0) {
     if (CATEGORY.test(args[0])) {
       if (args.length < 2) {
-        throw new Error('You must specify a category!')
+        return msg.error('You must specify a category!')
       }
 
       commands = bot.commands.all(args[1])
@@ -25,7 +25,7 @@ exports.run = async (bot, msg, args) => {
     } else {
       const command = bot.commands.get(args[0])
       if (!command) {
-        throw new Error(`The command \`${args[0]}\` does not exist!`)
+        return msg.error(`The command \`${args[0]}\` does not exist!`)
       }
 
       commands = [command]

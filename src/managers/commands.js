@@ -3,6 +3,8 @@ const chalk = require('chalk')
 const read = require('readdir-recursive')
 const Discord = require('discord.js')
 
+const DELETE = 8000
+
 class CommandManager {
   constructor () {
     this.bot = bot
@@ -41,7 +43,7 @@ class CommandManager {
       delete this._commands
       delete this._categories
     } else if (manual !== undefined) {
-      throw new Error('The bot can not reload individual commands for the time being.')
+      throw new Error('The bot can not reload individual commands for the time being\u2026')
     }
 
     this._commands = []
@@ -64,7 +66,7 @@ class CommandManager {
 
       const error = this._validateCommand(command)
       if (error) {
-        this.bot.logger.severe(`Failed to load '${file}': ${chalk.red(error)}`)
+        console.error(`Failed to load '${file}': ${chalk.red(error)}`)
         continue
       }
 
@@ -80,7 +82,7 @@ class CommandManager {
         try {
           await command.init(this.bot)
         } catch (err) {
-          this.bot.logger.severe(`Failed to init '${parsed.name}':`, err)
+          console.error(`Failed to init '${parsed.name}':`, err)
           continue
         }
       }
@@ -118,10 +120,11 @@ class CommandManager {
 
   async execute (msg, command, args, ...extended) {
     if (msg instanceof Discord.Message) {
-      const DELETE = 8000
+      msg.error = async (message, timeout = DELETE, muteLog = false) => {
+        if (!muteLog) {
+          console.info(`${chalk.yellow(`[${command.info.name}]`)} ${message}`)
+        }
 
-      msg.error = async (message, timeout = DELETE) => {
-        this.bot.logger.warn(`${chalk.yellow(`[${command.info.name}]`)} ${message}`)
         await msg.edit(`❌\u2000${message.toString() || 'Something failed!'}`)
         return msg.delete(timeout)
       }
@@ -138,9 +141,10 @@ class CommandManager {
       await command.run(this.bot, msg, args, ...extended)
     } catch (err) {
       if (msg instanceof Discord.Message) {
-        msg.error(err)
+        console.error(`${chalk.red(`[${command.info.name}]`)} ${err.stack || err}`)
+        msg.error(err, DELETE, true)
       } else {
-        console.error(err)
+        console.error(`${chalk.red(`[${command.info.name}]`)} ${err.stack || err}`)
       }
     }
   }

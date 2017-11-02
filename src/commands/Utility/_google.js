@@ -7,13 +7,17 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!args.length) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   const y = 'Google'
 
   await msg.edit(`${PROGRESS}Searching for \`${args.join(' ')}\` on ${y}\u2026`)
   const res = await snekfetch.get('http://google.com/search?client=chrome&rls=en&ie=UTF-8&oe=UTF-8&q=' + args.join('+'))
+  if (res.status !== 200) {
+    return msg.error('Could not connect to Google server!')
+  }
+
   const $ = cheerio.load(res.body)
   const results = []
   $('.g').each((i) => {

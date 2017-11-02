@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['i'])

@@ -14,7 +14,7 @@ exports.methods = {
 
 exports.run = async (bot, msg, args) => {
   if (args.length < 2) {
-    throw new Error(`Do \`${config.prefix}help binary\` to see how to use this.`)
+    return msg.error(`Do \`${config.prefix}help binary\` to see how to use this.`)
   }
 
   const input = args.slice(1).join(' ')
@@ -23,7 +23,7 @@ exports.run = async (bot, msg, args) => {
   } else if (DECODE.test(args[0])) {
     return msg.edit(this.methods.decode(input))
   } else {
-    throw new Error(`Unknown sub command: \`${args[0]}\``)
+    return msg.error(`Unknown sub command: \`${args[0]}\``)
   }
 }
 

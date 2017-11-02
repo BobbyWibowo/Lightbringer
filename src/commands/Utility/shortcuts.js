@@ -17,7 +17,7 @@ exports.run = async (bot, msg, args) => {
     const shortcuts = this.storage.values
 
     if (shortcuts.length < 1) {
-      throw new Error('You have no shortcuts!')
+      return msg.error('You have no shortcuts!')
     }
 
     await msg.edit(msg.content, {
@@ -41,17 +41,17 @@ exports.run = async (bot, msg, args) => {
 
   if (ADD.test(action)) {
     if (parsed.leftover.length < 3) {
-      throw new Error(`Usage: \`${config.prefix}shortcuts add <name> <command>\``)
+      return msg.error(`Usage: \`${config.prefix}shortcuts add <name> <command>\``)
     }
 
     const name = parsed.leftover[1].toLowerCase()
 
     if (bot.commands.get(name)) {
-      throw new Error(`That name \`${name}\` was already reserved by a module as a command or as an alias!`)
+      return msg.error(`That name \`${name}\` was already reserved by a module as a command or as an alias!`)
     }
 
     if (this.storage.get(name)) {
-      throw new Error(`The shortcut \`${name}\` already exists!`)
+      return msg.error(`The shortcut \`${name}\` already exists!`)
     }
 
     let command = parsed.leftover.slice(2).join(' ')
@@ -66,13 +66,13 @@ exports.run = async (bot, msg, args) => {
     return msg.success(`The shortcut \`${name}\` was added!`)
   } else if (REMOVE.test(action)) {
     if (parsed.leftover.length < 2) {
-      throw new Error(`Usage: \`${config.prefix}shortcut remove <name>\``)
+      return msg.error(`Usage: \`${config.prefix}shortcut remove <name>\``)
     }
 
     const name = parsed.leftover[1].toLowerCase()
 
     if (!this.storage.get(name)) {
-      throw new Error(`The shortcut \`${name}\` does not exist!`)
+      return msg.error(`The shortcut \`${name}\` does not exist!`)
     }
 
     this.storage.set(name)
@@ -81,20 +81,20 @@ exports.run = async (bot, msg, args) => {
     return msg.success(`The shortcut \`${name}\` was deleted.`)
   } else if (INFO.test(action)) {
     if (parsed.leftover.length < 2) {
-      throw new Error(`Usage: \`${config.prefix}shortcut info <name>\``)
+      return msg.error(`Usage: \`${config.prefix}shortcut info <name>\``)
     }
 
     const name = parsed.leftover[1].toLowerCase()
     const shortcut = this.storage.get(name)
 
     if (!shortcut) {
-      throw new Error(`The shortcut \`${name}\` does not exist!`)
+      return msg.error(`The shortcut \`${name}\` does not exist!`)
     }
 
     await msg.edit(`**Name:** ${shortcut.name}\n${bot.utils.formatCode(shortcut.command, 'xl')}`)
     return msg.delete(30000)
   } else {
-    throw new Error('That action is not valid!')
+    return msg.error('That action is not valid!')
   }
 }
 

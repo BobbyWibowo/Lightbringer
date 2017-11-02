@@ -6,7 +6,7 @@ exports.run = async (bot, msg, args) => {
   const action = /^u(tils)?$/i.test(args[0]) ? 'utils' : (/^c(onst(s)?)?$/i.test(args[0]) ? 'consts' : null)
 
   if (args.length > 0 && !action) {
-    throw new Error('That action is not valid!')
+    return msg.error('That action is not valid!')
   }
 
   this._stats.set('RELOADING', true)
@@ -31,7 +31,7 @@ exports.run = async (bot, msg, args) => {
       const elapsedTimeNs = elapsedTime[0] * 1e9 + elapsedTime[1]
 
       if (!reload) {
-        throw new Error('An unexpected error occurred while trying to reload the ' +
+        return msg.error('An unexpected error occurred while trying to reload the ' +
           `${action === 'p' ? 'plugin' : 'module'}s!`)
       }
 

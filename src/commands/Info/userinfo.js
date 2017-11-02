@@ -14,7 +14,7 @@ exports.run = async (bot, msg, args) => {
   const mention = get[1]
 
   if (parsed.options.m && user === bot.user) {
-    throw new Error(`Use \`${config.prefix}guilds\` command to if you want to list your own guilds!`)
+    return msg.error(`Use \`${config.prefix}guilds\` command to if you want to list your own guilds!`)
   }
 
   await msg.edit(`${PROGRESS}Fetching ${mention ? `${user}'s ` : ''}profile\u2026`)
@@ -26,11 +26,11 @@ exports.run = async (bot, msg, args) => {
   const avatarURL = user.displayAvatarURL
   if (parsed.options.m) {
     if (user.bot) {
-      throw new Error('Can not get mutual guilds information from bot accounts!')
+      return msg.error('Can not get mutual guilds information from bot accounts!')
     }
 
     if (!profile.mutualGuilds || !profile.mutualGuilds.size) {
-      throw new Error(`You and \`${user.tag}\` have no mutual guilds!`)
+      return msg.error(`You and \`${user.tag}\` have no mutual guilds!`)
     }
 
     const thumbAvatarURL = avatarURL.replace(/\?size=\d+?$/i, '')

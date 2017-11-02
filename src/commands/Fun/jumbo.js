@@ -3,7 +3,7 @@ exports.run = async (bot, msg, args) => {
   parsed.split = parsed.leftover.join(' ').replace(/(<:\w+?:\d+?>)/g, '|$1|').split('|')
 
   if (parsed.split.length < 1) {
-    throw new Error('You must enter at least one emoji!')
+    return msg.error('You must enter at least one emoji!')
   }
 
   let files = parsed.split.map(a => {
@@ -29,7 +29,7 @@ exports.run = async (bot, msg, args) => {
   })
 
   if (!files.length) {
-    throw new Error('Could not parse emojis!')
+    return msg.error('Could not parse emojis!')
   }
 
   await msg.channel.send(parsed.split.join(''), { files })

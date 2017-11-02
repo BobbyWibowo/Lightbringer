@@ -1,6 +1,6 @@
 global.PROGRESS = '🔄\u2000'
 global.SUCCESS = '✅\u2000'
-global.FAIL = '❌\u2000'
+global.FAILURE = '❌\u2000'
 
 exports.fullDateFormat = 'dddd, MMMM Do YYYY @ h:mm:ss a'
 exports.mediumDateFormat = 'ddd, MMM Do YYYY @ h:mm:ss a'

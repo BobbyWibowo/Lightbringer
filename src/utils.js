@@ -439,6 +439,42 @@ exports.formatSeconds = ms => {
   return `${s} second${s !== 1 ? 's' : ''}`
 }
 
+exports.getProp = (obj, props) => {
+  if (!obj || !props) return
+
+  if (typeof props === 'string') {
+    if (props.includes('.')) {
+      const propsArr = props.split('.')
+      props = []
+
+      for (let i = 0; i < propsArr.length; i++) {
+        let p = propsArr[i]
+
+        while (p[p.length - 1] === '\\' && propsArr[i + 1] !== undefined) {
+          p = p.slice(0, -1) + '.'
+          p += propsArr[++i]
+        }
+
+        props.push(p)
+      }
+    } else {
+      props = [props]
+    }
+  } else if (!props.constructor || props.constructor.name !== 'Array') {
+    return
+  }
+
+  for (let i = 0; i < props.length; i++) {
+    obj = obj[props[i]]
+
+    if (obj === undefined) {
+      break
+    }
+  }
+
+  return obj
+}
+
 /**
  * utils.getMsg - A Promise which will return a cached message from a
  * channel. If msgId is not provided, then it will return the previous
@@ -489,21 +525,12 @@ const formatFoundList = (collection, props, name) => {
   const isMoreThanMax = collection.size > 20
   const leftover = isMoreThanMax && collection.size - 20
 
-  const _get = (object, props) => {
-    let last = object
-    for (let i = 0; i < props.length; i++) {
-      last = last[props[i]] || undefined
-      if (!last) break
-    }
-    return last
-  }
-
-  const array = collection.sort((a, b) => _get(a, props).localeCompare(_get(b, props))).array()
+  const array = collection.sort((a, b) => this.getProp(a, props).localeCompare(this.getProp(b, props))).array()
   array.length = Math.min(MAX, array.length)
 
   return new Error(`Found \`${collection.size}\` ${name}${collection.size !== 1 ? 's' : ''} with that keyword. ` +
     'Please use a more specific keywords!\n' +
-    bot.utils.formatCode(`${array.map(i => _get(i, props)).join(', ')}` +
+    bot.utils.formatCode(`${array.map(i => this.getProp(i, props)).join(', ')}` +
     `${isMoreThanMax ? `, and ${leftover} more\u2026` : ''}`))
 }
 
@@ -547,7 +574,7 @@ exports.getGuildMember = (guild, keyword, fallback, suppress) => {
     if (filter.size === 1) {
       return [filter.first(), false]
     } else if (filter.size !== 0) {
-      throw formatFoundList(filter, ['user', 'tag'], 'guild member')
+      throw formatFoundList(filter, 'user.tag', 'guild member')
     }
   }
 
@@ -601,7 +628,7 @@ exports.getUser = (guild, keyword, fallback) => {
     if (filter.size === 1) {
       return [filter.first(), false]
     } else if (filter.size !== 0) {
-      throw formatFoundList(filter, ['tag'], 'user')
+      throw formatFoundList(filter, 'tag', 'user')
     }
   }
 
@@ -646,7 +673,7 @@ exports.getGuildRole = (guild, keyword) => {
   if (filter.size === 1) {
     return [filter.first(), false]
   } else if (filter.size !== 0) {
-    throw formatFoundList(filter, ['name'], 'guild role')
+    throw formatFoundList(filter, 'name', 'guild role')
   }
 
   throw new Error('Guild role with that keyword could not be found!')
@@ -669,7 +696,7 @@ exports.getGuild = (keyword, suppress) => {
   if (filter.size === 1) {
     return filter.first()
   } else if (filter.size !== 0) {
-    throw formatFoundList(filter, ['name'], 'guild')
+    throw formatFoundList(filter, 'name', 'guild')
   }
 
   if (!suppress) {
@@ -697,7 +724,7 @@ exports.getChannel = (keyword, guild, strict = false) => {
     if (filter.size === 1) {
       return filter.first()
     } else if (filter.size !== 0) {
-      throw formatFoundList(filter, ['name'], 'guild channel')
+      throw formatFoundList(filter, 'name', 'guild channel')
     }
   }
 
@@ -724,7 +751,7 @@ exports.getChannel = (keyword, guild, strict = false) => {
     if (filter.size === 1) {
       return filter.first()
     } else if (filter.size !== 0) {
-      throw formatFoundList(filter, ['recipient', 'tag'], 'DM channel')
+      throw formatFoundList(filter, 'recipient.tag', 'DM channel')
     }
   }
 
@@ -783,9 +810,10 @@ const dumpDescription = `Uploaded with Lightbringer v${process.env.npm_package_v
 exports.haste = async (content, suffix = '', raw = false) => {
   try {
     const res = await snekfetch.post('https://hastebin.com/documents').send(content + `\n\n${dumpDescription}`)
-    if (!res.body || !res.body.key) {
-      throw new Error('Failed to upload, no key was returned!')
+    if (res.status !== 200) {
+      throw new Error('Could not connect to hastebin server!')
     }
+
     return `https://hastebin.com/${raw ? 'raw/' : ''}${res.body.key}${suffix ? `.${suffix}` : ''}`
   } catch (err) {
     throw err

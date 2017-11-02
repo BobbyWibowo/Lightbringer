@@ -1,10 +1,10 @@
 exports.run = async (bot, msg) => {
   if (msg.mentions.users.size < 1) {
-    throw new Error('@mention some people to insult!')
+    return msg.error('@mention some people to insult!')
   }
 
   return msg.edit(msg.mentions.users.map(m => {
-    return `**${bot.consts.insults[Math.round(Math.random() * (bot.consts.insults.length - 1))].replace(/@/g, m)}**`
+    return `${bot.consts.insults[Math.round(Math.random() * (bot.consts.insults.length - 1))].replace(/@/g, m)}`
   }).join('\n'))
 }
 

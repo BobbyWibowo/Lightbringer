@@ -35,6 +35,9 @@ const poll = async () => {
   try {
     res = await snekfetch.get(`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&format=json` +
       `&user=${config.lastFmUsername}&api_key=${config.lastFmApiKey}&limit=1`)
+    if (res.status !== 200) {
+      throw new Error(res.text)
+    }
   } catch (err) {
     if (!SUPPRESS_ERROR) {
       console.error(`Last.fm listener (snekfetch): ${err}`)
@@ -102,7 +105,7 @@ exports.run = async (bot, msg, args) => {
         return msg.success('Enabled Last.fm listener!')
       }
     } else {
-      throw new Error('That action is not valid!')
+      return msg.error('That action is not valid!')
     }
   }
 }

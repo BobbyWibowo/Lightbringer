@@ -29,7 +29,7 @@ exports.run = async (bot, msg, args) => {
     })
     images = await booru.commonfy(images)
     if (!images.length) {
-      throw new Error('No images found!')
+      return msg.error('No images found!')
     }
 
     const image = images[0]
@@ -48,7 +48,7 @@ exports.run = async (bot, msg, args) => {
   } catch (err) {
     if (err.name === 'booruError') {
       if (new RegExp('You didn\'t give any images', 'i').test(err.message)) {
-        throw new Error('No images found!')
+        return msg.error('No images found!')
       } else {
         throw err.message
       }

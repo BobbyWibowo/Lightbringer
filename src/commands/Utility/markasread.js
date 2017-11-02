@@ -12,7 +12,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!args.length && !msg.guild) {
-    throw new Error('This command can only be used in a guild!')
+    return msg.error('This command can only be used in a guild!')
   }
 
   const guild = args.length ? bot.utils.getGuild(args.join(' ')) : msg.guild

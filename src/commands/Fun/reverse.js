@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('You must input text to be reversed!')
+    return msg.error('You must input text to be reversed!')
   }
 
   return msg.edit(args.join(' ').split('').reverse().join(''))

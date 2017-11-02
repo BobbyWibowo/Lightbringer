@@ -5,12 +5,12 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['l:', 's'])
 
   if (!parsed.leftover.length) {
-    throw new Error('You must provide a command to run!')
+    return msg.error('You must provide a command to run!')
   }
 
   const ps = exec(parsed.leftover.join(' '))
   if (!ps) {
-    throw new Error('Failed to start process!')
+    return msg.error('Failed to start process!')
   }
 
   if (!parsed.options.s) {

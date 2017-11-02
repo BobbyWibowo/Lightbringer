@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
   let avatarURL = user.displayAvatarURL
 
   if (!avatarURL) {
-    throw new Error('Could not get display avatar of the specified user!')
+    return msg.error('Could not get display avatar of the specified user!')
   }
 
   if (parsed.options.np) {

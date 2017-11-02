@@ -2,7 +2,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['r:'])
 
   if (!parsed.leftover.length) {
-    throw new Error('Specify a user to kick!')
+    return msg.error('Specify a user to kick!')
   }
 
   const keyword = parsed.leftover.join(' ')

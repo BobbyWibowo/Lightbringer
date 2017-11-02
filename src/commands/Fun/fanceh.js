@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('You must provide some text to convert!')
+    return msg.error('You must provide some text to convert!')
   }
 
   const emojis = bot.utils.buildEmojisArray(args.join(' '), {
@@ -10,7 +10,7 @@ exports.run = async (bot, msg, args) => {
   })
 
   if (!emojis.length) {
-    throw new Error('Unable to parse text into emojis!')
+    return msg.error('Unable to parse text into emojis!')
   }
 
   return msg.edit(emojis.join(' '))

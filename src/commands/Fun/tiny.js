@@ -40,7 +40,7 @@ const mappings = ((object) => {
 
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('You must provide some text to shrink!')
+    return msg.error('You must provide some text to shrink!')
   }
 
   let output = args.join(' ')

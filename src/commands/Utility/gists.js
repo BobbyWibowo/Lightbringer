@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('You must have something to upload!')
+    return msg.error('You must have something to upload!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['n:', 's:', 'p'])

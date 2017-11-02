@@ -8,7 +8,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['a'])
 
   if (!parsed.leftover.length) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   const antonyms = parsed.options.a
@@ -19,13 +19,13 @@ exports.run = async (bot, msg, args) => {
   const res = await saurus(query)
 
   if (!res) {
-    throw new Error('No matches found!')
+    return msg.error('No matches found!')
   }
 
   if (antonyms && (!res.antonyms || !res.antonyms.length)) {
-    throw new Error(`No antonyms found for \`${query}\``)
+    return msg.error(`No antonyms found for \`${query}\``)
   } else if (!antonyms && (!res.synonyms || !res.synonyms.length)) {
-    throw new Error(`No synonyms found for \`${query}\``)
+    return msg.error(`No synonyms found for \`${query}\``)
   }
 
   let title = ` of ${query}`

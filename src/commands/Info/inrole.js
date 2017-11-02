@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (!msg.guild) {
-    throw new Error('This command can only be used in a guild!')
+    return msg.error('This command can only be used in a guild!')
   }
 
   bot.utils.assertEmbedPermission(msg.channel, msg.member)
@@ -8,7 +8,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['r', 'o'])
 
   if (parsed.leftover.length < 1) {
-    throw new Error('You must specify a role name!')
+    return msg.error('You must specify a role name!')
   }
 
   const keyword = parsed.leftover.join(' ')

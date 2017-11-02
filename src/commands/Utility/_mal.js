@@ -9,7 +9,7 @@ const resultsPerPage = 10
 
 exports.run = async (bot, msg, args) => {
   if (!config.malUser || !config.malPassword) {
-    throw new Error('MyAnimeList username or password is missing from config.json file.')
+    return msg.error('MyAnimeList username or password is missing from config.json file.')
   }
 
   if (msg.guild) {
@@ -19,7 +19,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['m', 'l', 'p:', 'i:'])
 
   if (parsed.leftover.length < 1) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   const query = parsed.leftover.join(' ')
@@ -31,13 +31,13 @@ exports.run = async (bot, msg, args) => {
   const auth = await mal.verifyAuth()
 
   if (auth.username !== config.malUser) {
-    throw new Error('MyAnimeList auth did not return the expected value.')
+    return msg.error('MyAnimeList auth did not return the expected value.')
   }
 
   const res = await (parsed.options.m ? mal.searchMangas(query) : mal.searchAnimes(query))
 
   if (!res || !res[0]) {
-    throw new Error('No matches found!')
+    return msg.error('No matches found!')
   }
 
   // BEGIN: Utility functions/variables - for the await feature
@@ -81,7 +81,7 @@ exports.run = async (bot, msg, args) => {
     if (isInputInRange(parsed.options.i, res.length)) {
       index = parsed.options.i - 1
     } else {
-      throw new Error(formatInvalidIndex(parsed.options.i, res.length))
+      return msg.error(formatInvalidIndex(parsed.options.i, res.length))
     }
   } else if (res.length > 1) {
     await msg.edit(formatAwaitMessage(parsed.options.p))
@@ -107,11 +107,11 @@ exports.run = async (bot, msg, args) => {
               msg.edit(formatAwaitMessage(newPage)).then(() =>
                 tm.delete())
             } else {
-              tm.edit(`${FAIL}${formatInvalidIndex(tm.content, pageCount)}`).then(() =>
+              tm.edit(`${FAILURE}${formatInvalidIndex(tm.content, pageCount)}`).then(() =>
                 tm.delete(3000))
             }
           } else {
-            tm.edit(`${FAIL}${formatInvalidIndex(tm.content, res.length)}`).then(() =>
+            tm.edit(`${FAILURE}${formatInvalidIndex(tm.content, res.length)}`).then(() =>
               tm.delete(3000))
           }
 
@@ -126,7 +126,7 @@ exports.run = async (bot, msg, args) => {
         errors: ['time']
       })
     } catch (err) {
-      throw new Error(`You did not specify an index within ${AWAIT_TIMEOUT} second${AWAIT_TIMEOUT !== 1 ? 's' : ''}.`)
+      return msg.error(`You did not specify an index within ${AWAIT_TIMEOUT} second${AWAIT_TIMEOUT !== 1 ? 's' : ''}.`)
     }
 
     const tm = collected.first()

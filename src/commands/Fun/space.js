@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('You must provide text to space out!')
+    return msg.error('You must provide text to space out!')
   }
 
   let amount = 2

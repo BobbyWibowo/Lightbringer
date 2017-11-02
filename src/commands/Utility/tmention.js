@@ -11,7 +11,7 @@ exports.run = async (bot, msg, args) => {
       const mentions = this.storage.keys
 
       if (mentions.length < 1) {
-        throw new Error('You are not logging mentions from any guilds!')
+        return msg.error('You are not logging mentions from any guilds!')
       }
 
       await msg.edit(msg.content, {
@@ -39,7 +39,7 @@ exports.run = async (bot, msg, args) => {
         id = name = _args
       }
     } else if (!msg.guild) {
-      throw new Error('This command is only available in guilds when no arguments are provided!')
+      return msg.error('This command is only available in guilds when no arguments are provided!')
     }
   }
 

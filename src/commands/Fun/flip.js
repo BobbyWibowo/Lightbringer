@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('No texts provided to flip!')
+    return msg.error('No texts provided to flip!')
   }
 
   const content = args.join(' ')

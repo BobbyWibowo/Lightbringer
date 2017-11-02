@@ -3,13 +3,13 @@ const { stripIndents } = require('common-tags')
 
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('You must specify in dice notation (XdY)')
+    return msg.error('You must specify in dice notation (XdY)')
   }
 
   const notation = args[0]
   const roll = new Roll()
   if (!roll.validate(notation)) {
-    throw new Error(`\`${notation}\` is not a valid dice notation!`)
+    return msg.error(`\`${notation}\` is not a valid dice notation!`)
   }
 
   const reason = args.splice(1).join(' ')

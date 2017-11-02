@@ -13,12 +13,12 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!guild) {
-    throw new Error('This command can only be used in a guild!')
+    return msg.error('This command can only be used in a guild!')
   }
 
   const emojis = guild.emojis
   if (!emojis.size) {
-    throw new Error('The guild does not have any emojis!')
+    return msg.error('The guild does not have any emojis!')
   }
 
   if (parsed.options.g) {

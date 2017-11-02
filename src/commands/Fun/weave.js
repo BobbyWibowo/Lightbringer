@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
   if (args.length < 2) {
-    throw new Error('You must provide an emoji and an input text!')
+    return msg.error('You must provide an emoji and an input text!')
   }
 
   // NOTE: No need to check whether the first argument is an emoji or not

@@ -4,7 +4,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!args.length) {
-    throw new Error('You must specify something to embed!')
+    return msg.error('You must specify something to embed!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['ft:', 't:', 'c:', 'r', 'i:', 'a:', 'th:'])
@@ -23,7 +23,7 @@ exports.run = async (bot, msg, args) => {
     }
 
     if (!/^#[a-fA-F0-9]{6}$/.test(color)) {
-      throw new Error(`Invalid color: \`${color}\`. Please use valid hex format (\`#RRGGBB\`)`)
+      return msg.error(`Invalid color: \`${color}\`. Please use valid hex format (\`#RRGGBB\`)`)
     }
   }
 

@@ -8,7 +8,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['v'])
 
   if (parsed.leftover.length < 1) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   const query = parsed.leftover.join(' ')
@@ -17,7 +17,7 @@ exports.run = async (bot, msg, args) => {
 
   const data = await wiki().search(query, 1)
   if (!data.results || !data.results.length) {
-    throw new Error('No matches found!')
+    return msg.error('No matches found!')
   }
 
   const page = await wiki().page(data.results[0])

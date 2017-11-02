@@ -10,7 +10,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['e', 'v'])
 
   if (parsed.leftover.length < 1) {
-    throw new Error('That action is not valid!')
+    return msg.error('That action is not valid!')
   }
 
   const action = parsed.leftover[0]
@@ -23,7 +23,7 @@ exports.run = async (bot, msg, args) => {
     const tags = this.storage.values.sort((a, b) => b.used - a.used)
 
     if (tags.length < 1) {
-      throw new Error('You have no tags!')
+      return msg.error('You have no tags!')
     }
 
     await msg.edit(msg.content, {
@@ -48,12 +48,12 @@ exports.run = async (bot, msg, args) => {
     return msg.delete(60000)
   } else if (ADD.test(action)) {
     if (parsed.leftover.length < 2) {
-      throw new Error(`Usage: \`${config.prefix}${this.info.name} add <name> [contents]\``)
+      return msg.error(`Usage: \`${config.prefix}${this.info.name} add <name> [contents]\``)
     }
 
     const name = parsed.leftover[1]
     if (this.storage.get(name)) {
-      throw new Error(`The tag \`${name}\` already exists!`)
+      return msg.error(`The tag \`${name}\` already exists!`)
     }
 
     let contents = parsed.leftover.slice(2).join(' ')
@@ -72,7 +72,7 @@ exports.run = async (bot, msg, args) => {
         })
         m = collected.first()
       } catch (err) {
-        throw new Error(`You did not specify your desired content within ${AWAIT_TIMEOUT} ` +
+        return msg.error(`You did not specify your desired content within ${AWAIT_TIMEOUT} ` +
           `second${AWAIT_TIMEOUT !== 1 ? 's' : ''}.`)
       }
 
@@ -90,13 +90,13 @@ exports.run = async (bot, msg, args) => {
     return msg.success(`The tag \`${name}\` was added!`)
   } else if (REMOVE.test(action)) {
     if (parsed.leftover.length < 2) {
-      throw new Error(`Usage: \`${config.prefix}${this.info.name} delete <name>\``)
+      return msg.error(`Usage: \`${config.prefix}${this.info.name} delete <name>\``)
     }
 
     const name = parsed.leftover[1]
 
     if (!this.storage.get(name)) {
-      throw new Error(`The tag \`${name}\` does not exist!`)
+      return msg.error(`The tag \`${name}\` does not exist!`)
     }
 
     this.storage.set(name)
@@ -107,7 +107,7 @@ exports.run = async (bot, msg, args) => {
     const tag = this.storage.get(action)
 
     if (!tag) {
-      throw new Error('Action and tag with that name do not exist!')
+      return msg.error('Action and tag with that name do not exist!')
     }
 
     const lo = parsed.leftover.slice(1).join(' ').replace(/\\n/g, '\n').replace(/^ +| +?$/g, '')

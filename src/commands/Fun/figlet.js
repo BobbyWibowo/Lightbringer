@@ -12,7 +12,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!parsed.leftover.length) {
-    throw new Error('You must provide some text to render!')
+    return msg.error('You must provide some text to render!')
   }
 
   const options = {}

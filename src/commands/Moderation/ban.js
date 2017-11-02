@@ -2,14 +2,14 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['r:', 'd:'])
 
   if (!parsed.leftover.length) {
-    throw new Error('Specify a user to ban!')
+    return msg.error('Specify a user to ban!')
   }
 
   let days = 0
   if (parsed.options.d) {
     days = parseInt(parsed.options.d)
     if (isNaN(days)) {
-      throw new Error('Invalid days option. It must only be numbers!')
+      return msg.error('Invalid days option. It must only be numbers!')
     }
   }
 

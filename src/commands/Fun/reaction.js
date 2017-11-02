@@ -3,20 +3,20 @@ exports.run = async (bot, msg, args) => {
   const reactions = parsed.leftover.join(' ')
 
   if (!reactions.length) {
-    throw new Error('No text provided to parse into reaction emojis!')
+    return msg.error('No text provided to parse into reaction emojis!')
   }
 
   const channel = bot.utils.getChannel(parsed.options.c, msg.guild) || msg.channel
 
   if (channel.guild && !channel.permissionsFor(channel.guild.me).has('ADD_REACTIONS')) {
-    throw new Error('The user have no permission to add reactions in the said channel!')
+    return msg.error('The user have no permission to add reactions in the said channel!')
   }
 
   let delay = 1000 // Default delay is 1000 milliseconds (1 second)
   if (parsed.options.d) {
     delay = parseInt(parsed.options.d)
     if (isNaN(delay)) {
-      throw new Error('Delay option must be a valid number!')
+      return msg.error('Delay option must be a valid number!')
     }
   }
 
@@ -29,7 +29,7 @@ exports.run = async (bot, msg, args) => {
   })
 
   if (!emojis.length) {
-    throw new Error('Unable to parse text into reaction emojis!')
+    return msg.error('Unable to parse text into reaction emojis!')
   }
 
   if (parsed.options.s) {

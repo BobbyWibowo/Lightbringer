@@ -27,7 +27,7 @@ exports.run = async (bot, msg, args) => {
     const keywords = args[0].split('.')
     if (keywords[0] === 'version') {
       if (!args[1]) {
-        throw new Error('You must specify a valid version string!')
+        return msg.error('You must specify a valid version string!')
       }
       await fetchDocs(args[1])
       return msg.success(`Successfully loaded docs with version: \`${args[1]}\`!`)
@@ -44,7 +44,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!embed) {
-    throw new Error('Could not get any information with that keyword from API docs!')
+    return msg.error('Could not get any information with that keyword from API docs!')
   }
 
   return msg.edit(msg.content, { embed })
@@ -268,7 +268,7 @@ const buildEmbed = (data, sub, type) => {
 const fetchDocs = async version => {
   try {
     const res = await snekfetch.get(`https://raw.githubusercontent.com/hydrabolt/discord.js/docs/${version}.json`)
-    if (!res || !res.body) {
+    if (res.status !== 200) {
       throw new Error('Unexpected error occurred!')
     }
     docs = JSON.parse(res.body)

@@ -8,7 +8,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!args.length) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   const prev = msg.content
@@ -18,15 +18,16 @@ exports.run = async (bot, msg, args) => {
     await msg.edit(`${PROGRESS}Loading info for \`${repo}\`\u2026`)
     try {
       const res = await snekfetch.get(`https://api.github.com/repos/${repo}`)
-      if (!res || !res.body) {
-        throw new Error('An unexpected error occurred!')
+      if (res.status !== 200) {
+        return msg.error('Could not connect to GitHub server!')
       }
+
       return msg.edit(prev, {
         embed: buildEmbedFromJson(res.body)
       })
     } catch (err) {
       if (new RegExp('404 Not Found', 'i').test(err.toString())) {
-        throw new Error('That repository could not be found!')
+        return msg.error('That repository could not be found!')
       } else {
         throw err
       }
@@ -34,12 +35,19 @@ exports.run = async (bot, msg, args) => {
   } else {
     const query = args.join(' ')
     await msg.edit(`${PROGRESS}Searching for \`${query}\`\u2026`)
+
     const res = await snekfetch.get(`https://api.github.com/search/repositories?q=${args.join('+')}`)
-    if (res.body.items.length < 1) {
-      return msg.error(`${FAIL}No results found for '${args.join(' ')}'`)
+    if (res.status !== 200) {
+      return msg.error('Could not connect to GitHub server!')
     }
+
+    if (res.body.items.length < 1) {
+      return msg.error(`${FAILURE}No results found for '${args.join(' ')}'`)
+    }
+
     const count = res.body.items.length = Math.min(3, res.body.items.length)
     await msg.edit(`${SUCCESS}Top ${count} result${count !== 1 ? 's' : ''} for \`${query}\`:`)
+
     const send = async i => {
       if (!res.body.items[i]) {
         return

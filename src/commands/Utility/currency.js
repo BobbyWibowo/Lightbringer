@@ -21,8 +21,8 @@ exports.updateRates = async () => {
   }
 
   const res = await snekfetch.get('https://api.fixer.io/latest')
-  if (!res || !res.body) {
-    throw new Error('Could not fetch exchange rates info!')
+  if (res.status !== 200) {
+    throw new Error('Could not connect to fixer.io server!')
   }
   this.fixerIoLatest = res.body
   this.fixerIoTimestamp = new Date()
@@ -40,7 +40,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (args.length < 3) {
-    throw new Error(`Usage: \`${config.prefix}${this.info.name} <value> <from> <to>\``)
+    return msg.error(`Usage: \`${config.prefix}${this.info.name} <value> <from> <to>\``)
   }
 
   if (!this.fixerIoLatest) {
@@ -50,7 +50,7 @@ exports.run = async (bot, msg, args) => {
 
   const value = parseFloat(args[0])
   if (isNaN(value)) {
-    throw new Error('Invalid value. It must only be numbers!')
+    return msg.error('Invalid value. It must only be numbers!')
   }
 
   const base = this.fixerIoLatest.base
@@ -59,7 +59,7 @@ exports.run = async (bot, msg, args) => {
   const to = args[/^to$/i.test(args[2]) && args.length > 3 ? 3 : 2].toUpperCase()
   for (const c of [from, to]) {
     if (!rates[c] && c !== base) {
-      throw new Error(`Currency \`${c}\` is not available!`)
+      return msg.error(`Currency \`${c}\` is not available!`)
     }
   }
 

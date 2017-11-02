@@ -4,7 +4,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['u'])
 
   if (parsed.leftover.length < 1) {
-    throw new Error('You must provide something to search for!')
+    return msg.error('You must provide something to search for!')
   }
 
   await msg.edit('🔄')
@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
       }
 
       if (!res.data.url) {
-        throw new Error('No matches found!')
+        return msg.error('No matches found!')
       }
 
       const key = res.data.url.substr(res.data.url.lastIndexOf('-') + 1)

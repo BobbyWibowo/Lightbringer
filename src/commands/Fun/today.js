@@ -16,7 +16,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!args.length) {
-    throw new Error('You must specify a type!')
+    return msg.error('You must specify a type!')
   }
 
   let mappingIndex
@@ -29,14 +29,14 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!mappingIndex) {
-    return new Error('That type is not available!')
+    return msg.error('That type is not available!')
   }
 
   const prev = msg.content
 
   const res = await snekfetch.get('http://history.muffinlabs.com/date')
-  if (!res || !res.body) {
-    throw new Error('Could not fetch data')
+  if (res.status !== 200) {
+    return msg.error('Could not fetch data!')
   }
 
   const data = JSON.parse(res.body)

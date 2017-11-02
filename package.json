@@ -21,31 +21,31 @@
       "config",
       "PROGRESS",
       "SUCCESS",
-      "FAIL"
+      "FAILURE"
     ]
   },
   "dependencies": {
     "bbcode-to-markdown": "^1.0.1",
     "booru": "^0.3.3",
     "bufferutil": "^3.0.2",
-    "chalk": "^2.1.0",
+    "chalk": "^2.3.0",
     "common-tags": "^1.4.0",
     "didyoumean2": "^1.2.0",
     "discord.js": "^11.2.1",
     "emoji-regex": "^6.5.1",
     "encodeurl": "^1.0.1",
     "figlet": "^1.2.0",
-    "filesize": "^3.5.9",
+    "filesize": "^3.5.11",
     "fs-extra": "^4.0.2",
     "giphy-api": "^1.2.7",
     "graceful-fs": "^4.1.11",
     "html-entities": "^1.2.1",
     "js-beautify": "^1.6.14",
-    "mathjs": "^3.16.3",
+    "mathjs": "^3.16.5",
     "minimatch": "^3.0.4",
-    "moment": "^2.18.1",
+    "moment": "^2.19.1",
     "normalize-url": "^1.9.1",
-    "os-toolbox": "^0.2.7",
+    "os-toolbox": "^0.2.9",
     "path": "^0.12.7",
     "pixel-average": "^1.0.1",
     "prompt": "^1.0.0",
@@ -53,12 +53,12 @@
     "relevant-urban": "^2.0.0",
     "roll": "^1.2.0",
     "saurus": "^1.3.1",
-    "snekfetch": "^3.5.1",
+    "snekfetch": "^3.5.8",
     "txtgen": "^2.0.1",
-    "wikijs": "^4.2.0",
+    "wikijs": "^4.3.4",
     "xml2js": "^0.4.19"
   },
   "resolutions": {
-    "discord.js/snekfetch": "^3.5.1"
+    "discord.js/snekfetch": "^3.5.8"
   }
 }

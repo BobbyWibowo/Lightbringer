@@ -5,7 +5,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['nb', 'g', 'nd'])
 
   if (parsed.leftover.length < 1) {
-    throw new Error('You must provide a command to run!')
+    return msg.error('You must provide a command to run!')
   }
 
   if (parsed.options.e && msg.guild) {
@@ -28,7 +28,7 @@ exports.run = async (bot, msg, args) => {
   const elapsedTimeNs = elapsedTime[0] * 1e9 + elapsedTime[1]
 
   if (result.err) {
-    console.error(`Evaluation error:\n${result.err.stack || result.err}`)
+    console.error(`Evaluation error:\n${result.err}`)
   }
 
   let disout = result.err

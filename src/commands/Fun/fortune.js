@@ -49,7 +49,7 @@ exports.run = async (bot, msg, args) => {
 
   if (args.length) {
     if (LIST.test(args[0])) {
-      return msg.edit(`🔮\u2000|\u2000**Available types:** ${CATEGORIES.map(c => `\`${c.name}\``).join(', ')}.`)
+      return msg.edit(`🔮\u2000|\u2000**Available types for \`${this.info.name}\` command:** ${CATEGORIES.map(c => `\`${c.name}\``).join(', ')}.`)
     } else {
       let valid = false
       for (const c of CATEGORIES) {
@@ -60,7 +60,7 @@ exports.run = async (bot, msg, args) => {
         }
       }
       if (!valid) {
-        throw new Error(`That type is not available!`)
+        return msg.error(`That type is not available!`)
       }
     }
   }
@@ -68,8 +68,8 @@ exports.run = async (bot, msg, args) => {
   await msg.edit('🔄\u2000Getting a fortune cookie\u2026')
   const res = await snekfetch.get(`http://yerkee.com/api/fortune/${selected}`)
 
-  if (!res || !res.body) {
-    throw new Error('Could not retrieve fortune!')
+  if (res.status !== 200) {
+    return msg.error('Could not retrieve fortune!')
   }
 
   await msg.edit(`🔮\u2000|\u2000**Fortune cookie${selected ? ` (${selected})` : ''}:**\n\n${res.body.fortune}`)
@@ -79,5 +79,11 @@ exports.info = {
   name: 'fortune',
   usage: 'fortune [category|list]',
   description: 'Shows a random fortune cookie',
-  aliases: ['fortunecookie']
+  aliases: ['fortunecookie'],
+  examples: [
+    'fortune',
+    'fortune list',
+    'fortune computers',
+    'fortune science'
+  ]
 }

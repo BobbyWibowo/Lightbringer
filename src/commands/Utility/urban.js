@@ -20,7 +20,7 @@ exports.run = async (bot, msg, args) => {
   let def, total
 
   if (!defs) {
-    throw new Error('No matches found!')
+    return msg.error('No matches found!')
   }
 
   if (defs.constructor.name === 'Array') {
@@ -29,11 +29,11 @@ exports.run = async (bot, msg, args) => {
     total = Object.keys(defs).length
 
     if (!defs || !total) {
-      throw new Error('No matches found!')
+      return msg.error('No matches found!')
     }
 
     if (index >= total) {
-      throw new Error(`Index is out of range (maximum index for this definition is ${total})`)
+      return msg.error(`Index is out of range (maximum index for this definition is ${total})`)
     }
 
     def = defs[index]

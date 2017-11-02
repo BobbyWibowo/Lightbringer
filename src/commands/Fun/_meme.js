@@ -51,7 +51,7 @@ exports.init = async bot => {
 
 exports.run = async (bot, msg, args) => {
   if (templates.length < 1) {
-    throw new Error('The memes haven\'t loaded yet!')
+    return msg.error('The memes haven\'t loaded yet!')
   }
 
   if (HELP.test(args[0])) {
@@ -70,12 +70,12 @@ exports.run = async (bot, msg, args) => {
 
   if (INFO.test(args[0])) {
     if (args.length < 2) {
-      throw new Error('You must provide a meme to get info about!')
+      return msg.error('You must provide a meme to get info about!')
     }
 
     const info = getMeme(args[1])
     if (!info) {
-      throw new Error(`That is not a valid meme! Do \`${config.prefix}${this.info.name} list\` to see available memes.`)
+      return msg.error(`That is not a valid meme! Do \`${config.prefix}${this.info.name} list\` to see available memes.`)
     }
 
     let styles
@@ -97,7 +97,7 @@ exports.run = async (bot, msg, args) => {
 
   const meme = getMeme(parts[0])
   if (!meme) {
-    throw new Error(`That is not a valid meme! Do \`${config.prefix}${this.info.name} list\` to see available memes.`)
+    return msg.error(`That is not a valid meme! Do \`${config.prefix}${this.info.name} list\` to see available memes.`)
   }
 
   let url = `${meme.url}/${cleanInput(parts[1]) || '_'}/${cleanInput(parts[2]) || '_'}.jpg`

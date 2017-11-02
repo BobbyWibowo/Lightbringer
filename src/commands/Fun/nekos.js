@@ -9,8 +9,8 @@ exports.run = async (bot, msg, args) => {
   await msg.edit('🔄\u2000Fetching a random nekos image\u2026')
   const res = await snekfetch.get(`http://nekos.life/api/${isLewd ? 'lewd/' : ''}neko`)
 
-  if (!res || !res.body || !res.body.neko) {
-    throw new Error('Failed to fetch image!')
+  if (res.status !== 200) {
+    return msg.error('Failed to fetch image!')
   }
 
   if (parsed.options.u) {

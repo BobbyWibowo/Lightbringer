@@ -4,7 +4,7 @@ exports.run = async (bot, msg, args) => {
 
   if (args[0]) {
     if (isNaN(parseInt(args[0]))) {
-      throw new Error('Invalid amount. It must be numbers!')
+      return msg.error('Invalid amount. It must be numbers!')
     } else {
       amount = Math.min(50, parseInt(args[0]))
     }

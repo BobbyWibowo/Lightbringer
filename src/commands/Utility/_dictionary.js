@@ -6,7 +6,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!args.length) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   const query = args.join(' ')
@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
   await msg.edit(`${PROGRESS}Searching for \`${query}\` on ${y}\u2026`)
   const resp = await webdict('dictionary', query)
   if (!resp || (parseInt(resp.statusCode) !== 200)) {
-    throw new Error('No matches found!')
+    return msg.error('No matches found!')
   }
 
   return msg.edit(`First search result of \`${query}\` on ${y}:`, {

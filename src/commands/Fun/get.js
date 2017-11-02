@@ -5,7 +5,17 @@ const { XmlEntities } = require('html-entities')
 const apis = [
   {
     name: 'joke',
-    regex: '^j(oke)?$',
+    regex: '^j(oke)?$|^dad(joke)?$',
+    api: 'https://icanhazdadjoke.com/',
+    prop: 'joke',
+    headers: {
+      'Accept': 'application/json',
+      'User-Agent': 'Lightbringer (https://github.com/BobbyWibowo/Lightbringer)'
+    }
+  },
+  {
+    name: 'chucknorris',
+    regex: '^c(huck(norris)?)?$',
     api: 'http://api.icndb.com/jokes/random',
     prop: 'value.joke',
     decode: true
@@ -20,7 +30,7 @@ const apis = [
     name: 'yomomma',
     regex: '^y(omomma)?$',
     api: 'http://api.yomomma.info/',
-    parseJson: true,
+    jsonParse: true,
     prop: 'joke'
   },
   {
@@ -66,7 +76,11 @@ const apis = [
 
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error(`You must specify a type! Available types: ${apis.map(a => `\`${a.name}\``).join(', ')}.`)
+    return msg.error(`You must specify a type! Use \`${bot.config.prefix}${this.info.name} list\` to see list of available APIs.`)
+  }
+
+  if (/^l(ist)?$/i.test(args[0])) {
+    return msg.edit(`ℹ\u2000|\u2000**Available types for \`${this.info.name}\` command:** ${apis.map(a => `\`${a.name}\``).join(', ')}.`)
   }
 
   let result = {
@@ -74,23 +88,23 @@ exports.run = async (bot, msg, args) => {
     image: false
   }
 
-  await msg.edit('🔄')
+  await msg.edit(`${PROGRESS}Fetching data\u2026`)
   for (const a of apis) {
     if (new RegExp(a.regex, 'i').test(args[0])) {
       if (a.api) {
-        const res = await snekfetch.get(a.api)
-        if (!res || !res.body) {
-          throw new Error('Could not fetch data')
-        }
-        const body = a.parseJson ? JSON.parse(res.body) : res.body
-        if (a.prop) {
-          if (body[a.prop]) {
-            result.content = body[a.prop]
+        const res = await snekfetch.get(a.api).set(a.headers || {})
+
+        if (res.status === 200) {
+          const body = a.jsonParse ? JSON.parse(res.body) : res.body
+          if (a.prop) {
+            result.content = bot.utils.getProp(body, a.prop)
           } else {
-            throw new Error('Could not fetch data')
+            result.content = body
           }
-        } else {
-          result.content = body
+        }
+
+        if (!result.content) {
+          return msg.error('Could not fetch data!')
         }
       } else {
         result.content = await a.func()
@@ -107,7 +121,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!result.content) {
-    throw new Error('That type is not available!')
+    return msg.error('That type is not available!')
   }
 
   if (result.image) {
@@ -125,7 +139,12 @@ exports.run = async (bot, msg, args) => {
 
 exports.info = {
   name: 'get',
-  usage: 'get [type]',
+  usage: 'get [type|list]',
   description: 'Gets random thing from various APIs',
-  aliases: ['g', 'f', 'fetch']
+  aliases: ['g', 'f', 'fetch'],
+  examples: [
+    'get',
+    'get list',
+    'get joke'
+  ]
 }

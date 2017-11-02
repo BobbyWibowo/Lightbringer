@@ -8,6 +8,10 @@ exports.run = async (bot, msg, args) => {
 
   try {
     const res = await snekfetch.get(`${timeIs}${location}`)
+    if (res.status !== 200) {
+      return msg.error('Could not connect to time.is server!')
+    }
+
     const text = res.text || res.body.toString()
 
     const date = text.match(new RegExp('<div id="dd" class="w90 tr" onclick="location=\'/calendar\'" ' +
@@ -21,7 +25,7 @@ exports.run = async (bot, msg, args) => {
     return msg.edit(`${clock} The time in '${place}' is ${tMoment.format(bot.consts.fullDateFormat)}.`)
   } catch (err) {
     if (err.status === 404) {
-      throw new Error(`Location \`${location}\` was not found!`)
+      return msg.error(`Location \`${location}\` was not found!`)
     } else {
       throw err
     }

@@ -52,7 +52,7 @@ exports.run = async (bot, msg, args) => {
     const url = await bot.utils.gists(content)
     return msg.success(`<${url}>`, { timeout: -1 })
   } else {
-    throw new Error('That action is not valid!')
+    return msg.error('That action is not valid!')
   }
 }
 

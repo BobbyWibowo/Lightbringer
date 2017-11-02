@@ -2,14 +2,14 @@ const snekfetch = require('snekfetch')
 
 exports.run = async (bot, msg, args) => {
   if (!args.length) {
-    throw new Error('You must provide something to ask!')
+    return msg.error('You must provide something to ask!')
   }
 
   await msg.edit('🔄\u2000Asking 8-ball\u2026')
   const res = await snekfetch.get(`https://8ball.delegator.com/magic/JSON/${args.join(' ')}`)
 
-  if (!res || !res.body || !res.body.magic) {
-    throw new Error('Could not retrieve answer from 8-ball!')
+  if (res.status !== 200) {
+    return msg.error('Could not retrieve answer from 8-ball!')
   }
 
   const magic = res.body.magic

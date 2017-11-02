@@ -27,39 +27,61 @@ const animals = [
       type: 'append',
       data: 'http://random.birb.pw/img/'
     }
+  },
+  {
+    name: 'lizard',
+    regex: /^li(z(ard(s)?)?)?$/i,
+    api: 'https://nekos.life/api/lizard',
+    action: {
+      type: 'json',
+      data: 'url'
+    }
   }
 ]
 
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['u'])
-
-  if (!parsed.leftover.length) {
-    throw new Error(`You must specify a type! Available types: ${animals.map(a => `\`${a.name}\``).join(', ')}.`)
-  }
-
   const type = parsed.leftover[0]
 
-  let image
-  for (const animal of animals) {
-    if (animal.regex.test(type)) {
-      await msg.edit(`🔄\u2000Fetching a random ${animal.name} image\u2026`)
-      const res = await snekfetch.get(animal.api)
-      if (animal.action && animal.action.type === 'regex') {
-        const exec = animal.action.data.exec(res.body)
-        if (exec && exec[1]) {
-          image = exec[1]
-        }
-      } else if (animal.action && animal.action.type === 'append') {
-        image = animal.action.data + res.body
-      } else {
-        image = res.body
-      }
+  if (/^l(ist)?$/i.test(type)) {
+    return msg.edit(`🐱\u2000|\u2000**Available types for \`${this.info.name}\` command:** ${animals.map(a => `\`${a.name}\``).join(', ')}.`)
+  }
+
+  let animal
+  for (let i = 0; i < animals.length; i++) {
+    if (animals[i].regex.test(type)) {
+      animal = animals[i]
       break
     }
   }
 
-  if (!image) {
-    throw new Error('Failed to fetch image or that type is possibly not available!')
+  if (!animal) {
+    animal = animals[Math.floor(Math.random() * animals.length)]
+  }
+
+  await msg.edit(`🔄\u2000Fetching a random ${animal.name} image\u2026`)
+  const res = await snekfetch.get(animal.api)
+
+  if (res.status !== 200) {
+    return msg.error('Failed to fetch image!')
+  }
+
+  let image
+  switch (animal.action.type) {
+    case 'regex':
+      const exec = animal.action.data.exec(res.body)
+      if (exec && exec[1]) {
+        image = exec[1]
+      }
+      break
+    case 'append':
+      image = animal.action.data + res.body
+      break
+    case 'json':
+      image = bot.utils.getProp(res.body, animal.action.data)
+      break
+    default:
+      image = res.body
   }
 
   if (parsed.options.u) {
@@ -72,14 +94,19 @@ exports.run = async (bot, msg, args) => {
 
 exports.info = {
   name: 'animals',
-  usage: 'animals [-u] <cats|dogs>',
-  description: 'Shows you random pictures of cats or dogs',
+  usage: 'animals [-u] [type|list]',
+  description: 'Shows you random animal picture',
   aliases: ['a', 'animal'],
   options: [
     {
       name: '-u',
       usage: '-u',
-      description: 'Attempts to send the image as an attachment instead'
+      description: 'Uploads the picture as an attachment'
     }
+  ],
+  examples: [
+    'animals',
+    'animals list',
+    'animals cat'
   ]
 }

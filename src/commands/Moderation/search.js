@@ -3,13 +3,13 @@ const moment = require('moment')
 
 exports.run = async (bot, msg, args) => {
   if (!msg.guild) {
-    throw new Error('This command can only be used in a guild!')
+    return msg.error('This command can only be used in a guild!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['l:', 'c:', 's'])
 
   if (parsed.leftover.length < 1) {
-    throw new Error('You must specify something to search!')
+    return msg.error('You must specify something to search!')
   }
 
   const content = parsed.leftover.join(' ')
@@ -28,7 +28,7 @@ exports.run = async (bot, msg, args) => {
 
   const messages = await bot.utils.searchMessages(msg.guild, options)
   if (!messages.length) {
-    throw new Error('No matches found!')
+    return msg.error('No matches found!')
   }
 
   await msg.edit(`Search results of \`${content}\` (${messages.length}):`)

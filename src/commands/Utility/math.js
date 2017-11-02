@@ -5,7 +5,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['s', 'l', 'v'])
 
   if (parsed.leftover.length < 1) {
-    throw new Error('Please enter math expressions to evaluate!')
+    return msg.error('Please enter math expressions to evaluate!')
   }
 
   const beginTime = process.hrtime()

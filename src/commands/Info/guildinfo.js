@@ -16,7 +16,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   if (!msg.guild && !parsed.options.f) {
-    throw new Error('This command can only be used in a guild!')
+    return msg.error('This command can only be used in a guild!')
   }
 
   const guild = parsed.options.f ? bot.utils.getGuild(parsed.options.f) : msg.guild
@@ -57,7 +57,7 @@ exports.run = async (bot, msg, args) => {
       )
       delimeter = '\n'
     } else {
-      throw new Error('That action is not valid!')
+      return msg.error('That action is not valid!')
     }
 
     if (parsed.options.g) {
