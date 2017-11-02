@@ -37,7 +37,7 @@ Afterwards, edit `.../Lightbringer/data/configs/config.json` file, then add the 
 > Replace `YOUR_LASTFM_API_KEY` with the API key and `YOUR_LASTFM_USERNAME` with your Last.fm username.  
 Once you're done, you will just have to restart the bot and it will automatically update your game status whenever you're scrobbling anything to Last.fm.  
 >
-> Please note that when it's scrobbling, you won't be able to manually change your game using `lbsetgame`. And if you want to temporarily disable this feature, you can simply use `lblastfm toggle` (since it's a toggle command, you will simply have to use it again to re-enable it).
+> Please note that when it's scrobbling, you won't be able to manually change your game using `lbsetgame`. And if you want to temporarily disable this feature, you can simply use `lblastfm toggle` (since it's a toggle command, use it again to re-enable).
 
 - How to enable MyAnimeList command (`lbmal`)?
 > Edit `.../Lightbringer/data/configs/config.json` file, then add the following:
@@ -46,6 +46,11 @@ Once you're done, you will just have to restart the bot and it will automaticall
 > "malPassword": "YOUR_MYANIMELIST_PASSWORD",
 > ```
 > Afterwards, restart the bot and try the command again.
+>
+> **NOTE:** This command is currently disabled.
+
+- How to enable Merriam-Webster command (`lbdictionary`)?
+> https://github.com/BobbyWibowo/Lightbringer/commit/4b5fdba4022a1235c52624a54c5670d892f07c96#commitcomment-25355888
 
 ### Common errors
 - `ERROR: There are no scenarios; must have at least one.`
@@ -56,6 +61,8 @@ Once you're done, you will just have to restart the bot and it will automaticall
 
 - `Error: Cannot find module './docs'`
 > This is a bug with `mathjs` module, though it's still unclear whether it's caused by `yarn` or the module itself. To solve this, you'll have to download the files in `https://github.com/josdejong/mathjs/tree/4e1142a1/lib/expression/docs`. You can use [this tool](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/josdejong/mathjs/tree/4e1142a1/lib/expression/docs) to download them. Once you have downloaded the archived file, extract its content to `.../Lightbringer/node_modules/mathjs/lib/expression/docs`.
+>
+> **NOTE:** This issue seemed to be caused by `yarn clean`. By default it would get rid of `docs` in modules. Usually it would work just fine, but `mathjs` module required some files in its `docs` directory. If you had not run `yarn clean`, you would not encounter this issue. But if you had run it, try to delete `.yarnclean` file in the bot's root directory.
 
 - `TRACKER : error TRK0005: Failed to locate: "CL.exe". The system cannot find the file specified. [...\Lightbringer\node_modules\leveldown\deps\snappy\snappy.vcxproj]`
 > This issue happens on Windows when you haven't configured the required tools for `node-gyp` module. Please refer to [this page](https://github.com/nodejs/node-gyp#on-windows) for more information about what you have to prepare beforehand.
