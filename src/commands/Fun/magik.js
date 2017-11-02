@@ -52,11 +52,8 @@ exports.info = {
   name: 'magik',
   usage: 'magik <user|url>',
   description: 'Make something magik!',
-  options: [
-    {
-      name: '-u',
-      usage: '-u',
-      description: 'Uploads result as an attachment'
-    }
+  examples: [
+    'magik @user',
+    'magik https://nekos.life/static/neko/neko1.jpg'
   ]
 }

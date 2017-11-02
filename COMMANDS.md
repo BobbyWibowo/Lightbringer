@@ -1,6 +1,6 @@
-# Commands (73)  
+# Commands (77)  
   
-## Fun – 28 commands  
+## Fun – 32 commands  
 ### `8ball`  
 *Description:* `Uses 8ball.delegator.com to ask the magic 8-ball for a question`  
 *Usage:* `8ball <question>`  
@@ -9,8 +9,8 @@
 *Description:* `"Animates" a series of emojis`  
 *Usage:* `anim [-d <delay>] <emoji> [emoji2] [...]`  
 ### `animals`  
-*Description:* `Shows you random pictures of cats or dogs`  
-*Usage:* `animals [-u] <cats|dogs>`  
+*Description:* `Shows you random animal picture`  
+*Usage:* `animals [-u] [type|list]`  
 *Aliases:* `a`, `animal`  
 ### `binary`  
 *Description:* `Encodes/decodes your input to/from binary`  
@@ -39,7 +39,7 @@
 *Aliases:* `fortunecookie`  
 ### `get`  
 *Description:* `Gets random thing from various APIs`  
-*Usage:* `get [type]`  
+*Usage:* `get [type|list]`  
 *Aliases:* `g`, `f`, `fetch`  
 ### `gif`  
 *Description:* `Searches Giphy for GIFs`  
@@ -48,6 +48,9 @@
 ### `gtime`  
 *Description:* `Prints current time in yours or a particular location (using Google Maps API)`  
 *Usage:* `gtime [location]`  
+### `hug`  
+*Description:* `Hugs someone`  
+*Usage:* `hug <user>`  
 ### `insult`  
 *Description:* `Insults some users`  
 *Usage:* `insult <user-1> [user-2] ... [user-n]`  
@@ -60,10 +63,19 @@
 *Description:* `Kills some users`  
 *Usage:* `kill <user-1> [user-2] ... [user-n]`  
 *Credits:* `illusorum#8235 (286011141619187712)`  
+### `kiss`  
+*Description:* `Kisses someone`  
+*Usage:* `kiss <user>`  
+### `magik`  
+*Description:* `Make something magik!`  
+*Usage:* `magik <user|url>`  
 ### `nekos`  
 *Description:* `Uses nekos.life to get random nekos image`  
 *Usage:* `nekos [lewd]`  
 *Aliases:* `neko`  
+### `pat`  
+*Description:* `Pats someone`  
+*Usage:* `pat <user>`  
 ### `reaction`  
 *Description:* `Sends reaction to the previous message`  
 *Usage:* `reaction [options] <text|emoji|both>`  
