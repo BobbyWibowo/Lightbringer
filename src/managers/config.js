@@ -23,7 +23,8 @@ const questions = {
     prefix: {
       type: 'string',
       default: 'lb',
-      required: false
+      required: false,
+      before: value => value.toLowerCase()
     }
   }
 }
@@ -38,7 +39,7 @@ class ConfigManager {
 
   load () {
     if (!fse.existsSync(this._configPath)) {
-      console.log(stripIndents`
+      console.log(stripIndents`...
         ${chalk.gray('---------------------------------------------------------')}
         ${chalk.gray('==============< ') + chalk.yellow('Lightbringer Setup Wizard') + chalk.gray(' >==============')}
         ${chalk.gray('---------------------------------------------------------')}
@@ -47,6 +48,7 @@ class ConfigManager {
         ${chalk.green('https://github.com/BobbyWibowo/Lightbringer#getting-your-user-token')}
 
         Please enter your ${chalk.yellow('bot token')} and desired ${chalk.yellow('command prefix')} for the bot:
+        ${chalk.gray('---------------------------------------------------------')}
       `)
 
       prompt.get(questions, (err, res) => {
@@ -76,8 +78,10 @@ class ConfigManager {
         res.githubGistsToken = ''
 
         fse.outputJsonSync(this._configPath, res, { spaces: 2 })
-        process.exit(1)
+        console.log('Configuration file saved. Please restart the bot!')
+        process.exit(0)
       })
+
       return null
     }
 

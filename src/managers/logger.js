@@ -31,7 +31,7 @@ class Logger {
   }
 
   severe (message, error) {
-    this._log && this._log(chalk.red('!'), message)
+    this._log && this._log(chalk.red('\u2715'), message)
     error && console.error(error)
   }
 

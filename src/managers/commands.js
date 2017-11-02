@@ -121,8 +121,7 @@ class CommandManager {
       const DELETE = 8000
 
       msg.error = async (message, timeout = DELETE) => {
-        // this.bot.logger.severe(message.stack || message)
-        this.bot.logger.severe(message)
+        this.bot.logger.warn(`${chalk.yellow(`[${command.info.name}]`)} ${message}`)
         await msg.edit(`❌\u2000${message.toString() || 'Something failed!'}`)
         return msg.delete(timeout)
       }
