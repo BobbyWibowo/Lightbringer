@@ -34,13 +34,12 @@ if (!fse.existsSync(settings.configsFolder)) fse.mkdirSync(settings.configsFolde
 let beginTime
 let loaded = false
 
-const updateTitle = () => {
-  const title = `Lightbringer - ${bot.user.tag}`
-  process.title = title
-  process.stdout.write(`\u001B]0;${title}\u0007`)
-}
-
 bot.on('ready', async () => {
+  if (loaded) {
+    logger.warn('Shutting down bot due to possible connection issue\u2026')
+    process.exit(1)
+  }
+
   logger.info('Bot successfully logged in! Loading modules\u2026 (this may take a few seconds)')
 
   await bot.user.setStatus('online')
@@ -56,7 +55,10 @@ bot.on('ready', async () => {
   bot.commandsDir = path.resolve(__dirname, 'commands')
   await commands.loadCommands(bot.commandsDir)
 
-  updateTitle()
+  const title = `Lightbringer - ${bot.user.tag}`
+  process.title = title
+  process.stdout.write(`\u001B]0;${title}\u0007`)
+
   logger.info(stripIndents`
     Stats:
     - User: ${bot.user.tag} (ID: ${bot.user.id})
@@ -91,13 +93,10 @@ bot.on('ready', async () => {
 
   loaded = true
 
-  let elapsedTimeS
-  if (beginTime) {
-    const elapsedTime = process.hrtime(beginTime)
-    elapsedTimeS = Math.floor((elapsedTime[0] * 1e9 + elapsedTime[1]) / 1e9)
-    beginTime = null
-  }
-  const readyMessage = `Bot is ready!${elapsedTimeS ? ` - Time taken: **${elapsedTimeS}s**` : ''}`
+  const elapsedTime = process.hrtime(beginTime)
+  const elapsedTimeS = Math.floor((elapsedTime[0] * 1e9 + elapsedTime[1]) / 1e9)
+
+  const readyMessage = `Bot is ready! - Time taken: **${elapsedTimeS}s**`
 
   logger.info(readyMessage.replace(/\*/g, ''))
 
@@ -217,13 +216,12 @@ bot.on('error', logger.severe)
 
 bot.on('warn', logger.warn)
 
-bot.on('disconnect', event => {
-  if (event.code === 4004) {
+bot.on('disconnect', e => {
+  if (e.code === 4004) {
     logger.info('Disconnected from Discord (4004: invalid token)')
   } else {
-    logger.severe(`Disconnected from Discord ${event.code === 1000 ? 'cleanly' : `with code ${event.code}`}`)
+    logger.severe(`Disconnected from Discord ${e.code === 1000 ? 'cleanly' : `with code ${e.code}`}`)
   }
-
   // NOTE: Shutdown bot
   process.exit(1)
 })
@@ -242,6 +240,9 @@ const init = async () => {
       beginTime = process.hrtime()
       logger.info('Logging in\u2026')
       await bot.login(config.botToken)
+    } else {
+      logger.severe('Missing config!')
+      process.exit(1)
     }
   } catch (err) {
     console.error(err)
