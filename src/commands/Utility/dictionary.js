@@ -86,7 +86,7 @@ exports.run = async (bot, msg, args) => {
     }).filter(d => d).join('\n'),
     [
       ['Link', `**https://www.merriam-webster.com/dictionary/${selected.word.replace(/ /g, '+')}**`],
-      ['Match(es)', resp.map((l, i) => `**${i + 1}:** ${l.word}`).join('; ')]
+      ['Match(es)', resp.map((l, i) => `**${i + 1}** : ${l.word}`).join('; ')]
     ],
     {
       footer: y,
@@ -113,7 +113,7 @@ const _beautify = (m, word) => {
     if (i === 0 && m.startsWith(':')) {
       m = m.slice(2)
     } else if (i > 0 && !m.startsWith(':')) {
-      m = `*${m}*`
+      m = `*${m}* `
     }
 
     if (i !== a.length - 1 && a[i + 1] !== undefined && !a[i + 1].startsWith(':')) {
