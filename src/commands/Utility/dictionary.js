@@ -105,9 +105,11 @@ exports.run = async (bot, msg, args) => {
 const _beautify = (m, word) => {
   if (!m.meanings) {
     console.warn(require('util').inspect(m))
-    console.warn('[dictionary] Skipping the above object\u2026')
+    console.warn('[dictionary] Skipping the above Sense object\u2026')
     return false
   }
+
+  console.log(require('util').inspect(m))
 
   // These can be improved even further, I think
   // But oh well, these will do for now
@@ -121,6 +123,11 @@ const _beautify = (m, word) => {
 
     if (i !== a.length - 1 && a[i + 1] !== undefined && !a[i + 1].startsWith(':')) {
       m += '; '
+    }
+
+    // I'm not sure why some "meanings" ends with double whitespaces
+    if (m.endsWith('  ')) {
+      m = m.slice(0, m.length - 1)
     }
 
     return m
