@@ -76,9 +76,10 @@ exports.run = async (bot, msg, args) => {
       if (d.meanings) {
         return _beautify(d, selected.word)
       } else if (d.senses) {
-        return `**${d.number}:**\n${d.senses.map(s => {
-          return `    ${_beautify(s, selected.word)}`
-        }).filter(d => d.trim() !== 'false').join('\n')}`
+        return `**${d.number}** :\n${d.senses.map(s => {
+          const t = _beautify(s, selected.word)
+          return t ? `    ${t}` : t
+        }).filter(d => d).join('\n')}`
       } else {
         console.log(require('util').inspect(d))
         return '**WARN:** Unexpected behavior for this definition. Check your console\u2026'
@@ -103,17 +104,18 @@ exports.run = async (bot, msg, args) => {
 
 const _beautify = (m, word) => {
   if (!m.meanings) {
-    console.log(require('util').inspect(m))
-    console.info('Skipping object for now\u2026')
+    console.warn(require('util').inspect(m))
+    console.warn('[dictionary] Skipping the above object\u2026')
     return false
   }
 
-  let _temp = m.number ? `**${m.number}**${m.status ? ` *${m.status}*` : ''} : ` : ''
+  // These can be improved even further, I think
+  // But oh well, these will do for now
+
+  let _temp = m.number ? `**${m.number}**${m.status ? ` *${m.status}*` : ''} ` : ''
 
   _temp += m.meanings.map((m, i, a) => {
-    if (i === 0 && m.startsWith(':')) {
-      m = m.slice(2)
-    } else if (i > 0 && !m.startsWith(':')) {
+    if (i > 0 && !m.startsWith(':')) {
       m = `*${m}* `
     }
 
@@ -122,9 +124,15 @@ const _beautify = (m, word) => {
     }
 
     return m
-  }).join('').trim()
+  }).join('')
 
   if (m.synonyms) {
+    // There are some cases where the "meanings" ends with ": ",
+    // but some only ends with ":" (without the whitespace at the end)
+    if (_temp.endsWith(':')) {
+      _temp += ' '
+    }
+
     _temp += m.synonyms.map(s => `__${s}__`).join(', ')
   }
 
