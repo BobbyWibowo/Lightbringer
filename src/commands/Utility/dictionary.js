@@ -89,7 +89,8 @@ exports.run = async (bot, msg, args) => {
       ['Match(es)', resp.map((l, i) => `**${i + 1}** : ${l.word}`).join('; ')]
     ],
     {
-      footer: y,
+      footer: `${y}'s Collegiate® Dictionary`,
+      footerIcon: 'https://a.safe.moe/jGuCr.png',
       color: '#2d5f7c'
     }
   )
