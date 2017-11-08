@@ -1,6 +1,6 @@
 exports.run = async (bot, msg) => {
   await msg.edit('👋\u2000Shutting down\u2026 See you next time!')
-  return process.exit(1)
+  return process.exit(0)
 }
 
 exports.info = {
