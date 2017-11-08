@@ -1,19 +1,21 @@
 exports.run = async (bot, msg, args) => {
   const count = parseInt(args[0]) || 1
 
-  try {
-    msg.delete()
-    const messages = await msg.channel.fetchMessages({
-      limit: Math.min(count, 100),
-      before: msg.id
-    })
-    const prunable = messages.filter(m => m.author.id === bot.user.id)
-    await Promise.all(prunable.map(m => m.delete()))
-    const m = await msg.channel.send(`${SUCCESS}Pruned \`${prunable.size}\` messages.`)
-    return m.delete(2000)
-  } catch (err) {
-    console.error(err)
+  let messages = await msg.channel.fetchMessages({
+    limit: Math.min(count, 100),
+    before: msg.id
+  })
+
+  messages = messages.filter(m => m.author.id === bot.user.id)
+
+  if (!messages.size) {
+    return msg.error('There are no messages that can be deleted by user!')
   }
+
+  await msg.edit(`${PROGRESS}Pruning ${messages.size} message(s)\u2026`)
+  await Promise.all(messages.map(m => m.delete()))
+
+  return msg.success(`Pruned \`${messages.size}\` messages.`)
 }
 
 exports.info = {
