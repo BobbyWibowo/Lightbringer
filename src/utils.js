@@ -510,7 +510,7 @@ exports.getMsg = async (channel, msgId, curMsg) => {
   }
 
   if (msgId && isNaN(parseInt(msgId))) {
-    throw new Error('Invalid message ID. It must only be numbers!')
+    throw new Error('Invalid message ID. It must be numbers!')
   }
 
   const foundMsg = channel.messages.get(msgId || channel.messages.keyArray()[channel.messages.size - 2])

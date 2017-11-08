@@ -2,10 +2,15 @@ const { js_beautify } = require('js-beautify')
 const Discord = require('discord.js') // eslint-disable-line no-unused-vars
 
 exports.run = async (bot, msg, args) => {
-  const parsed = bot.utils.parseArgs(args, ['nb', 'g', 'nd', 's'])
+  const parsed = bot.utils.parseArgs(args, ['nb', 'g', 'd:', 's'])
 
   if (parsed.leftover.length < 1) {
     return msg.error('You must provide a command to run!')
+  }
+
+  const depth = parseInt(parsed.options.d) || 0
+  if (isNaN(depth)) {
+    return msg.error('Invalid value for depth option. It must be numbers!')
   }
 
   if (parsed.options.e && msg.guild) {
@@ -41,9 +46,7 @@ exports.run = async (bot, msg, args) => {
   if (result.err) {
     disout = result.err.toString()
   } else {
-    disout = require('util').inspect(result.out, {
-      depth: parsed.options.nd ? 2 : 0
-    })
+    disout = require('util').inspect(result.out, { depth })
   }
 
   if (parsed.options.s) {
@@ -101,12 +104,12 @@ exports.info = {
     {
       name: '-g',
       usage: '-g',
-      description: 'Forcibly uploads the output to GitHub Gists'
+      description: 'Forcibly uploads the output to GitHub Gists (by default it will only upload when the output is too long)'
     },
     {
-      name: '-nd',
-      usage: '-nd',
-      description: 'Prevents the bot from limiting the depth of the output inspector to 0 (default depth is 2)'
+      name: '-d',
+      usage: '-d <depth>',
+      description: 'Forcibly sets depth parameter for util.inspect() (by default the depth is 0 and recommended maximum is 2)'
     },
     {
       name: '-s',

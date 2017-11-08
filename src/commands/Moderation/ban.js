@@ -9,7 +9,7 @@ exports.run = async (bot, msg, args) => {
   if (parsed.options.d) {
     days = parseInt(parsed.options.d)
     if (isNaN(days)) {
-      return msg.error('Invalid days option. It must only be numbers!')
+      return msg.error('Invalid value for days option. It must be numbers!')
     }
   }
 

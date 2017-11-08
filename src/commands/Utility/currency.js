@@ -50,7 +50,7 @@ exports.run = async (bot, msg, args) => {
 
   const value = parseFloat(args[0])
   if (isNaN(value)) {
-    return msg.error('Invalid value. It must only be numbers!')
+    return msg.error('Invalid value. It must be numbers!')
   }
 
   const base = this.fixerIoLatest.base
