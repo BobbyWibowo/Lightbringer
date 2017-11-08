@@ -8,7 +8,7 @@ exports.run = async (bot, msg, args) => {
     return msg.error('You must provide a command to run!')
   }
 
-  const depth = parseInt(parsed.options.d) || 0
+  let depth = parsed.options.d ? parseInt(parsed.options.d) : 0
   if (isNaN(depth)) {
     return msg.error('Invalid value for depth option. It must be numbers!')
   }
