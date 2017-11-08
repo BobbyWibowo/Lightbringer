@@ -12,12 +12,10 @@ exports.run = async (bot, msg, args) => {
     return msg.error('The user have no permission to add reactions in the said channel!')
   }
 
-  let delay = 1000 // Default delay is 1000 milliseconds (1 second)
-  if (parsed.options.d) {
-    delay = parseInt(parsed.options.d)
-    if (isNaN(delay)) {
-      return msg.error('Delay option must be a valid number!')
-    }
+  // Default delay is 1000 milliseconds (1 second)
+  const delay = parsed.options.d ? parseInt(parsed.options.d) : 1000
+  if (isNaN(delay)) {
+    return msg.error('Invalid value for delay option. It must be numbers!')
   }
 
   const m = await bot.utils.getMsg(channel, parsed.options.m, msg.id)
