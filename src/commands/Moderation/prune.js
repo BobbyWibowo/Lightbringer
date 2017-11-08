@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
   await msg.edit(`${PROGRESS}Pruning ${messages.size} message(s)\u2026`)
   await Promise.all(messages.map(m => m.delete()))
 
-  return msg.success(`Pruned \`${messages.size}\` messages.`)
+  return msg.success(`Pruned \`${messages.size}\` messages.`, 4000)
 }
 
 exports.info = {

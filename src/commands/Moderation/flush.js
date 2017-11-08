@@ -19,7 +19,7 @@ exports.run = async (bot, msg, args) => {
   await msg.edit(`${PROGRESS}Flushing ${messages.size} message(s)\u2026`)
   await Promise.all(messages.map(m => m.delete()))
 
-  return msg.success(`Flushed \`${messages.size}\` messages.`)
+  return msg.success(`Flushed \`${messages.size}\` messages.`, 4000)
 }
 
 exports.info = {

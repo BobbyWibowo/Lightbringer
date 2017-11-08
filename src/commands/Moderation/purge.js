@@ -17,7 +17,7 @@ exports.run = async (bot, msg, args) => {
   await msg.edit(`${PROGRESS}Purging ${messages.size} message(s)\u2026`)
   await Promise.all(messages.map(m => m.delete()))
 
-  return msg.success(`Purged \`${messages.size}\` messages.`)
+  return msg.success(`Purged \`${messages.size}\` messages.`, 4000)
 }
 exports.info = {
   name: 'purge',
