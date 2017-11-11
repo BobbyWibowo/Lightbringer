@@ -1,4 +1,5 @@
 const { CollegiateDictionary, WordNotFoundError } = require('mw-dict')
+
 const CONFIG_KEY_DICT = 'merriamWebsterDictKey'
 
 exports.init = async bot => {
@@ -25,7 +26,7 @@ exports.run = async (bot, msg, args) => {
     bot.utils.assertEmbedPermission(msg.channel, msg.member)
   }
 
-  const parsed = bot.utils.parseArgs(args, 'i:')
+  const parsed = bot.utils.parseArgs(args, ['i:', 'nm'])
 
   if (!parsed.leftover.length) {
     return msg.error('You must specify something to search!')
@@ -69,6 +70,18 @@ exports.run = async (bot, msg, args) => {
   }
 
   const selected = resp[index]
+  const nestedFields = [
+    ['Link', `**https://www.merriam-webster.com/dictionary/${selected.word.replace(/ /g, '+')}**`]
+  ]
+
+  if (resp.length > 1 && !parsed.options.nm) {
+    nestedFields.push([
+      'More',
+      resp.map((r, i) => i !== index ? `**${i + 1}** : ${r.word}` : false).filter(r => r).join('\n') +
+      '\n\n*Use -i <index> to display definition of search result with a specific index.*'
+    ])
+  }
+
   const embed = bot.utils.formatEmbed(
     `${selected.word}${selected.functional_label ? ` (${selected.functional_label})` : ''}`,
     selected.definition.map(d => {
@@ -82,13 +95,10 @@ exports.run = async (bot, msg, args) => {
         }).filter(d => d).join('\n')}`
       } else {
         console.log(require('util').inspect(d))
-        return '**WARN:** Unexpected behavior for this definition. Check your console\u2026'
+        return '**Unexpected behavior for this definition. Check your console\u2026**'
       }
     }).filter(d => d).join('\n'),
-    [
-      ['Link', `**https://www.merriam-webster.com/dictionary/${selected.word.replace(/ /g, '+')}**`],
-      ['Match(es)', resp.map((l, i) => `**${i + 1}** : ${l.word}`).join('; ')]
-    ],
+    nestedFields,
     {
       footer: `${y}'s Collegiate® Dictionary`,
       footerIcon: 'https://a.safe.moe/jGuCr.png',
@@ -109,40 +119,47 @@ const _beautify = (m, word) => {
     return false
   }
 
+  console.log(require('util').inspect(m))
+
   // These can be improved even further, I think
   // But oh well, these will do for now
 
   let _temp = m.number ? `**${m.number}**${m.status ? ` *${m.status}*` : ''} ` : ''
 
   _temp += m.meanings.map((m, i, a) => {
-    if (i > 0 && !m.startsWith(':')) {
-      m = `*${m}* `
+    // Trim whitespaces (some meanings have unexpected whitespace)
+    m = m.trim()
+
+    if (m.includes(':')) {
+      // Format semicolons
+      m = m.split(':').map(m => m.trim()).join(' : ').trim()
+    } else {
+      // Italicizes if the meaning does not start with a colon (:)
+      m = `*${m}*`
     }
 
-    if (i !== a.length - 1 && a[i + 1] !== undefined && !a[i + 1].startsWith(':')) {
-      m += '; '
-    }
-
-    // I'm not sure why some "meanings" ends with double whitespaces
-    if (m.endsWith('  ')) {
-      m = m.slice(0, m.length - 1)
+    // Starts meaning with a semicolon (;) if it does not start with
+    // a colon (:) and there was a precedent meaning
+    if (!m.startsWith(':') && a[i - 1] !== undefined) {
+      m = `; ${m}`
     }
 
     return m
-  }).join('')
+  }).join(' ')
 
   if (m.synonyms) {
-    // There are some cases where the "meanings" ends with ": ",
-    // but some only ends with ":" (without the whitespace at the end)
+    // Adds an extra whitespace if there was
+    // a meaning that ends with semicolon (;)
     if (_temp.endsWith(':')) {
       _temp += ' '
     }
 
+    // Underlines all synonyms
     _temp += m.synonyms.map(s => `__${s}__`).join(', ')
   }
 
   if (m.illustrations) {
-    _temp += m.illustrations.map(i => ` \u2022 ${i}`).join('')
+    _temp += ' ' + m.illustrations.map(i => `\u2022 ${i}`).join(' ')
   }
 
   return _temp.replace(new RegExp(`\\b${word}\\b`), `*${word}*`).trim()
@@ -158,6 +175,11 @@ exports.info = {
       name: '-i',
       usage: '-i <index>',
       description: 'Sets index of which definition to show'
+    },
+    {
+      name: '-nm',
+      usage: '-nm',
+      description: 'Prevents the bot from adding More field which will usually list the rest of the search results if available'
     }
   ]
 }

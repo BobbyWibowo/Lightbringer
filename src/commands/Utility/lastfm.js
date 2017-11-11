@@ -31,7 +31,7 @@ const timeout = (modifier = 1) => {
 
 const poll = async () => {
   if (this._stats.get(OFF_ID)) {
-    return timeout(2) // Next poll in 2 * 5000 = 10000 ms
+    return timeout(2) // Next poll in 2 * 7500 = 15000 ms
   }
 
   let res
@@ -43,7 +43,7 @@ const poll = async () => {
     }
   } catch (err) {
     console.warn(`[lastfm] ${err}`)
-    return timeout(2) // Next poll in 2 * 5000 = 10000 ms
+    return timeout(2) // Next poll in 2 * 7500 = 15000 ms
   }
 
   if (res.status !== 200 || !res.body || !res.body.recenttracks || !res.body.recenttracks.track || !res.body.recenttracks.track[0]) {
