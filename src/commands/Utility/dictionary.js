@@ -26,7 +26,7 @@ exports.run = async (bot, msg, args) => {
     bot.utils.assertEmbedPermission(msg.channel, msg.member)
   }
 
-  const parsed = bot.utils.parseArgs(args, ['i:', 'nm'])
+  const parsed = bot.utils.parseArgs(args, ['i:', 'm'])
 
   if (!parsed.leftover.length) {
     return msg.error('You must specify something to search!')
@@ -74,7 +74,7 @@ exports.run = async (bot, msg, args) => {
     ['Link', `**https://www.merriam-webster.com/dictionary/${selected.word.replace(/ /g, '+')}**`]
   ]
 
-  if (resp.length > 1 && !parsed.options.nm) {
+  if (resp.length > 1 && parsed.options.m) {
     nestedFields.push([
       'More',
       resp.map((r, i) => i !== index ? `**${i + 1}** : ${r.word}` : false).filter(r => r).join('\n') +
@@ -177,9 +177,9 @@ exports.info = {
       description: 'Sets index of which definition to show'
     },
     {
-      name: '-nm',
-      usage: '-nm',
-      description: 'Prevents the bot from adding More field which will usually list the rest of the search results if available'
+      name: '-m',
+      usage: '-m',
+      description: 'Adds More field which will list the rest of the search results if available'
     }
   ]
 }
