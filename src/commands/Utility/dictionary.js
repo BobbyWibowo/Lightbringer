@@ -119,8 +119,6 @@ const _beautify = (m, word) => {
     return false
   }
 
-  console.log(require('util').inspect(m))
-
   // These can be improved even further, I think
   // But oh well, these will do for now
 
