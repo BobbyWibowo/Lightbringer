@@ -72,7 +72,7 @@ exports.info = {
     {
       name: '-c',
       usage: '-c <id>',
-      description: 'Specify an ID of a channel which has the message (requires -m to be set)'
+      description: 'Specify an ID of a channel which has the message (without -m, it will apply reactions to the very last message in the channel)'
     },
     {
       name: '-s',

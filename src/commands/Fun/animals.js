@@ -5,39 +5,34 @@ const animals = [
     name: 'cat',
     regex: /^c(at(s)?)?$/i,
     api: 'http://thecatapi.com/api/images/get?format=xml&type=jpg,png,gif',
-    action: {
-      type: 'regex',
-      data: /<url>\s*(.+?)\s*<\/url>/i
-    }
+    action: 'regex',
+    data: /<url>\s*(.+?)\s*<\/url>/i
   },
   {
     name: 'dog',
     regex: /^d(og(s)?)?$/i,
     api: 'https://random.dog/woof',
-    action: {
-      type: 'append',
-      data: 'https://random.dog/'
-    }
+    action: 'append',
+    data: 'https://random.dog/',
+    exclude: /\.mp4$/i
   },
   {
     name: 'bird',
     regex: /^b(ird(s)?)?$/i,
     api: 'http://random.birb.pw/tweet/',
-    action: {
-      type: 'append',
-      data: 'http://random.birb.pw/img/'
-    }
+    action: 'append',
+    data: 'http://random.birb.pw/img/'
   },
   {
     name: 'lizard',
     regex: /^li(z(ard(s)?)?)?$/i,
     api: 'https://nekos.life/api/lizard',
-    action: {
-      type: 'json',
-      data: 'url'
-    }
+    action: 'json',
+    data: 'url'
   }
 ]
+
+const MAX_RETRY = 3
 
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['u'])
@@ -60,28 +55,46 @@ exports.run = async (bot, msg, args) => {
   }
 
   await msg.edit(`🔄\u2000Fetching a random ${animal.name} image\u2026`)
-  const res = await snekfetch.get(animal.api)
-
-  if (res.status !== 200) {
-    return msg.error('Failed to fetch image!')
-  }
 
   let image
-  switch (animal.action.type) {
-    case 'regex':
-      const exec = animal.action.data.exec(res.body)
-      if (exec && exec[1]) {
-        image = exec[1]
-      }
-      break
-    case 'append':
-      image = animal.action.data + res.body
-      break
-    case 'json':
-      image = bot.utils.getProp(res.body, animal.action.data)
-      break
-    default:
-      image = res.body
+  let attempts = 0
+  while (!image && attempts <= 3) {
+    attempts++
+
+    const res = await snekfetch.get(animal.api)
+    if (res.status !== 200) {
+      continue
+    }
+
+    let _image
+    switch (animal.action) {
+      case 'regex':
+        const exec = animal.data.exec(res.body)
+        if (exec && exec[1]) {
+          _image = exec[1]
+        }
+        break
+      case 'append':
+        _image = animal.data + res.body
+        break
+      case 'json':
+        _image = bot.utils.getProp(res.body, animal.data)
+        break
+      default:
+        _image = res.body
+    }
+
+    // It will attempt to re-fetch till MAX_RETRY
+    // if the image URL matched exclude regex
+    if (animal.exclude && animal.exclude.test(_image)) {
+      continue
+    }
+
+    image = _image
+  }
+
+  if (!image) {
+    return msg.error(`Failed to fetch image after ${MAX_RETRY} retries!`)
   }
 
   if (parsed.options.u) {

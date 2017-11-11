@@ -1,9 +1,8 @@
 const snekfetch = require('snekfetch')
 
-const SUPPRESS_ERROR = true
 const TIMEOUT_ID = 'lastfm_timeout'
 const OFF_ID = 'lastfm_off'
-const DELAY = 5000
+const DELAY = 7500
 const TOGGLE = /^t(oggle)?$/i
 
 exports.nowPlaying = ''
@@ -15,20 +14,24 @@ exports.init = async bot => {
 
 const stopListening = () => {
   const oldTimeout = this._stats.get(TIMEOUT_ID)
+
   if (oldTimeout) {
     clearTimeout(oldTimeout)
     this._stats.set(TIMEOUT_ID)
   }
 }
 
-const timeout = modifier => {
+const timeout = (modifier = 1) => {
+  // Call stopListening() again just in case someone
+  // runs the reload command when poll() was still running
   stopListening()
+
   this._stats.set(TIMEOUT_ID, setTimeout(() => poll(), DELAY * modifier))
 }
 
 const poll = async () => {
   if (this._stats.get(OFF_ID)) {
-    return timeout(1.5)
+    return timeout(2) // Next poll in 2 * 5000 = 10000 ms
   }
 
   let res
@@ -39,13 +42,11 @@ const poll = async () => {
       throw new Error(res.text)
     }
   } catch (err) {
-    if (!SUPPRESS_ERROR) {
-      console.error(`Last.fm listener (snekfetch): ${err}`)
-    }
-    return timeout(1.5)
+    console.warn(`[lastfm] ${err}`)
+    return timeout(2) // Next poll in 2 * 5000 = 10000 ms
   }
 
-  if (!res || !res.body || !res.body.recenttracks || !res.body.recenttracks.track || !res.body.recenttracks.track[0]) {
+  if (res.status !== 200 || !res.body || !res.body.recenttracks || !res.body.recenttracks.track || !res.body.recenttracks.track[0]) {
     return timeout()
   }
 
@@ -73,17 +74,20 @@ const poll = async () => {
       )
     }
   } catch (err) {
-    console.error(`Last.fm listener (setGame/status): ${err}`)
+    console.warn(`[lastfm] ${err}`)
   }
-  timeout()
+
+  return timeout()
 }
 
 const startListening = () => {
   stopListening()
+
   if (!config.lastFmApiKey || !config.lastFmUsername) {
-    return
+    console.warn(`[lastfm] Last.fm listener disabled due to missing API key and username from config.json!`)
+  } else {
+    poll()
   }
-  poll()
 }
 
 exports.run = async (bot, msg, args) => {
@@ -98,11 +102,11 @@ exports.run = async (bot, msg, args) => {
         stopListening()
         await bot.user.setGame()
         this.nowPlaying = ''
-        return msg.success('Disabled Last.fm listener.')
+        return msg.success('Disabled `Last.fm` listener.')
       } else {
         this._stats.set(OFF_ID)
         startListening()
-        return msg.success('Enabled Last.fm listener!')
+        return msg.success('Enabled `Last.fm` listener!')
       }
     } else {
       return msg.error('That action is not valid!')
