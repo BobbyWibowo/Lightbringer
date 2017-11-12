@@ -95,7 +95,7 @@ exports.run = async (bot, msg, args) => {
         }).filter(d => d).join('\n')}`
       } else {
         console.log(require('util').inspect(d))
-        return '**Unexpected behavior for this definition. Check your console\u2026**'
+        return `**${d.number}** : *Unexpected behavior for this meaning. Check your console\u2026*`
       }
     }).filter(d => d).join('\n'),
     nestedFields,
