@@ -5,20 +5,21 @@ exports.run = async (bot, msg, args) => {
 
   bot.utils.assertEmbedPermission(msg.channel, msg.member)
 
-  const parsed = bot.utils.parseArgs(args, ['r', 'o'])
+  const parsed = bot.utils.parseArgs(args, ['r', 'o', 'f:'])
 
   if (parsed.leftover.length < 1) {
     return msg.error('You must specify a role name!')
   }
 
   const keyword = parsed.leftover.join(' ')
-  const get = bot.utils.getGuildRole(msg.guild, keyword)
+  const guild = parsed.options.f ? bot.utils.getGuild(parsed.options.f) : msg.guild
+  const get = bot.utils.getGuildRole(guild, keyword)
   const role = get[0]
   const mention = get[1]
 
   await msg.edit(`${PROGRESS}Fetching role information\u2026`)
 
-  const res = await bot.utils.fetchGuildMembers(msg.guild, !parsed.options.r)
+  const res = await bot.utils.fetchGuildMembers(guild, !parsed.options.r)
   let members = role.members
 
   if (parsed.options.o) {
@@ -30,14 +31,15 @@ exports.run = async (bot, msg, args) => {
   const message = mention
     ? `Members of ${keyword}:`
     : `Members of the role which matched the keyword \`${keyword}\`:`
+  const membersMap = members.map(m => m.user.tag).sort((a, b) => a.localeCompare(b))
+
   return msg.edit(message, {
-    embed: bot.utils.formatLargeEmbed(`${role.name} (ID: ${role.id})`, `**Guild:** ${msg.guild.name} (ID: ${msg.guild.id})`,
-      {
-        delimeter: ', ',
-        children: members.sort((a, b) => a.user.tag.localeCompare(b.user.tag)).map(m => {
-          return `${m.user.tag}${(m.user.bot ? ' **`[BOT]`**' : (m.user === bot.user ? ' **`[YOU]`**' : ''))}`
-        })
-      },
+    embed: bot.utils.formatEmbed(
+      `${role.name} (ID: ${role.id})`,
+      `**---**\n**Guild:** ${guild.name} (ID: ${guild.id})\n` +
+      (membersMap.includes(bot.user.tag) ? '*You are a member of this role.*\n' : '') +
+      bot.utils.formatCode(membersMap.join(', '), 'css'),
+      [],
       {
         color: role.hexColor,
         footer: res.time ? `Time taken to re-fetch members: ${res.time}` : ''
@@ -60,6 +62,11 @@ exports.info = {
       name: '-o',
       usage: '-o',
       description: 'Lists online members only'
+    },
+    {
+      name: '-f',
+      usage: '-f <guild name>',
+      description: 'Uses a certain guild instead'
     }
   ]
 }
