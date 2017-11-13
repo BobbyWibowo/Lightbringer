@@ -75,38 +75,58 @@ exports.embed = (title = '', description = '', fields = [], options = {}) => {
     ? options.author
     : { name: typeof options.author === 'string' ? options.author : '' }
 
-  // Temporary countermeasure against
-  // description length issue with Discord API
+  // This number will progressively be subtracted by
+  // the length of every other fields to be used as
+  // the maximum length that the description can take
   let maxLength = 2000
 
-  fields.length = Math.min(25, fields.length)
-
   fields = fields.map(obj => {
-    maxLength -= obj.name.length * 2
+    // TODO: Truncate field's title
 
     if (options.inline) {
       obj.inline = true
     }
 
+    // Maximum length of a field's value is 1024 characters
     if (obj.value.length > 1024) {
       obj.value = this.truncate(obj.value, 1024)
     }
 
+    // Subtract with field's name and value
+    maxLength -= obj.name.length
+    maxLength -= obj.value.length
+
     return obj
   })
 
+  // Maximum length of an embed's title is 256 characters
   if (title.length > 256) {
     title = this.truncate(title, 256)
   }
 
-  maxLength -= title.length + footer.length + author.length
+  // Subtract with title, footer and author's name
+  maxLength -= title.length + footer.length + author.name.length
+
+  // Cancel only if max length is less than 2 characters
+  // We use 2 characters as to preserve the first character
+  // for the original description, and the second character
+  // for the triple dots (\u2026)
+  if (maxLength < 2) {
+    throw new Error('No leftover space for embed\u2026')
+  }
+
+  console.log(maxLength)
+
+  // Use maximum length for description
   if (description.length > maxLength) {
     description = this.truncate(description, maxLength)
   }
 
+  /* // 0w0. What's this???
   if (url !== '') {
     description = this.truncate(description, description.length, '\n')
   }
+  */
 
   const embed = new Discord.RichEmbed({ fields, video: options.video || url })
     .setTitle(title)
