@@ -20,15 +20,15 @@ const DAYS = {
 }
 
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['i'])
-  const keyword = parsed.leftover.join(' ') || config.defaultTimeZone
+  const keyword = parsed.leftover.join(' ') || bot.config.defaultCity
 
   if (!keyword) {
-    return msg.error('You must specify a city!')
+    return msg.error('Please specify a location to lookup!')
   }
 
   await msg.edit('🔄\u2000Fetching weather information from Yahoo! Weather\u2026')
@@ -126,7 +126,7 @@ exports.run = async (bot, msg, args) => {
 
 exports.info = {
   name: 'weather',
-  usage: 'weather [city]',
+  usage: 'weather <city>',
   description: 'Shows you weather information of a particular city',
   options: [
     {

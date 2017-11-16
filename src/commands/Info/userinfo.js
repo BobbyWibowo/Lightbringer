@@ -1,8 +1,8 @@
 const moment = require('moment')
 
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['m'])
@@ -14,10 +14,10 @@ exports.run = async (bot, msg, args) => {
   const mention = get[1]
 
   if (parsed.options.m && user === bot.user) {
-    return msg.error(`Use \`${config.prefix}guilds\` command to if you want to list your own guilds!`)
+    return msg.error(`Use \`${bot.config.prefix}guilds\` command to if you want to list your own guilds!`)
   }
 
-  await msg.edit(`${PROGRESS}Fetching ${mention ? `${user}'s ` : ''}profile\u2026`)
+  await msg.edit(`${consts.p}Fetching ${mention ? `${user}'s ` : ''}profile\u2026`)
   let profile = {}
   try {
     profile = await user.fetchProfile()

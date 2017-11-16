@@ -1,6 +1,6 @@
-const ADD = /^a(dd)?$|^c(reate)?$/i
-const REMOVE = /^r(em(ove)?$)?$|^d(el(ete)?$)?$/i
-const INFO = /^i(nfo)?$/i
+const R_ADD = /^a(dd)?$|^c(reate)?$/i
+const R_REMOVE = /^r(em(ove)?$)?$|^d(el(ete)?$)?$/i
+const R_INFO = /^i(nfo)?$/i
 
 exports.init = async bot => {
   this.storage = bot.storage('shortcuts')
@@ -10,8 +10,8 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['v'])
 
   if (parsed.leftover.length < 1) {
-    if (msg.guild) {
-      bot.utils.assertEmbedPermission(msg.channel, msg.member)
+    if(!bot.utils.hasEmbedPermission(msg.channel)) {
+      return msg.error('No permission to use embed in this channel!')
     }
 
     const shortcuts = this.storage.values
@@ -39,9 +39,9 @@ exports.run = async (bot, msg, args) => {
 
   const action = parsed.leftover[0]
 
-  if (ADD.test(action)) {
+  if (R_ADD.test(action)) {
     if (parsed.leftover.length < 3) {
-      return msg.error(`Usage: \`${config.prefix}shortcuts add <name> <command>\``)
+      return msg.error(`Usage: \`${bot.config.prefix}shortcuts add <name> <command>\``)
     }
 
     const name = parsed.leftover[1].toLowerCase()
@@ -56,17 +56,17 @@ exports.run = async (bot, msg, args) => {
 
     let command = parsed.leftover.slice(2).join(' ')
 
-    if (command.startsWith(config.prefix)) {
-      command = command.substr(config.prefix.length)
+    if (command.startsWith(bot.config.prefix)) {
+      command = command.substr(bot.config.prefix.length)
     }
 
     this.storage.set(name, { name, command })
     this.storage.save()
 
     return msg.success(`The shortcut \`${name}\` was added!`)
-  } else if (REMOVE.test(action)) {
+  } else if (R_REMOVE.test(action)) {
     if (parsed.leftover.length < 2) {
-      return msg.error(`Usage: \`${config.prefix}shortcut remove <name>\``)
+      return msg.error(`Usage: \`${bot.config.prefix}shortcut remove <name>\``)
     }
 
     const name = parsed.leftover[1].toLowerCase()
@@ -79,9 +79,9 @@ exports.run = async (bot, msg, args) => {
     this.storage.save()
 
     return msg.success(`The shortcut \`${name}\` was deleted.`)
-  } else if (INFO.test(action)) {
+  } else if (R_INFO.test(action)) {
     if (parsed.leftover.length < 2) {
-      return msg.error(`Usage: \`${config.prefix}shortcut info <name>\``)
+      return msg.error(`Usage: \`${bot.config.prefix}shortcut info <name>\``)
     }
 
     const name = parsed.leftover[1].toLowerCase()

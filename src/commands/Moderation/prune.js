@@ -12,10 +12,10 @@ exports.run = async (bot, msg, args) => {
     return msg.error('There are no messages that can be deleted by user!')
   }
 
-  await msg.edit(`${PROGRESS}Pruning ${messages.size} message(s)\u2026`)
+  await msg.edit(`${consts.p}Pruning ${messages.size} message(s)\u2026`)
   await Promise.all(messages.map(m => m.delete()))
 
-  return msg.success(`Pruned \`${messages.size}\` messages.`, 3000)
+  return msg.success(`Pruned \`${messages.size}\` message(s)!`, 3000)
 }
 
 exports.info = {

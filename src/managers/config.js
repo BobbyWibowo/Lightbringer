@@ -14,7 +14,7 @@ const questions = {
     botToken: {
       pattern: /^"?[a-zA-Z0-9_.-]+"?$/,
       type: 'string',
-      message: 'Token can only contain letters, numbers, underscores and dashes',
+      message: 'Token can only contain letters, numbers, underscores and dashes.',
       required: true,
       hidden: true,
       replace: '*',
@@ -65,18 +65,15 @@ class ConfigManager {
           '272885620769161216'
         ]
 
+        res.skipStatusUpdate = false
         res.mentionLogChannel = ''
         res.statusChannel = ''
         res.malUser = ''
         res.malPassword = ''
-        res.googleApiKey = ''
-        res.defaultTimeZone = ''
-        res.lastFmApiKey = ''
-        res.lastFmUsername = ''
+        res.defaultCity = ''
         res.pastebinApiDevKey = ''
         res.pastebinApiUserKey = ''
         res.githubGistsToken = ''
-        res.merriamWebsterDictKey = ''
 
         fse.outputJsonSync(this._configPath, res, { spaces: 2 })
         console.log('Configuration file saved. Please restart the bot!')
@@ -99,17 +96,19 @@ class ConfigManager {
   save () {
     const backupPath = this._backup()
     try {
-      fse.outputJsonSync(this._configPath, this._config)
+      fse.outputJsonSync(this._configPath, this._config, { spaces: 2 })
       fse.removeSync(backupPath)
     } catch (e) {
-      this.bot.logger.severe('Failed to save config file!')
+      console.error('Failed to save config file!')
     }
   }
 
   set (key, value) {
     // Convert to string if it's not a string already
     const realKey = `${key}`
+
     this._config[realKey] = value
+    this.bot.config = this._config
     this.save()
   }
 }

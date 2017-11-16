@@ -1,5 +1,7 @@
 const snekfetch = require('snekfetch')
 
+const R_LIST = /^l(ist)?$/i
+
 const CATEGORIES = [
   {
     name: 'all',
@@ -42,13 +44,12 @@ const CATEGORIES = [
     regex: '^w(isdom)?$'
   }
 ]
-const LIST = /^l(ist)?$/i
 
 exports.run = async (bot, msg, args) => {
   let selected = ''
 
   if (args.length) {
-    if (LIST.test(args[0])) {
+    if (R_LIST.test(args[0])) {
       return msg.edit(`🔮\u2000|\u2000**Available types for \`${this.info.name}\` command:** ${CATEGORIES.map(c => `\`${c.name}\``).join(', ')}.`)
     } else {
       let valid = false

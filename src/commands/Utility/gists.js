@@ -5,7 +5,7 @@ exports.run = async (bot, msg, args) => {
 
   const parsed = bot.utils.parseArgs(args, ['n:', 's:', 'p'])
 
-  await msg.edit(`${PROGRESS}Uploading...`)
+  await msg.edit(`${consts.p}Uploading...`)
   const url = await bot.utils.gists(parsed.leftover.join(' '), {
     name: parsed.options.n,
     suffix: parsed.options.s,

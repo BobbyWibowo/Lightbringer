@@ -1,8 +1,8 @@
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['np', 'ne'])
 
-  if (msg.guild && !parsed.options.ne) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!parsed.options.ne && !bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel! Try to use `-ne` option?')
   }
 
   const keyword = parsed.leftover.join(' ')

@@ -24,7 +24,7 @@ exports.run = async (bot, msg, args) => {
     options.channel = bot.utils.getChannel(parsed.options.c, msg.guild, true)
   }
 
-  await msg.edit(`${PROGRESS}Searching for \`${content}\`\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${content}\`\u2026`)
 
   const messages = await bot.utils.searchMessages(msg.guild, options)
   if (!messages.length) {

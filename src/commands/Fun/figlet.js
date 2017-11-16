@@ -7,7 +7,7 @@ exports.run = async (bot, msg, args) => {
 
   if (parsed.options.l) {
     const url = await bot.utils.gists(figlet.fontsSync().join('\n'), { suffix: 'txt' })
-    return msg.edit(`A list of available fonts for \`${config.prefix}${this.info.name}\` ` +
+    return msg.edit(`A list of available fonts for \`${bot.config.prefix}${this.info.name}\` ` +
       `command can be found here:\n<${url}>`)
   }
 

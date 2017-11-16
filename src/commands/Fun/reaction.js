@@ -33,7 +33,7 @@ exports.run = async (bot, msg, args) => {
   if (parsed.options.s) {
     await msg.delete()
   } else {
-    await msg.edit(`${PROGRESS}Reacting (${delay}ms delay)...`)
+    await msg.edit(`${consts.p}Reacting (${delay}ms delay)...`)
   }
 
   try {

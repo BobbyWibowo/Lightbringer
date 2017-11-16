@@ -2,10 +2,8 @@ const filesize = require('filesize')
 
 exports.run = async (bot, msg, args, auto) => {
   try {
-    if (auto && auto.target.guild) {
-      bot.utils.assertEmbedPermission(auto.target, auto.target.guild.me)
-    } else if (msg.guild) {
-      bot.utils.assertEmbedPermission(msg.channel, msg.member)
+    if ((msg && !bot.utils.hasEmbedPermission(msg.channel)) || (auto && !bot.utils.hasEmbedPermission(auto.target))) {
+      return msg.error('No permission to use embed in this channel!')
     }
 
     const parsed = bot.utils.parseArgs(args, ['c'])

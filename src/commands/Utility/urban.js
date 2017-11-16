@@ -1,8 +1,8 @@
 const urban = require('relevant-urban')
 
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['i:'])
@@ -14,7 +14,7 @@ exports.run = async (bot, msg, args) => {
     ? `Searching for \`${query}\` on ${y}\u2026`
     : `Searching for random definition ${y}\u2026`
 
-  await msg.edit(`${PROGRESS}${searchMessage}`)
+  await msg.edit(`${consts.p}${searchMessage}`)
 
   const defs = await (query.length ? urban.all(query) : urban.random())
   let def, total

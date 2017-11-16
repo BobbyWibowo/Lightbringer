@@ -1,5 +1,5 @@
-const ENCODE = /^e(nc(ode)?)?$/i
-const DECODE = /^d(ec(ode)?)?$/i
+const R_ENCODE = /^e(nc(ode)?)?$/i
+const R_DECODE = /^d(ec(ode)?)?$/i
 
 exports.methods = {
   encode: input => {
@@ -14,13 +14,13 @@ exports.methods = {
 
 exports.run = async (bot, msg, args) => {
   if (args.length < 2) {
-    return msg.error(`Do \`${config.prefix}help binary\` to see how to use this.`)
+    return msg.error(`Do \`${bot.config.prefix}help binary\` to see how to use this.`)
   }
 
   const input = args.slice(1).join(' ')
-  if (ENCODE.test(args[0])) {
+  if (R_ENCODE.test(args[0])) {
     return msg.edit(this.methods.encode(input).join(' '))
-  } else if (DECODE.test(args[0])) {
+  } else if (R_DECODE.test(args[0])) {
     return msg.edit(this.methods.decode(input))
   } else {
     return msg.error(`Unknown sub command: \`${args[0]}\``)

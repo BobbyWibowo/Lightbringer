@@ -3,13 +3,13 @@ const ostb = require('os-toolbox')
 const GIT = 'https://github.com/BobbyWibowo/Lightbringer'
 
 exports.run = async (bot, msg) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const previous = msg.content
   const timestamp = new Date().getTime()
-  await msg.edit(`${PROGRESS}Fetching CPU load and memory usage\u2026`)
+  await msg.edit(`${consts.p}Fetching CPU load and memory usage\u2026`)
   const ping = new Date().getTime() - timestamp
 
   /*
@@ -119,7 +119,7 @@ exports.run = async (bot, msg) => {
             },
             {
               name: 'Prefix',
-              value: `\`${config.prefix}\``
+              value: `\`${bot.config.prefix}\``
             }
           ]
         }

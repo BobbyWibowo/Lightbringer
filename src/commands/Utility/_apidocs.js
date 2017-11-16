@@ -15,7 +15,7 @@ exports.init = async bot => {
 
 exports.run = async (bot, msg, args) => {
   if (!docs) {
-    await msg.edit(`${PROGRESS}API docs might have failed to load. Reloading...`)
+    await msg.edit(`${consts.p}API docs might have failed to load. Reloading...`)
     await fetchDocs()
     return msg.success('API docs successfully reloaded. You may now try again!')
   }

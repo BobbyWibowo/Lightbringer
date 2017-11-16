@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const m = await bot.utils.getMsg(bot.utils.getChannel(args[1], msg.guild) || msg.channel, args[0])

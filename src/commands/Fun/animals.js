@@ -1,6 +1,8 @@
 const snekfetch = require('snekfetch')
 
-const animals = [
+const R_LIST = /^l(ist)?$/i
+
+const ANIMALS = [
   {
     name: 'cat',
     regex: /^c(at(s)?)?$/i,
@@ -38,20 +40,20 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['u'])
   const type = parsed.leftover[0]
 
-  if (/^l(ist)?$/i.test(type)) {
-    return msg.edit(`🐱\u2000|\u2000**Available types for \`${this.info.name}\` command:** ${animals.map(a => `\`${a.name}\``).join(', ')}.`)
+  if (R_LIST.test(type)) {
+    return msg.edit(`🐱\u2000|\u2000**Available types for \`${this.info.name}\` command:** ${ANIMALS.map(a => `\`${a.name}\``).join(', ')}.`)
   }
 
   let animal
-  for (let i = 0; i < animals.length; i++) {
-    if (animals[i].regex.test(type)) {
-      animal = animals[i]
+  for (const A of ANIMALS) {
+    if (A.regex.test(type)) {
+      animal = A
       break
     }
   }
 
   if (!animal) {
-    animal = animals[Math.floor(Math.random() * animals.length)]
+    animal = ANIMALS[Math.floor(Math.random() * ANIMALS.length)]
   }
 
   await msg.edit(`🔄\u2000Fetching a random ${animal.name} image\u2026`)

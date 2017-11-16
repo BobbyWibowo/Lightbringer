@@ -1,32 +1,34 @@
 const { CollegiateDictionary, WordNotFoundError } = require('mw-dict')
 
-const CONFIG_KEY_DICT = 'merriamWebsterDictKey'
-
 exports.init = async bot => {
-  if (bot.config[CONFIG_KEY_DICT]) {
+  this.config = bot.config[this.info.name] || {}
+
+  if (this.config.apiKey) {
     await initDictClient()
   }
 }
 
-const initDictClient = async () => {
-  this.dictClient = await new CollegiateDictionary(bot.config[CONFIG_KEY_DICT])
-  return true
-}
-
 exports.run = async (bot, msg, args) => {
-  if (!bot.config[CONFIG_KEY_DICT]) {
-    return msg.error(`Merriam-Webster Dictionary key (\`${CONFIG_KEY_DICT}\`) is missing from config.json file!`)
+  const parsed = bot.utils.parseArgs(args, ['i:', 'm', 'key:'])
+
+  if (parsed.options.key) {
+    this.config.apiKey = parsed.options.key
+    bot.managers.config.set(this.info.name, this.config)
+
+    return msg.success('Successfully saved API key to the configuration file!')
+  }
+
+  if (!this.config.apiKey) {
+    return msg.error(`Missing API key!\nGet your Merriam-Webster's Collegiate® Dictionary API key from **http://dictionaryapi.com/** then use \`${bot.config.prefix}${this.info.name} -key <api key>\` to save the API key to the configuration file!`, -1)
   }
 
   if (!this.dictClient) {
     await initDictClient()
   }
 
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
-
-  const parsed = bot.utils.parseArgs(args, ['i:', 'm'])
 
   if (!parsed.leftover.length) {
     return msg.error('You must specify something to search!')
@@ -35,14 +37,14 @@ exports.run = async (bot, msg, args) => {
   const query = parsed.leftover.join(' ')
   const y = 'Merriam-Webster'
 
-  await msg.edit(`${PROGRESS}Searching for \`${query}\` on ${y}\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${query}\` on ${y}\u2026`)
 
   let resp
   try {
     resp = await this.dictClient.lookup(query)
   } catch (err) {
     if (err instanceof WordNotFoundError) {
-      return msg.edit(`${FAILURE}\`${query}\` was not found!`, {
+      return msg.edit(`${consts.e}\`${query}\` was not found!`, {
         embed: bot.utils.embed(
           `Suggestions`,
           err.suggestions.join('; '),
@@ -84,20 +86,10 @@ exports.run = async (bot, msg, args) => {
 
   const embed = bot.utils.formatEmbed(
     `${selected.word}${selected.functional_label ? ` (${selected.functional_label})` : ''}`,
-    selected.definition.map(d => {
-      // All instances of .filter(d => d) used to filter out 'false' from skipping object in line 102
-      if (d.meanings) {
-        return _beautify(d, selected.word)
-      } else if (d.senses) {
-        return `**${d.number}** :\n${d.senses.map(s => {
-          const t = _beautify(s, selected.word)
-          return t ? `    ${t}` : t
-        }).filter(d => d).join('\n')}`
-      } else {
-        console.log(require('util').inspect(d))
-        return `**${d.number}** : *Unexpected behavior for this meaning. Check your console\u2026*`
-      }
-    }).filter(d => d).join('\n'),
+    selected.definition.map(d =>
+      // Italicize any word matching the currently defined word
+      beautify(d).replace(new RegExp(`\\b${selected.word}\\b`), `*${selected.word}*`)
+    ).join('\n'),
     nestedFields,
     {
       footer: `${y}'s Collegiate® Dictionary`,
@@ -112,55 +104,88 @@ exports.run = async (bot, msg, args) => {
   )
 }
 
-const _beautify = (m, word) => {
-  if (!m.meanings) {
-    console.warn(require('util').inspect(m))
-    console.warn('[dictionary] Skipping the above Sense object\u2026')
-    return false
+const initDictClient = async () => {
+  this.dictClient = await new CollegiateDictionary(this.config.apiKey)
+}
+
+const beautify = (m, depth = 0) => {
+  let temp = ''
+  let hasContent = m.meanings || m.synonyms || m.illustrations || m.senses
+
+  if (m.senses && (m.senses.findIndex(s => s.number === m.number) !== -1)) {
+    // Skip current Sense if it has additional Senses
+    // in which the current Sense exist
+    // This is a workaround for a particular bug in mw-dict library
+    return m.senses.map(s => beautify(s, depth)).join('\n')
   }
 
-  // These can be improved even further, I think
-  // But oh well, these will do for now
+  temp += '    '.repeat(depth)
 
-  let _temp = m.number ? `**${m.number}**${m.status ? ` *${m.status}*` : ''} ` : ''
-
-  _temp += m.meanings.map((m, i, a) => {
-    // Trim whitespaces (some meanings have unexpected whitespace)
-    m = m.trim()
-
-    if (m.includes(':')) {
-      // Format semicolons
-      m = m.split(':').map(m => m.trim()).join(' : ').trim()
+  if (m.number) {
+    if (/^\(\d+?\)$/.test(m.number)) {
+      temp += m.number + ' '
     } else {
-      // Italicizes if the meaning does not start with a colon (:)
-      m = `*${m}*`
+      temp += `**${m.number}** `
     }
+  }
 
-    // Starts meaning with a semicolon (;) if it does not start with
-    // a colon (:) and there was a precedent meaning
-    if (!m.startsWith(':') && a[i - 1] !== undefined) {
-      m = `; ${m}`
-    }
+  if (m.status) {
+    temp += m.status + ' '
+  }
 
-    return m
-  }).join(' ')
+  if (!hasContent) {
+    // console.log(require('util').inspect(m))
+    return temp + '*This meaning may not have any content. Check your console\u2026*'
+  }
+
+  if (m.meanings) {
+    temp += m.meanings.map((m, i, a) => {
+      // Trim whitespaces (some meanings have unexpected whitespace)
+      m = m.trim()
+
+      if (m.includes(':')) {
+        // Format semicolons
+        m = m.split(':').map(m => m.trim()).join(' : ').trim()
+      } else {
+        // Italicizes if the meaning does not start with a colon (:)
+        m = `*${m}*`
+      }
+
+      // Starts meaning with a semicolon (;) if it does not start with
+      // a colon (:) and there was a precedent meaning
+      if (!m.startsWith(':') && a[i - 1] !== undefined) {
+        m = `; ${m}`
+      }
+
+      return m
+    }).join(' ')
+  }
 
   if (m.synonyms) {
     // Adds an extra whitespace if there was
     // a meaning that ends with semicolon (;)
-    if (_temp.endsWith(':')) {
-      _temp += ' '
+    if (temp.endsWith(':')) {
+      temp += ' '
     }
 
     // Underlines all synonyms
-    _temp += m.synonyms.map(s => `__${s}__`).join(', ')
+    temp += m.synonyms.map(s => `__${s}__`).join(', ')
   }
 
   if (m.illustrations) {
-    _temp += ' ' + m.illustrations.map(i => `\u2022 ${i}`).join(' ')
+    temp += ' ' + m.illustrations.map(i => `\u2022 ${i}`).join(' ')
   }
 
-  return _temp.replace(new RegExp(`\\b${word}\\b`), `*${word}*`).trim()
+  if (m.senses) {
+    depth++
+    temp += '\n' + m.senses.filter((s, i, a) =>
+      // Filter duplicate which have the same number but lack additional Senses
+      // This is a workaround for a particular bug in mw-dict library
+      a.findIndex(_s => (_s.number === s.number) && _s.senses && !s.senses) !== 1
+    ).map(s => beautify(s, depth)).join('\n')
+  }
+
+  return temp.replace(/\s*$/g, '')
 }
 
 exports.info = {
@@ -178,6 +203,11 @@ exports.info = {
       name: '-m',
       usage: '-m',
       description: 'Adds More field which will list the rest of the search results if available'
+    },
+    {
+      name: '-key',
+      usage: '-key <api key>',
+      description: 'Saves Merriam-Webster\'s Collegiate® Dictionary API key to configuration file'
     }
   ]
 }

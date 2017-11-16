@@ -4,8 +4,8 @@ const { stripIndents } = require('common-tags')
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['e', 'f:'])
 
-  if (msg.guild && !parsed.options.e) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!parsed.options.e && !bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   if (parsed.leftover.length < 2) {
@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
   const lang = parsed.leftover[0]
   const input = parsed.leftover.slice(1).join(' ')
 
-  await msg.edit(`${PROGRESS}Translating your text...`)
+  await msg.edit(`${consts.p}Translating your text...`)
 
   const res = await translate(input, {
     from: parsed.options.f,
@@ -45,7 +45,7 @@ exports.info = {
   options: [
     {
       name: '-e',
-      description: 'Edits your message with the translation instead of showing an embed'
+      description: 'Edits your message with the translation instead of sending an embed'
     },
     {
       name: '-f',

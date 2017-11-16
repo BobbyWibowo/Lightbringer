@@ -53,18 +53,8 @@ exports.truncate = (string, max, append = '') => {
   return string + '\u2026' + append
 }
 
-exports.assertEmbedPermission = (channel, member) => {
-  if (!(channel instanceof Discord.TextChannel)) {
-    throw new Error('An instance of Discord.TextChannel is required!')
-  }
-
-  if (!(member instanceof Discord.GuildMember)) {
-    throw new Error('An instance of Discord.GuildMember is required!')
-  }
-
-  if (!channel.permissionsFor(member).has('EMBED_LINKS')) {
-    throw new Error('No permission to use embed in this channel!')
-  }
+exports.hasEmbedPermission = channel => {
+  return channel.guild ? channel.permissionsFor(channel.guild.me).has('EMBED_LINKS') : true
 }
 
 exports.embed = (title = '', description = '', fields = [], options = {}) => {
@@ -114,8 +104,6 @@ exports.embed = (title = '', description = '', fields = [], options = {}) => {
   if (maxLength < 2) {
     throw new Error('No leftover space for embed\u2026')
   }
-
-  console.log(maxLength)
 
   // Use maximum length for description
   if (description.length > maxLength) {
@@ -753,6 +741,12 @@ exports.getChannel = (keyword, guild, strict = false) => {
     if (get) return get
   }
 
+  const testMatch = keyword.match(/^<#(\d+?)>$/)
+  if (testMatch) {
+    const get = bot.channels.get(testMatch[1])
+    if (get) return get
+  }
+
   if (guild) {
     const find = guild.channels.find(c => c.name === keyword)
     if (find) return find
@@ -838,16 +832,16 @@ exports.fetchGuildMembers = async (guild, cache = false) => {
   }
 }
 
-const dumpName = () => {
+const pasteName = () => {
   return `lightbringer_${new Date().getTime()}`
 }
 
-const dumpDescription = `Uploaded with Lightbringer v${require('../package.json').version} – ` +
+const pasteFooter = `Uploaded with Lightbringer v${require('../package.json').version} – ` +
   'https://github.com/BobbyWibowo/Lightbringer.\nYet another Discord self-bot written with discord.js.'
 
 exports.haste = async (content, suffix = '', raw = false) => {
   try {
-    const res = await snekfetch.post('https://hastebin.com/documents').send(content + `\n\n${dumpDescription}`)
+    const res = await snekfetch.post('https://hastebin.com/documents').send(content + `\n\n${pasteFooter}`)
     if (res.status !== 200) {
       throw new Error('Could not connect to hastebin server!')
     }
@@ -863,11 +857,11 @@ exports.paste = async (content, options = {}) => {
   const CONFIG_KEY_DEV = 'pastebinApiDevKey'
   const CONFIG_KEY_USER = 'pastebinApiUserKey'
 
-  if (!config[CONFIG_KEY_DEV]) {
+  if (!bot.config[CONFIG_KEY_DEV]) {
     throw new Error(`Pastebin API dev key (\`${CONFIG_KEY_DEV}\`) is missing from config.json file!`)
   }
 
-  const name = options.name || dumpName()
+  const name = options.name || pasteName()
   const format = options.format || 'text'
   const privacy = parseInt(options.privacy) || 1
   const expiration = options.expiration || 'N'
@@ -876,10 +870,10 @@ exports.paste = async (content, options = {}) => {
     const res = await snekfetch.post('https://pastebin.com/api/api_post.php')
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({
-        api_dev_key: config[CONFIG_KEY_DEV],
+        api_dev_key: bot.config[CONFIG_KEY_DEV],
         api_option: 'paste',
-        api_paste_code: content + `\n\n${dumpDescription}`,
-        api_user_key: config[CONFIG_KEY_USER] || '',
+        api_paste_code: content + `\n\n${pasteFooter}`,
+        api_user_key: bot.config[CONFIG_KEY_USER] || '',
         api_paste_name: name,
         api_paste_format: format,
         api_paste_private: privacy,
@@ -902,8 +896,8 @@ exports.gists = async (content, options = {}) => {
   const snekpost = snekfetch.post('https://api.github.com/gists')
   const CONFIG_TOKEN = 'githubGistsToken'
 
-  if (config[CONFIG_TOKEN]) {
-    snekpost.set('Authorization', `token ${config[CONFIG_TOKEN]}`)
+  if (bot.config[CONFIG_TOKEN]) {
+    snekpost.set('Authorization', `token ${bot.config[CONFIG_TOKEN]}`)
   }
 
   if (!options.suffix || options.suffix === 'md') {
@@ -912,10 +906,10 @@ exports.gists = async (content, options = {}) => {
 
   try {
     const res = await snekpost.send({
-      description: dumpDescription.replace(/\n/g, ' '),
+      description: pasteFooter.replace(/\n/g, ' '),
       public: options.public || false,
       files: {
-        [options.name || `${dumpName()}.${options.suffix || 'md'}`]: {
+        [options.name || `${pasteName()}.${options.suffix || 'md'}`]: {
           content
         }
       }

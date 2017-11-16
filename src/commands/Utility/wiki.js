@@ -1,8 +1,8 @@
 const wiki = require('wikijs').default
 
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['v'])
@@ -13,7 +13,7 @@ exports.run = async (bot, msg, args) => {
 
   const query = parsed.leftover.join(' ')
 
-  await msg.edit(`${PROGRESS}Searching for \`${query}\` on Wikipedia\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${query}\` on Wikipedia\u2026`)
 
   const data = await wiki().search(query, 1)
   if (!data.results || !data.results.length) {

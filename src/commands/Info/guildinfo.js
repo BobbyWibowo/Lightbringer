@@ -4,15 +4,15 @@ const moment = require('moment')
 const verificationLevels = ['None', 'Low', 'Medium', '(╯°□°）╯︵ ┻━┻', '┻━┻ ﾐヽ(ಠ益ಠ)ノ彡┻━┻']
 const explicitContentFilters = ['No scan', 'Scan from members without a role', 'Scan from all members']
 
-const ROLES = /^r(oles)?$/i
-const MEMBERS = /^m(ember(s)?)?$|^u(ser(s)?)?$/i
-const CHANNELS = /^c(hannel(s)?)?$/i
+const R_ROLES = /^r(oles)?$/i
+const R_MEMBERS = /^m(ember(s)?)?$|^u(ser(s)?)?$/i
+const R_CHANNELS = /^c(hannel(s)?)?$/i
 
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['r', 'f:', 'g'])
 
-  if (msg.guild && !(parsed.leftover.length && parsed.options.g)) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!(parsed.leftover.length && parsed.options.g) && !bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   if (!msg.guild && !parsed.options.f) {
@@ -21,7 +21,7 @@ exports.run = async (bot, msg, args) => {
 
   const guild = parsed.options.f ? bot.utils.getGuild(parsed.options.f) : msg.guild
 
-  await msg.edit(`${PROGRESS}Fetching guild information\u2026`)
+  await msg.edit(`${consts.p}Fetching guild information\u2026`)
 
   const res = await bot.utils.fetchGuildMembers(guild, !parsed.options.r)
   const textChannels = guild.channels.filter(c => c.type === 'text')
@@ -37,15 +37,15 @@ exports.run = async (bot, msg, args) => {
     const f = t => ` **\`[${t}]\`**`
     const displayPerms = c => `${!hasPerm(c, 'SEND_MESSAGES') && c instanceof Discord.TextChannel ? f('NO_SEND') : ''}${!hasPerm(c, 'CONNECT') && c instanceof Discord.VoiceChannel ? f('NO_CONNECT') : ''}${!hasPerm(c, 'VIEW_CHANNEL') ? f('NO_VIEW') : ''}`
 
-    if (ROLES.test(parsed.leftover[0])) {
+    if (R_ROLES.test(parsed.leftover[0])) {
       title = `Roles in ${guild.name} [${guild.roles.size}]`
       children = guild.roles.sort((a, b) => b.position - a.position).map(r => r.name)
       delimeter = ', '
-    } else if (MEMBERS.test(parsed.leftover[0])) {
+    } else if (R_MEMBERS.test(parsed.leftover[0])) {
       title = `Members in ${guild.name} [${guild.memberCount}]`
       children = guild.members.map(m => `${bot.utils.escapeMarkdown(m.user.tag)}${(m.user.bot ? ' **`[BOT]`**' : '')}`).sort()
       delimeter = ', '
-    } else if (CHANNELS.test(parsed.leftover[0])) {
+    } else if (R_CHANNELS.test(parsed.leftover[0])) {
       title = `Channels in ${guild.name} [${guild.channels.size}]`
       const sortPos = (a, b) => a.position - b.position
       children = [].concat(

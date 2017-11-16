@@ -5,7 +5,7 @@ exports.run = async (bot, msg, args) => {
 
   const parsed = bot.utils.parseArgs(args, ['r', 's:'])
 
-  await msg.edit(`${PROGRESS}Uploading...`)
+  await msg.edit(`${consts.p}Uploading...`)
   const url = await bot.utils.haste(parsed.leftover.join(' '), parsed.options.s || '', parsed.options.r)
   return msg.success(`<${url}>`, { timeout: -1 })
 }

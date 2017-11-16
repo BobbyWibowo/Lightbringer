@@ -1,6 +1,6 @@
-const LIST = /^l(ist)?$/i
-const ADD = /^a(dd)?$|^c(reate)?$/i
-const REMOVE = /^r(em(ove)?$)?$|^d(el(ete)?$)?$/i
+const R_LIST = /^l(ist)?$/i
+const R_ADD = /^a(dd)?$|^c(reate)?$/i
+const R_REMOVE = /^r(em(ove)?$)?$|^d(el(ete)?$)?$/i
 
 exports.init = async bot => {
   this.storage = bot.storage('tags')
@@ -15,9 +15,9 @@ exports.run = async (bot, msg, args) => {
 
   const action = parsed.leftover[0]
 
-  if (LIST.test(action)) {
-    if (msg.guild) {
-      bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (R_LIST.test(action)) {
+    if (!bot.utils.hasEmbedPermission(msg.channel)) {
+      return msg.error('No permission to use embed in this channel!')
     }
 
     const tags = this.storage.values.sort((a, b) => b.used - a.used)
@@ -46,9 +46,9 @@ exports.run = async (bot, msg, args) => {
       )
     })
     return msg.delete(60000)
-  } else if (ADD.test(action)) {
+  } else if (R_ADD.test(action)) {
     if (parsed.leftover.length < 2) {
-      return msg.error(`Usage: \`${config.prefix}${this.info.name} add <name> [contents]\``)
+      return msg.error(`Usage: \`${bot.config.prefix}${this.info.name} add <name> [contents]\``)
     }
 
     const name = parsed.leftover[1]
@@ -88,9 +88,9 @@ exports.run = async (bot, msg, args) => {
     this.storage.save()
 
     return msg.success(`The tag \`${name}\` was added!`)
-  } else if (REMOVE.test(action)) {
+  } else if (R_REMOVE.test(action)) {
     if (parsed.leftover.length < 2) {
-      return msg.error(`Usage: \`${config.prefix}${this.info.name} delete <name>\``)
+      return msg.error(`Usage: \`${bot.config.prefix}${this.info.name} delete <name>\``)
     }
 
     const name = parsed.leftover[1]

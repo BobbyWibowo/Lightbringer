@@ -14,10 +14,10 @@ exports.run = async (bot, msg, args) => {
     return msg.error('There are no messages that can be deleted by user!')
   }
 
-  await msg.edit(`${PROGRESS}Purging ${messages.size} message(s)\u2026`)
+  await msg.edit(`${consts.p}Purging ${messages.size} message(s)\u2026`)
   await Promise.all(messages.map(m => m.delete()))
 
-  return msg.success(`Purged \`${messages.size}\` messages.`, 3000)
+  return msg.success(`Purged \`${messages.size}\` message(s)!`, 3000)
 }
 exports.info = {
   name: 'purge',

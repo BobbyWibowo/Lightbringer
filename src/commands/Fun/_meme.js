@@ -1,8 +1,8 @@
 const snekfetch = require('snekfetch')
 
-const HELP = /^(h(elp)?|\?)$/i
-const LIST = /^(ls|list|s(earch)?)$/i
-const INFO = /^(i(nf(o)?)?)$/i
+const R_HELP = /^(h(elp)?|\?)$/i
+const R_LIST = /^(ls|list|s(earch)?)$/i
+const R_INFO = /^(i(nf(o)?)?)$/i
 
 let templates = []
 
@@ -54,11 +54,11 @@ exports.run = async (bot, msg, args) => {
     return msg.error('The memes haven\'t loaded yet!')
   }
 
-  if (HELP.test(args[0])) {
+  if (R_HELP.test(args[0])) {
     return bot.commands.get('help').run(bot, msg, 'meme')
   }
 
-  if (LIST.test(args[0])) {
+  if (R_LIST.test(args[0])) {
     await msg.delete()
     const m = await msg.channel.send({
       embed: bot.utils.embed('Available Memes', '*This message will vanish in 30 seconds*\n\n' + templates.map(meme => {
@@ -68,14 +68,14 @@ exports.run = async (bot, msg, args) => {
     return m.delete(30000)
   }
 
-  if (INFO.test(args[0])) {
+  if (R_INFO.test(args[0])) {
     if (args.length < 2) {
       return msg.error('You must provide a meme to get info about!')
     }
 
     const info = getMeme(args[1])
     if (!info) {
-      return msg.error(`That is not a valid meme! Do \`${config.prefix}${this.info.name} list\` to see available memes.`)
+      return msg.error(`That is not a valid meme! Do \`${bot.config.prefix}${this.info.name} list\` to see available memes.`)
     }
 
     let styles
@@ -97,7 +97,7 @@ exports.run = async (bot, msg, args) => {
 
   const meme = getMeme(parts[0])
   if (!meme) {
-    return msg.error(`That is not a valid meme! Do \`${config.prefix}${this.info.name} list\` to see available memes.`)
+    return msg.error(`That is not a valid meme! Do \`${bot.config.prefix}${this.info.name} list\` to see available memes.`)
   }
 
   let url = `${meme.url}/${cleanInput(parts[1]) || '_'}/${cleanInput(parts[2]) || '_'}.jpg`

@@ -14,8 +14,8 @@ exports.run = async (bot, msg, args) => {
     return msg.error('Invalid value for depth option. It must be numbers!')
   }
 
-  if (parsed.options.e && msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const input = parsed.leftover.join(' ')

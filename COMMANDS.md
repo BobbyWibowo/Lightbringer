@@ -1,4 +1,4 @@
-# Commands (78)  
+# Commands (79)  
   
 ## Fun – 32 commands  
 ### `8ball`  
@@ -47,7 +47,8 @@
 *Aliases:* `giphy`  
 ### `gtime`  
 *Description:* `Prints current time in yours or a particular location (using Google Maps API)`  
-*Usage:* `gtime [location]`  
+*Usage:* `gtime <location>`  
+*Aliases:* `googletime`, `googlet`  
 ### `hug`  
 *Description:* `Hugs someone (using random hug GIF from nekos.life)`  
 *Usage:* `hug <user>`  
@@ -102,7 +103,7 @@
 *Aliases:* `sm`  
 ### `time`  
 *Description:* `Prints current time in yours or a particular location (using Time.is)`  
-*Usage:* `time [location]`  
+*Usage:* `time <location>`  
 *Credits:* `1Computer1`  
 ### `tiny`  
 *Description:* `Converts your text to tiny letters!`  
@@ -118,13 +119,14 @@
 ### `emojis`  
 *Description:* `Gets the emojis of the current guild`  
 *Usage:* `emojis [options]`  
+*Aliases:* `emoji`, `emote`, `emotes`  
 ### `guildinfo`  
 *Description:* `Shows info of the server you are in`  
 *Usage:* `guildinfo [options] [roles|members|channels]`  
 *Aliases:* `guild`, `server`, `serverinfo`  
 ### `help`  
 *Description:* `Shows you help for all commands or just a single command`  
-*Usage:* `help all|[command]|[category <name>]`  
+*Usage:* `help [all|command|category <name>]`  
 *Aliases:* `h`  
 ### `inrole`  
 *Description:* `Shows a list of members which have the specified role`  
@@ -184,7 +186,7 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 27 commands  
+## Utility – 28 commands  
 ### `avatar`  
 *Description:* `Display full image size of yours or another user's avatar`  
 *Usage:* `avatar [options] [user]`  
@@ -224,7 +226,7 @@
 *Aliases:* `hastebin`  
 ### `lastfm`  
 *Description:* `Get currently playing song from Last.fm`  
-*Usage:* `lastfm [toggle]`  
+*Usage:* `lastfm [toggle|config <apiKey> <username>]`  
 ### `lmgtfy`  
 *Description:* `Links to LMGTFY with the given search text`  
 *Usage:* `lmgtfy [search text]`  
@@ -244,8 +246,8 @@
 *Description:* `Pings the bot`  
 *Usage:* `ping`  
 ### `prefix`  
-*Description:* `Sets the bot prefix`  
-*Usage:* `prefix <new prefix>`  
+*Description:* `Changes the bot prefix`  
+*Usage:* `prefix <new>`  
 ### `reload`  
 *Description:* `Reloads all modules (or optionally reload "utils" or "consts")`  
 *Usage:* `reload [utils|consts]`  
@@ -278,9 +280,13 @@
 *Description:* `Looks up a word on Urban Dictionary (leave query blank to get a random definition)`  
 *Usage:* `urban [options] [query]`  
 *Aliases:* `u`, `urbandictionary`  
+### `vote`  
+*Description:* `Make a simple vote message (automatically adds positive/negative reactions)`  
+*Usage:* `vote <topic|list|config [key[:value]]>`  
+*Aliases:* `v`  
 ### `weather`  
 *Description:* `Shows you weather information of a particular city`  
-*Usage:* `weather [city]`  
+*Usage:* `weather <city>`  
 ### `wiki`  
 *Description:* `Returns the summary of the first matching search result from Wikipedia`  
 *Usage:* `wiki <query>`  

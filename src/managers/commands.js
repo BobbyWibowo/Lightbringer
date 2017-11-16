@@ -120,18 +120,22 @@ class CommandManager {
 
   async execute (msg, command, args, ...extended) {
     if (msg instanceof Discord.Message) {
-      msg.error = async (message, timeout = DELETE, muteLog = false) => {
-        if (!muteLog) {
-          console.info(`${chalk.yellow(`[${command.info.name}]`)} ${message}`)
+      msg.error = async (text, timeout = DELETE, bypassLog = false) => {
+        if (!bypassLog) {
+          console.info(`${chalk.yellow(`[${command.info.name}]`)} ${text}`)
         }
 
-        await msg.edit(`⛔\u2000${message.toString() || 'Something failed!'}`)
-        return msg.delete(timeout)
+        try {
+          await msg.edit(`${consts.e}${text || 'Something failed!'}`)
+          if (timeout >= 0) return msg.delete(timeout)
+        } catch (err) {}
       }
 
-      msg.success = async (message, timeout = DELETE) => {
-        await msg.edit(`✅\u2000${message || 'Success!'}`)
-        if (timeout >= 0) return msg.delete(timeout)
+      msg.success = async (text, timeout = DELETE) => {
+        try {
+          await msg.edit(`${consts.s}${text || 'Success!'}`)
+          if (timeout >= 0) return msg.delete(timeout)
+        } catch (err) {}
       }
 
       this.bot.managers.stats.increment('commands')
@@ -140,8 +144,8 @@ class CommandManager {
     try {
       await command.run(this.bot, msg, args, ...extended)
     } catch (err) {
-      if (msg instanceof Discord.Message) {
-        console.error(`${chalk.red(`[${command.info.name}]`)} ${err.stack || err}`)
+      if (msg) {
+        console.info(`${chalk.red(`[${command.info.name}]`)} ${err.stack || err}`)
         msg.error(err, DELETE, true)
       } else {
         console.error(`${chalk.red(`[${command.info.name}]`)} ${err.stack || err}`)

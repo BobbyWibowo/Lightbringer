@@ -1,8 +1,8 @@
 const getos = require('getos')
 
 exports.run = async (bot, msg) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   getos(async (err, res) => {

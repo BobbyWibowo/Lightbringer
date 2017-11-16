@@ -1,6 +1,7 @@
-global.PROGRESS = '🔄\u2000'
-global.SUCCESS = '✅\u2000'
-global.FAILURE = '⛔\u2000'
+exports.p = '🔄\u2000'
+exports.s = '✅\u2000'
+exports.e = '⛔\u2000'
+exports.q = '❓\u2000'
 
 exports.fullDateFormat = 'dddd, MMMM Do YYYY @ h:mm:ss a'
 exports.mediumDateFormat = 'ddd, MMM Do YYYY @ h:mm:ss a'
@@ -126,8 +127,8 @@ const expandEmojiMap = () => {
   const e = eemConfig.expandedEmojis
   const g = eemConfig.expandedGuilds.length
 
-  if (config.statusChannel && e && g) {
-    bot.channels.get(config.statusChannel).send(`${SUCCESS}The bot successfully expanded emojis map with \`${e}\` ` +
+  if (bot.config.statusChannel && e && g) {
+    bot.channels.get(bot.config.statusChannel).send(`${this.s}The bot successfully expanded emojis map with \`${e}\` ` +
       `emoji${e !== 1 ? 's' : ''} from \`${g}\` guild${g !== 1 ? 's' : ''}.`)
   }
 }

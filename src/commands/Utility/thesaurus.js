@@ -1,8 +1,8 @@
 const saurus = require('saurus')
 
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['a'])
@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
   const query = parsed.leftover.join(' ')
   const y = 'Thesaurus.com'
 
-  await msg.edit(`${PROGRESS}Searching for \`${query}\` on ${y}\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${query}\` on ${y}\u2026`)
   const res = await saurus(query)
 
   if (!res) {

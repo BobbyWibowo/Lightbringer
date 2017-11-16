@@ -1,25 +1,25 @@
 const { stripIndents } = require('common-tags')
 
-const CATEGORY = /^c(ategory)?$|^type$/i
-const ALL = /^a(ll)?$|^full$|^every$/i
+const R_CATEGORY = /^c(ategory)?$|^type$/i
+const R_ALL = /^a(ll)?$|^full$|^every$/i
 
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   let commands = []
   let title = 'Categories'
 
   if (args.length > 0) {
-    if (CATEGORY.test(args[0])) {
+    if (R_CATEGORY.test(args[0])) {
       if (args.length < 2) {
         return msg.error('You must specify a category!')
       }
 
       commands = bot.commands.all(args[1])
       title = `${args[1]} Commands`
-    } else if (ALL.test(args[0])) {
+    } else if (R_ALL.test(args[0])) {
       commands = bot.commands.all()
       title = 'All Commands'
     } else {
@@ -77,9 +77,9 @@ exports.run = async (bot, msg, args) => {
           ${categories.map(c => `- __${c}__`).join('\n')}
 
           ❯\u2000**Usage:**
-          •\u2000Do \`${config.prefix}help category <name>\` for a list of commands in a specific category.
-          •\u2000Do \`${config.prefix}help all\` for a list of every command available in this bot.
-          •\u2000Do \`${config.prefix}help <command>\` for help with a specific command.
+          •\u2000Do \`${bot.config.prefix}help category <name>\` for a list of commands in a specific category.
+          •\u2000Do \`${bot.config.prefix}help all\` for a list of every command available in this bot.
+          •\u2000Do \`${bot.config.prefix}help <command>\` for help with a specific command.
         `,
         [],
         {
@@ -94,11 +94,11 @@ exports.run = async (bot, msg, args) => {
 const getHelp = (command) => {
   let aliases = '<no aliases>'
   if (command.info.aliases) {
-    aliases = command.info.aliases.map(a => `\`${config.prefix}${a}\``).join(', ')
+    aliases = command.info.aliases.map(a => `\`${bot.config.prefix}${a}\``).join(', ')
   }
   let description = stripIndents`
     •\u2000**Aliases:** ${aliases}
-    •\u2000**Usage:** \`${config.prefix}${command.info.usage || command.info.name}\`
+    •\u2000**Usage:** \`${bot.config.prefix}${command.info.usage || command.info.name}\`
     •\u2000**Category:** ${command.info.category}
     •\u2000**Description:** ${command.info.description || '<no description>'}`
 
@@ -108,7 +108,7 @@ const getHelp = (command) => {
 
   if (command.info.examples) {
     description += `\n\n•\u2000**Examples:**\n${command.info.examples.map(example => {
-      return `-\u2000\`${config.prefix}${example}\``
+      return `-\u2000\`${bot.config.prefix}${example}\``
     }).join('\n')}`
   }
 
@@ -130,7 +130,7 @@ const getHelp = (command) => {
 
 exports.info = {
   name: 'help',
-  usage: 'help all|[command]|[category <name>]',
+  usage: 'help [all|command|category <name>]',
   description: 'Shows you help for all commands or just a single command',
   aliases: ['h']
 }

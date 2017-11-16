@@ -18,8 +18,8 @@ exports.run = async (bot, msg, args) => {
 
   const x = tags.map(t => `\`${t}\``).join(' and ')
   const searchMessage = tags.length
-    ? `${PROGRESS}Searching for ${x}\u2026`
-    : `${PROGRESS}Searching for random image\u2026`
+    ? `${consts.p}Searching for ${x}\u2026`
+    : `${consts.p}Searching for random image\u2026`
 
   await msg.edit(searchMessage)
   try {

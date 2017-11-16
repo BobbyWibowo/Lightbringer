@@ -8,12 +8,12 @@ const moment = require('moment')
 const resultsPerPage = 10
 
 exports.run = async (bot, msg, args) => {
-  if (!config.malUser || !config.malPassword) {
+  if (!bot.config.malUser || !bot.config.malPassword) {
     return msg.error('MyAnimeList username or password is missing from config.json file.')
   }
 
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['m', 'l', 'p:', 'i:'])
@@ -25,12 +25,12 @@ exports.run = async (bot, msg, args) => {
   const query = parsed.leftover.join(' ')
   const y = 'MyAnimeList'
 
-  await msg.edit(`${PROGRESS}Searching for \`${query}\` on ${y}\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${query}\` on ${y}\u2026`)
 
-  const mal = popura(config.malUser, config.malPassword)
+  const mal = popura(bot.config.malUser, bot.config.malPassword)
   const auth = await mal.verifyAuth()
 
-  if (auth.username !== config.malUser) {
+  if (auth.username !== bot.config.malUser) {
     return msg.error('MyAnimeList auth did not return the expected value.')
   }
 
@@ -90,7 +90,7 @@ exports.run = async (bot, msg, args) => {
     try {
       // Filter function can not be async
       collected = await msg.channel.awaitMessages(tm => {
-        if (tm.author !== msg.author) {
+        if (tm.author.id !== msg.author.id) {
           return false
         }
 
@@ -107,11 +107,11 @@ exports.run = async (bot, msg, args) => {
               msg.edit(formatAwaitMessage(newPage)).then(() =>
                 tm.delete())
             } else {
-              tm.edit(`${FAILURE}${formatInvalidIndex(tm.content, pageCount)}`).then(() =>
+              tm.edit(`${consts.e}${formatInvalidIndex(tm.content, pageCount)}`).then(() =>
                 tm.delete(3000))
             }
           } else {
-            tm.edit(`${FAILURE}${formatInvalidIndex(tm.content, res.length)}`).then(() =>
+            tm.edit(`${consts.e}${formatInvalidIndex(tm.content, res.length)}`).then(() =>
               tm.delete(3000))
           }
 

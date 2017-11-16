@@ -7,7 +7,7 @@ exports.fixerIoTimestamp = null
 
 const STAT_ID = 'currencyTimeout'
 
-const REFRESH = /^r(efresh)?$/i
+const R_REFRESH = /^r(efresh)?$/i
 
 exports.init = async bot => {
   this._stats = bot.managers.stats
@@ -33,14 +33,14 @@ exports.updateRates = async () => {
 }
 
 exports.run = async (bot, msg, args) => {
-  if (args.length && REFRESH.test(args[0])) {
+  if (args.length && R_REFRESH.test(args[0])) {
     await msg.edit('🔄\u2000Refreshing exchange rates information\u2026')
     await this.updateRates()
     return msg.success('Successfully refreshed exchange rates information!')
   }
 
   if (args.length < 3) {
-    return msg.error(`Usage: \`${config.prefix}${this.info.name} <value> <from> <to>\``)
+    return msg.error(`Usage: \`${bot.config.prefix}${this.info.name} <value> <from> <to>\``)
   }
 
   if (!this.fixerIoLatest) {

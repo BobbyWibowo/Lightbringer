@@ -10,7 +10,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   this._stats.set('RELOADING', true)
-  await msg.edit(`${PROGRESS}Reloading\u2026`)
+  await msg.edit(`${consts.p}Reloading\u2026`)
 
   try {
     if (action) {

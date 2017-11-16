@@ -20,37 +20,37 @@ Afterwards, edit `.../Lightbringer/data/configs/config.json` file, then add the 
 > Replace `CHANNEL_ID` with the ID that you had copied before.  
 Once you're done, you'll have to restart the bot.
 >
-> Please note that by default it won't monitor any servers. To whitelist a particular server, you have to use `lbtmention` command in the said server (it doesn't matter in which channel you use it on). It's a toggle command, so you will just have to use the command again to blacklist the server.
+> Please note, by default it won't monitor any servers. To whitelist a particular server, you have to use `lbtmention` command in the said server or `lbtmention SERVER_NAME_OR_ID` anywhere else. Use the command again to remove the server from the whitelist.
 
 - How to enable auto Last.fm playing status updater?
 > This feature will automatically poll Last.fm server every 5 seconds to check whether your Last.fm account is currently scrobbling anything or not. When it's scrobbling, it will automatically update your Discord game status with the title of the currently scrobbling song.  
 >
 > To enable this feature, first you will need to get your Last.fm API key.  
-To get an API key, submit the form in this page: https://www.last.fm/api/account/create.  
-You can leave `Callback URL` field empty. As for `Application homepage` field, feel free to use this repo URL.  
-Once you have submitted the form and got your API key, save them somewhere safe since you wouldn't be able to see them again later from Last.fm website.  
-Afterwards, edit `.../Lightbringer/data/configs/config.json` file, then add the following:
-> ```
-> "lastFmApiKey": "YOUR_LASTFM_API_KEY",
-> "lastFmUsername": "YOUR_LASTFM_USERNAME"
-> ```
-> Replace `YOUR_LASTFM_API_KEY` with the API key and `YOUR_LASTFM_USERNAME` with your Last.fm username.  
-Once you're done, you will just have to restart the bot and it will automatically update your game status whenever you're scrobbling anything to Last.fm.  
+> To get an API key, submit the form in this page: https://www.last.fm/api/account/create.  
+> You can leave `Callback URL` field empty. As for `Application homepage` field, feel free to use this repo URL.  
 >
-> Please note that when it's scrobbling, you won't be able to manually change your game using `lbsetgame`. And if you want to temporarily disable this feature, you can simply use `lblastfm toggle` (since it's a toggle command, use it again to re-enable).
+> Once you have submitted the form and got your API key, save them somewhere safe since you wouldn't be able to see them again later from Last.fm website.  
+> Afterwards, use `lblastfm config YOUR_KEY YOUR_USERNAME` command to save your key and username to your configuration file.  
+> N.b. Replace `YOUR_KEY` with your Last.fm API key and `YOUR_USERNAME` with your Last.fm username.  
+> After running the command, use `lblastfm toggle` to start fetching your scrobbles.  
+>
+> Please note, when it's scrobbling you won't be able to manually change your game using `lbsetgame`. If you want to temporarily disable this feature, you can use `lblastfm toggle` command again.
 
 - How to enable MyAnimeList command (`lbmal`)?
+> **This command is currently disabled.**
+>
 > Edit `.../Lightbringer/data/configs/config.json` file, then add the following:
-> ```
+> ```json
 > "malUser": "YOUR_MYANIMELIST_USERNAME",
 > "malPassword": "YOUR_MYANIMELIST_PASSWORD",
 > ```
 > Afterwards, restart the bot and try the command again.
->
-> **NOTE:** This command is currently disabled.
 
 - How to enable Merriam-Webster command (`lbdictionary`)?
-> https://github.com/BobbyWibowo/Lightbringer/commit/4b5fdba4022a1235c52624a54c5670d892f07c96#commitcomment-25355888
+> Get your API key from http://dictionaryapi.com/. Make sure you get the one for its Collegiate® Dictionary.  
+> Afterwards, use `lbdictionary -key YOUR_KEY` command to save your key to your configuration file.  
+> N.b. Replace `YOUR_KEY` with your API key (remember, it's Collegiate® Dictionary).
+> After saving the key, you can directly use the command to get definitions.
 
 ### Common errors
 - `ERROR: There are no scenarios; must have at least one.`
@@ -70,5 +70,4 @@ Once you're done, you will just have to restart the bot and it will automaticall
 - `SyntaxError: Unexpected token (`
 > If this error occurred on any line which contains `async` in it, then it must be because you're running a node installation which doesn't have `async/await` feature enabled by default.  
 This feature is enabled by default in node `>= 7.6`.  
-~~For node with versions `>= 7.0 & < 7.6`, the bot will attempt to automatically enable the flag.~~  
-As for node older than that, such as `6.x`, you have no other options but to upgrade your node to either `7.x` or `8.x`.
+As for node older than that, such as `6.x`, you have no other options but to upgrade.

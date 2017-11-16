@@ -3,8 +3,8 @@ const moment = require('moment')
 exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['r', 'f:'])
 
-  if (!msg.guild && !parsed.options.f) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!parsed.options.f && !bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   if (!parsed.leftover.length) {
@@ -17,7 +17,7 @@ exports.run = async (bot, msg, args) => {
   const role = get[0]
   const mention = get[1]
 
-  await msg.edit(`${PROGRESS}Fetching role information\u2026`)
+  await msg.edit(`${consts.p}Fetching role information\u2026`)
 
   const res = await bot.utils.fetchGuildMembers(guild, !parsed.options.r)
   const color = hexToRgb(role.hexColor)

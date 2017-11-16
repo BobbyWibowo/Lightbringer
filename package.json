@@ -1,6 +1,6 @@
 {
   "name": "lightbringer",
-  "version": "1.2.5",
+  "version": "1.3.0",
   "description": "Yet another Discord self-bot written with Discord.js",
   "author": "",
   "license": "MIT",
@@ -18,10 +18,7 @@
   "standard": {
     "globals": [
       "bot",
-      "config",
-      "PROGRESS",
-      "SUCCESS",
-      "FAILURE"
+      "consts"
     ]
   },
   "dependencies": {
@@ -43,8 +40,8 @@
     "js-beautify": "^1.6.14",
     "mathjs": "^3.16.5",
     "minimatch": "^3.0.4",
-    "moment": "^2.19.1",
-    "mw-dict": "^1.0.4",
+    "moment": "^2.19.2",
+    "mw-dict": "^1.0.5",
     "normalize-url": "^1.9.1",
     "os-toolbox": "^0.2.9",
     "path": "^0.12.7",
@@ -56,8 +53,11 @@
     "saurus": "^1.3.1",
     "snekfetch": "^3.5.8",
     "txtgen": "^2.0.1",
-    "wikijs": "^4.4.0",
+    "wikijs": "^4.5.0",
     "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3"
   },
   "resolutions": {
     "discord.js/snekfetch": "^3.5.8"

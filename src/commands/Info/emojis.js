@@ -1,6 +1,6 @@
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['r', 'f:', 'g'])
@@ -51,6 +51,7 @@ exports.info = {
   name: 'emojis',
   usage: 'emojis [options]',
   description: 'Gets the emojis of the current guild',
+  aliases: ['emoji', 'emote', 'emotes'],
   options: [
     {
       name: '-r',

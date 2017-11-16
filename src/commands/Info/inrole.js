@@ -3,7 +3,9 @@ exports.run = async (bot, msg, args) => {
     return msg.error('This command can only be used in a guild!')
   }
 
-  bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
+  }
 
   const parsed = bot.utils.parseArgs(args, ['r', 'o', 'f:'])
 
@@ -17,7 +19,7 @@ exports.run = async (bot, msg, args) => {
   const role = get[0]
   const mention = get[1]
 
-  await msg.edit(`${PROGRESS}Fetching role information\u2026`)
+  await msg.edit(`${consts.p}Fetching role information\u2026`)
 
   const res = await bot.utils.fetchGuildMembers(guild, !parsed.options.r)
   let members = role.members

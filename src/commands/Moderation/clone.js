@@ -23,8 +23,8 @@ exports.run = async (bot, msg, args) => {
     }
 
     if (richEmbed) {
-      if (msg.guild) {
-        bot.utils.assertEmbedPermission(msg.channel, msg.member)
+      if (!bot.utils.hasEmbedPermission(msg.channel)) {
+        return msg.error('No permission to use embed in this channel!')
       }
 
       let author = { name: '' }

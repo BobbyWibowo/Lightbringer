@@ -31,11 +31,11 @@ exports.run = async (bot, msg, args) => {
     }
   }
 
-  await msg.edit(`${PROGRESS}${content}`)
+  await msg.edit(`${consts.p}${content}`)
   const res = await snekfetch.get(`https://discord.services/api/magik?url=${imageURL}`)
 
   if (res.status === 200) {
-    await msg.edit(`${SUCCESS}${content}`)
+    await msg.edit(`${consts.s}${content}`)
     return msg.channel.send({
       file: {
         name: 'magik.png',
@@ -43,7 +43,7 @@ exports.run = async (bot, msg, args) => {
       }
     })
   } else {
-    await msg.edit(`${FAILURE}${content}`)
+    await msg.edit(`${consts.e}${content}`)
     return msg.error(res.text)
   }
 }

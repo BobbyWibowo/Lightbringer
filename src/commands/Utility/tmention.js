@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
       }
 
       await msg.edit(msg.content, {
-        embed: bot.utils.formatLargeEmbed('Logging mentions from these guilds:', '',
+        embed: bot.utils.formatLargeEmbed(`Logging mentions from these guilds [${mentions.length}]`, '',
           {
             delimeter: '\n',
             children: mentions.map(m => {

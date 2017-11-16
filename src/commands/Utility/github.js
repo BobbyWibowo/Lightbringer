@@ -1,10 +1,10 @@
 const snekfetch = require('snekfetch')
 
-const MY_GIT = 'BobbyWibowo/Lightbringer'
+const MY_GIT = require('../../../package.json').repository.replace(/^github:/, '')
 
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   if (!args.length) {
@@ -15,7 +15,7 @@ exports.run = async (bot, msg, args) => {
 
   if (args[0].indexOf('/') !== -1) {
     const repo = safeRepo(args[0])
-    await msg.edit(`${PROGRESS}Loading info for \`${repo}\`\u2026`)
+    await msg.edit(`${consts.p}Loading info for \`${repo}\`\u2026`)
     try {
       const res = await snekfetch.get(`https://api.github.com/repos/${repo}`)
       if (res.status !== 200) {
@@ -34,7 +34,7 @@ exports.run = async (bot, msg, args) => {
     }
   } else {
     const query = args.join(' ')
-    await msg.edit(`${PROGRESS}Searching for \`${query}\`\u2026`)
+    await msg.edit(`${consts.p}Searching for \`${query}\`\u2026`)
 
     const res = await snekfetch.get(`https://api.github.com/search/repositories?q=${args.join('+')}`)
     if (res.status !== 200) {
@@ -42,11 +42,11 @@ exports.run = async (bot, msg, args) => {
     }
 
     if (res.body.items.length < 1) {
-      return msg.error(`${FAILURE}No results found for '${args.join(' ')}'`)
+      return msg.error(`${consts.e}No results found for '${args.join(' ')}'`)
     }
 
     const count = res.body.items.length = Math.min(3, res.body.items.length)
-    await msg.edit(`${SUCCESS}Top ${count} result${count !== 1 ? 's' : ''} for \`${query}\`:`)
+    await msg.edit(`${consts.s}Top ${count} result${count !== 1 ? 's' : ''} for \`${query}\`:`)
 
     const send = async i => {
       if (!res.body.items[i]) {

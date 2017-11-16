@@ -10,8 +10,8 @@ exports.run = async (bot, msg, args) => {
     return msg.success('Cleared your game!')
   }
 
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   const parsed = bot.utils.parseArgs(args, ['s:'])

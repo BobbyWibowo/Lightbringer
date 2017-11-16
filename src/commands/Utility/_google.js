@@ -2,8 +2,8 @@ const snekfetch = require('snekfetch')
 const cheerio = require('cheerio')
 
 exports.run = async (bot, msg, args) => {
-  if (msg.guild) {
-    bot.utils.assertEmbedPermission(msg.channel, msg.member)
+  if (!bot.utils.hasEmbedPermission(msg.channel)) {
+    return msg.error('No permission to use embed in this channel!')
   }
 
   if (!args.length) {
@@ -12,7 +12,7 @@ exports.run = async (bot, msg, args) => {
 
   const y = 'Google'
 
-  await msg.edit(`${PROGRESS}Searching for \`${args.join(' ')}\` on ${y}\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${args.join(' ')}\` on ${y}\u2026`)
   const res = await snekfetch.get('http://google.com/search?client=chrome&rls=en&ie=UTF-8&oe=UTF-8&q=' + args.join('+'))
   if (res.status !== 200) {
     return msg.error('Could not connect to Google server!')
