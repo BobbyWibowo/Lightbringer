@@ -1,3 +1,7 @@
+/*
+ * No interest in maintaining this.
+ */
+
 const getos = require('getos')
 
 exports.run = async (bot, msg) => {

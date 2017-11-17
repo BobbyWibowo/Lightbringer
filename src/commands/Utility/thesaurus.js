@@ -13,9 +13,9 @@ exports.run = async (bot, msg, args) => {
 
   const antonyms = parsed.options.a
   const query = parsed.leftover.join(' ')
-  const y = 'Thesaurus.com'
+  const source = 'Thesaurus.com'
 
-  await msg.edit(`${consts.p}Searching for \`${query}\` on ${y}\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${query}\` on ${source}\u2026`)
   const res = await saurus(query)
 
   if (!res) {
@@ -38,13 +38,13 @@ exports.run = async (bot, msg, args) => {
     description = res.synonyms.join(', ')
   }
 
-  return msg.edit(`First search result of \`${query}\` on ${y}:`, {
+  return msg.edit(`First search result of \`${query}\` on ${source}:`, {
     embed: bot.utils.embed(
       title,
       description,
       [],
       {
-        footer: y,
+        footer: source,
         footerIcon: 'https://a.safe.moe/VhreL.png',
         color: '#fba824'
       }

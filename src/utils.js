@@ -37,6 +37,17 @@ exports.formatNumber = number => {
   return `${input},${out.reverse().join(',')}`
 }
 
+/*
+exports.formatString = format => {
+  const args = Array.prototype.slice.call(arguments, 1)
+  return format.replace(/{(\d+)}/g, function (match, number) {
+    return typeof args[number] !== 'undefined'
+      ? args[number]
+      : match
+  })
+}
+*/
+
 exports.truncate = (string, max, append = '') => {
   if (!string || !max || (1 + append.length) >= max) {
     return ''

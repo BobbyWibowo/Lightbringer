@@ -1,3 +1,8 @@
+/*
+ * Still working on an util function which can automatically
+ * split message into multiple embeds.
+ */
+
 exports.run = async (bot, msg) => {
   if (!bot.utils.hasEmbedPermission(msg.channel)) {
     return msg.error('No permission to use embed in this channel!')

@@ -28,23 +28,26 @@ exports.run = async (bot, msg, args) => {
     paragraphs.length = Math.min(2, paragraphs.length)
   }
 
-  const y = `Wikipedia${parsed.options.v ? ' (no paragraphs limit)' : ''}`
+  const source = `Wikipedia`
 
-  return msg.edit(`First search result of \`${query}\` on ${y}:`, {
-    embed: bot.utils.embed(page.raw.title, paragraphs.join('\n\n'),
-      [
+  return msg.edit(
+    `First search result of \`${query}\` on ${source}${parsed.options.v && ' (no paragraphs limit)'}:`,
+    {
+      embed: bot.utils.embed(page.raw.title, paragraphs.join('\n\n'),
+        [
+          {
+            name: 'Link',
+            value: `**${page.raw.fullurl}**`
+          }
+        ],
         {
-          name: 'Link',
-          value: `**${page.raw.fullurl}**`
+          footer: source,
+          footerIcon: 'https://a.safe.moe/8GCNj.png',
+          color: '#c7c8ca'
         }
-      ],
-      {
-        footer: 'Wikipedia',
-        footerIcon: 'https://a.safe.moe/8GCNj.png',
-        color: '#c7c8ca'
-      }
-    )
-  })
+      )
+    }
+  )
 }
 
 exports.info = {

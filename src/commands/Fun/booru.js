@@ -16,9 +16,9 @@ exports.run = async (bot, msg, args) => {
   const tags = parsed.leftover
   tags.length = Math.min(2, tags.length)
 
-  const x = tags.map(t => `\`${t}\``).join(' and ')
+  const query = tags.map(t => `\`${t}\``).join(' and ')
   const searchMessage = tags.length
-    ? `${consts.p}Searching for ${x}\u2026`
+    ? `${consts.p}Searching for ${query}\u2026`
     : `${consts.p}Searching for random image\u2026`
 
   await msg.edit(searchMessage)
@@ -34,10 +34,10 @@ exports.run = async (bot, msg, args) => {
 
     const image = images[0]
     const imageUrl = bot.utils.cleanUrl(image.common.file_url)
-    const y = `\`${bot.utils.getHostName(imageUrl)}\``
+    const source = `\`${bot.utils.getHostName(imageUrl)}\``
     const title = tags.length
-      ? `Random search result of ${x} on ${y}:`
-      : `Random image on ${y}:`
+      ? `Random search result of ${query} on ${source}:`
+      : `Random image on ${source}:`
 
     return msg.edit(stripIndents`
       ${title}

@@ -1,3 +1,7 @@
+/*
+ * No interest in maintaining this command.
+ */
+
 const translate = require('google-translate-api')
 const { stripIndents } = require('common-tags')
 

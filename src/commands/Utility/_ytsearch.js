@@ -1,7 +1,10 @@
-// This command is temporarily disabled
-// until youtube-scrape package is fixed
+/*
+ * youtube-scrape library might have been fixed, but
+ * I don't have any interest in this command for the time
+ * being.
+ */
 
-const yts = require('youtube-scrape')
+const youtubeScrape = require('youtube-scrape')
 
 exports.run = async (bot, msg, args) => {
   if (!bot.utils.hasEmbedPermission(msg.channel)) {
@@ -13,7 +16,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   await msg.edit('🔄')
-  const data = await yts(`${args.join(' ')}`)
+  const data = await youtubeScrape(`${args.join(' ')}`)
 
   if (data && data.results && data.results[0]) {
     const result = data.results[0]

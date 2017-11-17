@@ -1,3 +1,8 @@
+/*
+ * Worthless if timezone is all DuckDuckGo's API can do.
+ * I'll look into more usage in the near future.
+ */
+
 const snekfetch = require('snekfetch')
 
 exports.run = async (bot, msg, args) => {

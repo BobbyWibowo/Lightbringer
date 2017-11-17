@@ -1,3 +1,10 @@
+/*
+ * This command is temporarily disabled since a single embed can not list
+ * all available Classes and Typedefs in discord.js.
+ * I'm working on an util function to automatically split message into
+ * multiple embeds. Until then, this command will remain disabled.
+ */
+
 const snekfetch = require('snekfetch')
 const { stripIndents } = require('common-tags')
 

@@ -35,9 +35,9 @@ exports.run = async (bot, msg, args) => {
   }
 
   const query = parsed.leftover.join(' ')
-  const y = 'Merriam-Webster'
+  const source = 'Merriam-Webster'
 
-  await msg.edit(`${consts.p}Searching for \`${query}\` on ${y}\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${query}\` on ${source}\u2026`)
 
   let resp
   try {
@@ -50,7 +50,7 @@ exports.run = async (bot, msg, args) => {
           err.suggestions.join('; '),
           [],
           {
-            footer: y,
+            footer: source,
             color: '#ff0000'
           }
         )
@@ -92,14 +92,14 @@ exports.run = async (bot, msg, args) => {
     ).join('\n'),
     nestedFields,
     {
-      footer: `${y}'s Collegiate® Dictionary`,
+      footer: `${source}'s Collegiate® Dictionary`,
       footerIcon: 'https://a.safe.moe/jGuCr.png',
       color: '#2d5f7c'
     }
   )
 
   return msg.edit(
-    `Search result of \`${query}\` at index \`${index + 1}/${resp.length}\` on ${y}:`,
+    `Search result of \`${query}\` at index \`${index + 1}/${resp.length}\` on ${source}:`,
     { embed }
   )
 }

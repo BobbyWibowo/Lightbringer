@@ -10,10 +10,11 @@ exports.run = async (bot, msg, args) => {
     return msg.error('You must specify something to search!')
   }
 
-  const y = 'Google'
+  const query = args.join(' ')
+  const source = 'Google'
 
-  await msg.edit(`${consts.p}Searching for \`${args.join(' ')}\` on ${y}\u2026`)
-  const res = await snekfetch.get('http://google.com/search?client=chrome&rls=en&ie=UTF-8&oe=UTF-8&q=' + args.join('+'))
+  await msg.edit(`${consts.p}Searching for \`${query}\` on ${source}\u2026`)
+  const res = await snekfetch.get('http://google.com/search?client=chrome&rls=en&ie=UTF-8&oe=UTF-8&q=' + query.replace(/\s/g, '+'))
   if (res.status !== 200) {
     return msg.error('Could not connect to Google server!')
   }
@@ -36,7 +37,7 @@ exports.run = async (bot, msg, args) => {
     .map(r => `**${r.link}**\n\t${r.description}\n`)
     .join('\n')
 
-  return msg.edit(`Search results of \`${args.join(' ')}\` on ${y}:`, {
+  return msg.edit(`Search results of \`${query}\` on ${source}:`, {
     embed: bot.utils.embed('', output, [], {
       footer: 'Google',
       footerIcon: 'https://a.safe.moe/F3RvU.png',

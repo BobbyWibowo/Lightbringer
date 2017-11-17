@@ -9,10 +9,10 @@ exports.run = async (bot, msg, args) => {
   const query = parsed.leftover.join(' ')
   let index = query.length ? parseInt(parsed.options.i) - 1 || 0 : -1
 
-  const y = 'Urban Dictionary'
+  const source = 'Urban Dictionary'
   const searchMessage = index >= 0
-    ? `Searching for \`${query}\` on ${y}\u2026`
-    : `Searching for random definition ${y}\u2026`
+    ? `Searching for \`${query}\` on ${source}\u2026`
+    : `Searching for random definition ${source}\u2026`
 
   await msg.edit(`${consts.p}${searchMessage}`)
 
@@ -44,8 +44,8 @@ exports.run = async (bot, msg, args) => {
   }
 
   const resultMessage = index >= 0
-    ? `Search result of \`${query}\` at index \`${index + 1}${total ? `/${total}` : ''}\` on ${y}:`
-    : `Random definition on ${y}:`
+    ? `Search result of \`${query}\` at index \`${index + 1}${total ? `/${total}` : ''}\` on ${source}:`
+    : `Random definition on ${source}:`
 
   return msg.edit(resultMessage, {
     embed: bot.utils.formatEmbed(`${def.word} by ${def.author}`, def.definition,

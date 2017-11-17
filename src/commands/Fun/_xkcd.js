@@ -1,3 +1,7 @@
+/*
+ * No interest in maintaining this.
+ */
+
 const xkcd = require('xkcd-imgs')
 
 exports.run = async (bot, msg) => {

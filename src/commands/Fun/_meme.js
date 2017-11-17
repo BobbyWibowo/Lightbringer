@@ -1,3 +1,9 @@
+/*
+ * There seemed to be an issue with this command somewhere.
+ * Probably at the _loadMeme() function. Maybe it's dead?
+ * Unforunately no interest to look more into this.
+ */
+
 const snekfetch = require('snekfetch')
 
 const R_HELP = /^(h(elp)?|\?)$/i

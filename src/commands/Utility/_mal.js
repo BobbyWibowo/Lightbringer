@@ -1,3 +1,9 @@
+/*
+ * This command should work properly, but I'm trying to decrease
+ * the bot's dependencies for the time being. I'll look more into
+ * this at a later date.
+ */
+
 const popura = require('popura')
 const paginate = require('paginate-array')
 const { stripIndents } = require('common-tags')
@@ -23,9 +29,9 @@ exports.run = async (bot, msg, args) => {
   }
 
   const query = parsed.leftover.join(' ')
-  const y = 'MyAnimeList'
+  const source = 'MyAnimeList'
 
-  await msg.edit(`${consts.p}Searching for \`${query}\` on ${y}\u2026`)
+  await msg.edit(`${consts.p}Searching for \`${query}\` on ${source}\u2026`)
 
   const mal = popura(bot.config.malUser, bot.config.malPassword)
   const auth = await mal.verifyAuth()
@@ -155,6 +161,17 @@ exports.run = async (bot, msg, args) => {
   const startDate = item.start_date === INVALID ? 'N/A' : moment(item.start_date).format(bot.consts.shortDateFormat)
   const endDate = item.end_date === INVALID ? 'N/A' : moment(item.end_date).format(bot.consts.shortDateFormat)
 
+  let footer = `${source} | `
+
+  // Add airing date only if at least one of either
+  // start date or end date is not invalid
+  if (item.start_date !== 'N/A' || item.end_date !== 'N/A') {
+    footer += `${startDate} to ${endDate}`
+  } else {
+    // Is it appropriate to immediately assume this?
+    footer += `Not Yet Aired`
+  }
+
   const embed = bot.utils.formatEmbed(item.title, stripIndents`
     ${item.english ? `**Alternative Title:** ${item.english}` : ''}
 
@@ -187,17 +204,13 @@ exports.run = async (bot, msg, args) => {
     ],
     {
       thumbnail: item.image,
-      footer: `MyAnimeList${item.start_date
-        ? ` | ${startDate}${item.end_date
-          ? ` to ${endDate}`
-          : ''}`
-        : ''}`,
+      footer,
       footerIcon: 'https://a.safe.moe/3NOZ3.png',
       color: '#1d439b'
     }
   )
 
-  return msg.edit(`Search result of \`${query}\` at index \`${index + 1}/${res.length}\` on ${y}:`, { embed })
+  return msg.edit(`Search result of \`${query}\` at index \`${index + 1}/${res.length}\` on ${source}:`, { embed })
 }
 
 const formatResultsList = (res, title, p) => {
