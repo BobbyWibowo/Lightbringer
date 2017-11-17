@@ -1,4 +1,4 @@
-# Commands (79)  
+# Commands (80)  
   
 ## Fun – 32 commands  
 ### `8ball`  
@@ -186,7 +186,7 @@
 *Usage:* `search [options] <text>`  
 *Aliases:* `s`  
   
-## Utility – 28 commands  
+## Utility – 29 commands  
 ### `avatar`  
 *Description:* `Display full image size of yours or another user's avatar`  
 *Usage:* `avatar [options] [user]`  
@@ -220,6 +220,9 @@
 *Description:* `Links to a GitHub repository`  
 *Usage:* `github <user/repo>`  
 *Aliases:* `git`  
+### `google`  
+*Description:* `Searches Google using magic`  
+*Usage:* `google <search>`  
 ### `haste`  
 *Description:* `Uploads some text to Hastebin`  
 *Usage:* `haste [options] <text>`  
