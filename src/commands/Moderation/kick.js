@@ -8,9 +8,13 @@ exports.run = async (bot, msg, args) => {
   const keyword = parsed.leftover.join(' ')
   const get = bot.utils.getGuildMember(msg.guild, keyword)
   const member = get[0]
-
-  await member.kick(parsed.options.r || null)
-  return msg.success(`Successfully kicked \`${member.user.tag}\` from the currently viewed guild!`)
+  
+  try{
+    await member.kick(parsed.options.r || null)
+    return msg.success(`Successfully kicked \`${member.user.tag}\` from the currently viewed guild!`)
+  }catch(err){
+    return msg.error(`Error: \n${err}`)
+  }
 }
 
 exports.info = {

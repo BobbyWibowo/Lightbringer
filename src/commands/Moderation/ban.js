@@ -17,8 +17,12 @@ exports.run = async (bot, msg, args) => {
   const get = bot.utils.getGuildMember(msg.guild, keyword)
   const member = get[0]
 
-  await member.ban({ days, reason: parsed.options.r || null })
-  return msg.success(`Successfully banned \`${member.user.tag}\` from the currently viewed guild!`)
+  try{
+    await member.ban({ days, reason: parsed.options.r || null })
+    return msg.success(`Successfully banned \`${member.user.tag}\` from the currently viewed guild!`)
+  }catch(err){
+    return msg.error(err)
+  }
 }
 
 exports.info = {
