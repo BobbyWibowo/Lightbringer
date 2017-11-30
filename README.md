@@ -18,7 +18,6 @@ Lightbringer makes full use of ES2017's `async/await` functionality for clear, c
 - [Gallery](#gallery)
 - [FAQ](#faq)
 - [Commands](COMMANDS.md)
-- [To-do](TODO.md)
 - [Requirements](#requirements)
 - [Why Yarn?](#why-yarn)
 - [Installing](#installing)

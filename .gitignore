@@ -1,11 +1,12 @@
+/.vscode/
+
+# Folders
+/node_modules/
+/data/
+
+# Files
 .DS_Store
 *.log
-node_modules/
-
-# Data files/folders
-data/
 *.sqlite
-src/config.json
+/src/config.json
 /config.json
-
-.rsync_*
