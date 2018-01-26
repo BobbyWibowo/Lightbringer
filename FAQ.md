@@ -1,5 +1,5 @@
 # Frequently Asked Questions
-If your question/problem is not answered here, feel free to send messages to my Discord account: **Bobby#4400**.
+If your question/problem is not answered here, feel free to send messages to my Discord account: **Bobby#0001**.
 
 ## Index
 - [Questions](#questions)
