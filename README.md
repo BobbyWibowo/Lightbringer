@@ -14,17 +14,10 @@
 Lightbringer makes full use of ES2017's `async/await` functionality for clear, concise code that is simple to write and easy to comprehend.
 
 ## Version 2.0.0
-I'm currently working on a 2nd generation of this self-bot. It's using the [Discord Akairo](https://1computer1.github.io/discord-akairo/master/) framework.  
-If you're curious about it, feel free to pull `2.0.0-akairo` branch of this repository using this command:
-```bash
-git clone -b 2.0.0-akairo https://github.com/BobbyWibowo/Lightbringer.git
-```
-Or if you had already pulled this `master` branch, you can run these commands to switch branch:
-```bash
-git fetch
-git checkout 2.0.0-akairo
-```
-You can also view the source from [here](https://github.com/BobbyWibowo/Lightbringer/tree/2.0.0-akairo/).
+Heads up!  
+I'm currently working on a 2nd generation of this self-bot.  
+It will be using the [Discord Akairo](https://1computer1.github.io/discord-akairo/master/) framework.  
+If you're curious about it, check out this repository: [BobbyWibowo/Lightbringer2](https://github.com/BobbyWibowo/Lightbringer2).
 
 ## Index
 - [Heads up!](#heads-up)
