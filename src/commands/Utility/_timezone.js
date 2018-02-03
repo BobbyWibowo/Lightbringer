@@ -38,7 +38,7 @@ exports.run = async (bot, msg, args) => {
     return msg.edit({
       embed: bot.utils.embed('Timezone', `${prefix} ➔\u2000${answer}`, [], {
         footer: 'Powered by DuckDuckGo',
-        footerIcon: 'https://a.safe.moe/N2qMW.png',
+        footerIcon: 'https://s.fiery.me/B1S4Wa6QtzBSFUpLvwdQgiVPljOZgMTV.png',
         color: '#df4e26'
       })
     })

@@ -1,5 +1,5 @@
 <p align="center">
-<img align="center" title="Lightbringer" src="https://a.safe.moe/pM9Ov.png">
+<img align="center" title="Lightbringer" src="https://s.fiery.me/4bTgz5icwUq99CoMhDn3ET0VX2I7svEh.png">
 </p>
 
 <p align="center">
@@ -19,6 +19,12 @@ If you're curious about it, feel free to pull `2.0.0-akairo` branch of this repo
 ```bash
 git clone -b 2.0.0-akairo https://github.com/BobbyWibowo/Lightbringer.git
 ```
+Or if you had already pulled this `master` branch, you can run these commands to switch branch:
+```bash
+git fetch
+git checkout 2.0.0-akairo
+```
+You can also view the source from [here](https://github.com/BobbyWibowo/Lightbringer/tree/2.0.0-akairo/).
 
 ## Index
 - [Heads up!](#heads-up)
@@ -125,7 +131,7 @@ yarn start
 6. At the bottom of the list, the last key should be `token`
 7. Copy the value on the right side (omitting the quotes)
 
-![Getting your user-token](https://a.safe.moe/p6xJ7.png)
+![Getting your user-token](https://s.fiery.me/nqBMpuRzVCh5C3Sv5RPO48ezVvqKBOOO.png)
 
 ## Credits
 This bot was originally based on [RayzrDev's SharpBot](https://github.com/RayzrDev/SharpBot) (which was apparently also based on [eslachance's djs-selfbot-v9](https://github.com/eslachance/djs-selfbot-v9)).

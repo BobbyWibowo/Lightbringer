@@ -118,7 +118,7 @@ exports.run = async (bot, msg, args) => {
       {
         color: '#410093',
         footer: 'Yahoo! Weather – Provided by The Weather Channel',
-        footerIcon: 'https://a.safe.moe/RElH8.png'
+        footerIcon: 'https://s.fiery.me/DJElKJApvndnGLNRqD3T1UnadOiEvXkT.png'
       }
     )
   })

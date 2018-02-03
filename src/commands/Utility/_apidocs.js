@@ -118,7 +118,7 @@ const buildEmbed = (data, sub, type) => {
       color: '#2196f3',
       author: {
         name: `${TITLE}: ${docs._version}`,
-        icon: 'https://a.safe.moe/3dgbc.png',
+        icon: 'https://s.fiery.me/zEo5xHN07jMYpdLZESvRJc8i4Ikf8AKh.png',
         url: `${DOCS_ROOT}/general/welcome`
       }
     },

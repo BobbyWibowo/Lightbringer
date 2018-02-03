@@ -205,7 +205,7 @@ exports.run = async (bot, msg, args) => {
     {
       thumbnail: item.image,
       footer,
-      footerIcon: 'https://a.safe.moe/3NOZ3.png',
+      footerIcon: 'https://s.fiery.me/K38afEtuxP0ljX3oZ8vnIJWIUw3fykwo.png',
       color: '#1d439b'
     }
   )

@@ -93,7 +93,7 @@ exports.run = async (bot, msg, args) => {
     nestedFields,
     {
       footer: `${source}'s Collegiate® Dictionary`,
-      footerIcon: 'https://a.safe.moe/jGuCr.png',
+      footerIcon: 'https://s.fiery.me/EuDU32BVAESNOfjYzLV9HMTZhfyBNYIH.png',
       color: '#2d5f7c'
     }
   )

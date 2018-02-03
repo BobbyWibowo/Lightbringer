@@ -45,7 +45,7 @@ exports.run = async (bot, msg, args) => {
       [],
       {
         footer: source,
-        footerIcon: 'https://a.safe.moe/VhreL.png',
+        footerIcon: 'https://s.fiery.me/bi19n5H8zZpFEOC50qwjzjEEEDituqHv.png',
         color: '#fba824'
       }
     )

@@ -42,7 +42,7 @@ exports.run = async (bot, msg, args) => {
         ],
         {
           footer: source,
-          footerIcon: 'https://a.safe.moe/8GCNj.png',
+          footerIcon: 'https://s.fiery.me/44ilqyOFn2omAjX2wf0EIZO10Wh2NmtL.png',
           color: '#c7c8ca'
         }
       )

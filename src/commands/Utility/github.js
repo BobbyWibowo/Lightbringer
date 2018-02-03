@@ -132,11 +132,11 @@ const buildEmbedFromJson = json => {
     {
       author: {
         name: json.full_name,
-        icon: 'https://a.safe.moe/cxwFp.png',
+        icon: 'https://s.fiery.me/9bmUIfL1ynSaJv5cmKjHg7yTpcciKMez.png',
         url: json.html_url
       },
       color: isMyGit ? '#ff0000' : '#4078c0',
-      thumbnail: isMyGit ? 'https://a.safe.moe/pM9Ov.png' : ''
+      thumbnail: isMyGit ? 'https://s.fiery.me/4bTgz5icwUq99CoMhDn3ET0VX2I7svEh.png' : ''
     }
   )
 }

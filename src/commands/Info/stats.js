@@ -128,7 +128,7 @@ exports.run = async (bot, msg) => {
         inline: true,
         author: {
           name: 'Lightbringer Statistics',
-          icon: 'https://a.safe.moe/F2a1H.png',
+          icon: 'https://s.fiery.me/5Mb95hqxc2WE6EFSOeLjrCVPjrt0psNa.png',
           url: GIT
         },
         color: '#ff0000',
