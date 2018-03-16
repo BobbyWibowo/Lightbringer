@@ -46,7 +46,7 @@ exports.run = async (bot, msg, args) => {
       •\u2000**Source:** \`${image.common.source || 'N/A'}\`
       ${imageUrl}`)
   } catch (err) {
-    if (err.name === 'booruError') {
+    if (err.name === 'BooruError') {
       if (new RegExp('You didn\'t give any images', 'i').test(err.message)) {
         return msg.error('No images found!')
       } else {
