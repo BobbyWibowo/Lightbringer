@@ -195,7 +195,7 @@ exports.formatEmbed = (title = '', description = '', nestedFields, options = {})
     const tmp = {
       name: `${parentField.icon || '❯'}\u2000${parentField.title}`,
       value: parentField.fields.map(field => {
-        let value = field.value !== undefined ? this.truncate(field.value.toString(), 1024) : ''
+        const value = field.value !== undefined ? this.truncate(field.value.toString(), 1024) : ''
         let newField = `${field.name !== undefined ? `•\u2000${field.name ? `**${field.name}:** ` : ''}` : ''}${value}`
 
         if (options.code) {
@@ -477,7 +477,7 @@ exports.formatSeconds = ms => {
 }
 
 exports.getProp = (obj, props) => {
-  if (!obj || !props) return
+  if (!obj || !props) { return }
 
   if (typeof props === 'string') {
     if (props.includes('.')) {
@@ -722,11 +722,11 @@ exports.getGuild = (keyword, suppress) => {
   const testId = /^\d+$/.test(keyword)
   if (testId) {
     const get = bot.guilds.get(keyword)
-    if (get) return get
+    if (get) { return get }
   }
 
   const find = bot.guilds.find(g => g.name === keyword)
-  if (find) return find
+  if (find) { return find }
 
   const regex = new RegExp(keyword, 'i')
   const filter = bot.guilds.filter(g => regex.test(g.name))
@@ -742,25 +742,25 @@ exports.getGuild = (keyword, suppress) => {
 }
 
 exports.getChannel = (keyword, guild, strict = false) => {
-  if (!keyword) return false
+  if (!keyword) { return false }
 
   keyword = keyword.trim()
 
   const testId = /^\d+$/.test(keyword)
   if (testId) {
     const get = bot.channels.get(keyword)
-    if (get) return get
+    if (get) { return get }
   }
 
   const testMatch = keyword.match(/^<#(\d+?)>$/)
   if (testMatch) {
     const get = bot.channels.get(testMatch[1])
-    if (get) return get
+    if (get) { return get }
   }
 
   if (guild) {
     const find = guild.channels.find(c => c.name === keyword)
-    if (find) return find
+    if (find) { return find }
 
     const regex = new RegExp(keyword, 'i')
     const filter = guild.channels.filter(c => regex.test(c.name))
@@ -777,17 +777,17 @@ exports.getChannel = (keyword, guild, strict = false) => {
     const testId = /^\d+$/.test(keyword)
     if (testId) {
       const get = channels.get(keyword)
-      if (get) return get
+      if (get) { return get }
     }
 
     const testTag = /#\d{4}$/.test(keyword)
     if (testTag) {
       const find = channels.get(c => c.recipient && c.recipient.tag && regex.test(c.recipient.tag))
-      if (find) return find
+      if (find) { return find }
     }
 
     const find = channels.find(c => c.recpient && c.recipient.username === keyword)
-    if (find) return find
+    if (find) { return find }
 
     const regex = new RegExp(keyword, 'i')
     const filter = channels.filter(c => c.recipient && c.recipient.username && regex.test(c.recipient.username))
@@ -978,7 +978,7 @@ exports.buildEmojisArray = (source, options = {}) => {
         const t = typeof emojiMap
         if (t === 'object') {
           for (let e of emojiMap) {
-            if (e.match(/^\d*?$/)) e = bot.emojis.find('id', e)
+            if (e.match(/^\d*?$/)) { e = bot.emojis.find('id', e) }
             if (isCustomEmojiUsable(e)) {
               result.push(e)
               break

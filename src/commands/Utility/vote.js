@@ -33,7 +33,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['t:', 'e'])
 
   if (!parsed.leftover.length) {
-    return msg.error(`You must provide a topic!`)
+    return msg.error('You must provide a topic!')
   }
 
   const action = parsed.leftover[0]
@@ -86,7 +86,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   const fallback = this.config.type || Object.keys(TYPES)[0]
-  let _key = parsed.options.t ? get(parsed.options.t) : fallback
+  const _key = parsed.options.t ? get(parsed.options.t) : fallback
   if (!_key || !TYPES[_key]) {
     return msg.error('That type is not available!')
   }

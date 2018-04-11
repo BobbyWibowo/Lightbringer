@@ -8,8 +8,7 @@ class Stats {
   }
 
   set (key, value) {
-    if (value === undefined) delete this._stats[key]
-    else this._stats[key] = value
+    if (value === undefined) { delete this._stats[key] } else { this._stats[key] = value }
   }
 
   increment (key, amount) {

@@ -10,7 +10,7 @@ exports.run = async (bot, msg, args) => {
   const parsed = bot.utils.parseArgs(args, ['v'])
 
   if (parsed.leftover.length < 1) {
-    if(!bot.utils.hasEmbedPermission(msg.channel)) {
+    if (!bot.utils.hasEmbedPermission(msg.channel)) {
       return msg.error('No permission to use embed in this channel!')
     }
 

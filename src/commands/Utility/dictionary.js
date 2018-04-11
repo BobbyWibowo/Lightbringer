@@ -46,7 +46,7 @@ exports.run = async (bot, msg, args) => {
     if (err instanceof WordNotFoundError) {
       return msg.edit(`${consts.e}\`${query}\` was not found!`, {
         embed: bot.utils.embed(
-          `Suggestions`,
+          'Suggestions',
           err.suggestions.join('; '),
           [],
           {
@@ -93,7 +93,7 @@ exports.run = async (bot, msg, args) => {
     nestedFields,
     {
       footer: `${source}'s Collegiate® Dictionary`,
-      footerIcon: 'https://s.fiery.me/EuDU32BVAESNOfjYzLV9HMTZhfyBNYIH.png',
+      footerIcon: 'https://the.fiery.me/Xs8Z.png',
       color: '#2d5f7c'
     }
   )
@@ -110,7 +110,7 @@ const initDictClient = async () => {
 
 const beautify = (m, depth = 0) => {
   let temp = ''
-  let hasContent = m.meanings || m.synonyms || m.illustrations || m.senses
+  const hasContent = m.meanings || m.synonyms || m.illustrations || m.senses
 
   if (m.senses && (m.senses.findIndex(s => s.number === m.number) !== -1)) {
     // Skip current Sense if it has additional Senses

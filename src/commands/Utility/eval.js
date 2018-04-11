@@ -1,4 +1,4 @@
-const { js_beautify } = require('js-beautify')
+const { jsBeautify } = require('js-beautify')
 const Discord = require('discord.js') // eslint-disable-line no-unused-vars
 
 exports.run = async (bot, msg, args) => {
@@ -9,7 +9,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   // Default depth is 0
-  let depth = parsed.options.d ? parseInt(parsed.options.d) : 0
+  const depth = parsed.options.d ? parseInt(parsed.options.d) : 0
   if (isNaN(depth)) {
     return msg.error('Invalid value for depth option. It must be numbers!')
   }
@@ -69,7 +69,7 @@ exports.run = async (bot, msg, args) => {
 
     const disint = bot.utils.truncate(input, 1500)
     const prefix = '❯\u2000**Input:**\n' +
-      bot.utils.formatCode(parsed.options.nb ? disint : js_beautify(disint), 'js') + '\n' +
+      bot.utils.formatCode(parsed.options.nb ? disint : jsBeautify(disint), 'js') + '\n' +
       `❯\u2000**${result.err ? 'Error' : 'Output'}:**\n`
     const middle = `${bot.utils.formatCode(disout, 'js')}\n`
     const suffix = `${result.out != null ? `Type: ${result.out.constructor.name} | ` : ''}` +

@@ -7,7 +7,7 @@ class Storage {
 
     const factory = function (storageFile) {
       let realPath = path.resolve(global.settings.configsFolder, storageFile)
-      if (!realPath.endsWith('.json')) realPath += '.json'
+      if (!realPath.endsWith('.json')) { realPath += '.json' }
       return cache[storageFile] || (cache[storageFile] = new StorageAdapter(realPath))
     }
 

@@ -85,7 +85,7 @@ exports.run = async (bot, msg, args) => {
     return msg.edit(`ℹ\u2000|\u2000**Available types for \`${this.info.name}\` command:** ${APIS.map(A => `\`${A.name}\``).join(', ')}.`)
   }
 
-  let result = {
+  const result = {
     content: '',
     image: false
   }

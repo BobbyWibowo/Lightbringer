@@ -40,7 +40,7 @@ class Logger {
   }
 
   inject () {
-    if (console._original) throw new Error('Logger already injected!')
+    if (console._original) { throw new Error('Logger already injected!') }
 
     const original = {
       log: console.log,

@@ -61,7 +61,7 @@ exports.run = async (bot, msg, args) => {
         }
       }
       if (!valid) {
-        return msg.error(`That type is not available!`)
+        return msg.error('That type is not available!')
       }
     }
   }

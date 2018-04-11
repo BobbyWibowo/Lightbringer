@@ -56,7 +56,7 @@ exports.run = async (bot, msg, args) => {
       ],
       {
         footer: 'Urban Dictionary',
-        footerIcon: 'https://s.fiery.me/RUu1rxdW95dKUGseFv3YnMIj8A4JGiZJ.png',
+        footerIcon: 'https://the.fiery.me/fPMe.png',
         color: '#e86222'
       }
     )

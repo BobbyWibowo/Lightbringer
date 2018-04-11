@@ -160,7 +160,7 @@ const buildEmbed = (data, sub, type) => {
         if (found.params) {
           if (found._type !== 'events') {
             parsed.name += `(${found.params.map(p => {
-              if (p.name.includes('.')) return null
+              if (p.name.includes('.')) { return null }
               return `${p.variable ? '...' : ''}${p.optional ? `[${p.name}]` : p.name}`
             }).filter(p => p).join(', ')})`
           }

@@ -37,7 +37,7 @@ exports.run = async (bot, msg, args) => {
     const filtered = commands.filter(c => !c.info.hidden).sort((a, b) => a.info.name.localeCompare(b.info.name))
     let maxLength = 0
     filtered.forEach(c => {
-      if (maxLength < c.info.name.length) maxLength = c.info.name.length
+      if (maxLength < c.info.name.length) { maxLength = c.info.name.length }
     })
 
     await msg.edit('https://github.com/BobbyWibowo/Lightbringer/blob/master/COMMANDS.md')

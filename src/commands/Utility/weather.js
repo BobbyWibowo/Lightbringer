@@ -45,7 +45,7 @@ exports.run = async (bot, msg, args) => {
 
   const _location = []
   for (const k of ['city', 'region', 'country']) {
-    if (weather.location[k]) _location.push(weather.location[k].trim())
+    if (weather.location[k]) { _location.push(weather.location[k].trim()) }
   }
   const location = _location.join(', ')
 
@@ -91,37 +91,44 @@ exports.run = async (bot, msg, args) => {
     return `${_(matches[1])}:${_(matches[2])} ${matches[3].toUpperCase()}`
   }
 
-  return msg.edit(`Weather information for the location which matched the keyword \`${keyword}\`:`, {
-    embed: bot.utils.formatEmbed('', stripIndents`
-      ${flag}\u2000|\u2000**${location}**
+  return msg.edit(
+    `Weather information for the location which matched the keyword \`${keyword}\`:`,
+    {
+      embed: bot.utils.formatEmbed(
+        '',
+        stripIndents`
+          ${flag}\u2000|\u2000**${location}**
 
-      ${formatCondition(weather.item.condition.text)}
+          ${formatCondition(weather.item.condition.text)}
 
-      **Temperature:** ${formatTemp(weather.item.condition.temp)}
-      **Wind:** ${weather.wind.direction}° / ${formatSpeed(weather.wind.speed)}
-      **Humidity:** ${weather.atmosphere.humidity}%
-      **Pressure:** ${weather.atmosphere.pressure} hPa
-      **Visibility:** ${weather.atmosphere.visibility}%
-      **Sunrise:** ${formatClock(weather.astronomy.sunrise)} / **Sunset:** ${formatClock(weather.astronomy.sunset)}
-      **Coordinates:** ${weather.item.lat}, ${weather.item.long}
-      **Last update:** ${weather.item.pubDate}`, [
+          **Temperature:** ${formatTemp(weather.item.condition.temp)}
+          **Wind:** ${weather.wind.direction}° / ${formatSpeed(weather.wind.speed)}
+          **Humidity:** ${weather.atmosphere.humidity}%
+          **Pressure:** ${weather.atmosphere.pressure} hPa
+          **Visibility:** ${weather.atmosphere.visibility}%
+          **Sunrise:** ${formatClock(weather.astronomy.sunrise)} / **Sunset:** ${formatClock(weather.astronomy.sunset)}
+          **Coordinates:** ${weather.item.lat}, ${weather.item.long}
+          **Last update:** ${weather.item.pubDate}
+        `,
+        [
+          {
+            title: 'Forecasts',
+            fields: weather.item.forecast.map(f => {
+              return {
+                name: '',
+                value: `${DAYS[f.day]} – ${f.text} – ${formatTemp(f.low)} ~ ${formatTemp(f.high)}`
+              }
+            })
+          }
+        ],
         {
-          title: 'Forecasts',
-          fields: weather.item.forecast.map(f => {
-            return {
-              name: '',
-              value: `${DAYS[f.day]} – ${f.text} – ${formatTemp(f.low)} ~ ${formatTemp(f.high)}`
-            }
-          })
+          color: '#410093',
+          footer: 'Yahoo! Weather – Provided by The Weather Channel',
+          footerIcon: 'https://the.fiery.me/ZSUt.png'
         }
-      ],
-      {
-        color: '#410093',
-        footer: 'Yahoo! Weather – Provided by The Weather Channel',
-        footerIcon: 'https://s.fiery.me/DJElKJApvndnGLNRqD3T1UnadOiEvXkT.png'
-      }
-    )
-  })
+      )
+    }
+  )
 }
 
 exports.info = {

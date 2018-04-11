@@ -15,12 +15,6 @@
   "engines": {
     "node": ">=7.6.0"
   },
-  "standard": {
-    "globals": [
-      "bot",
-      "consts"
-    ]
-  },
   "dependencies": {
     "booru": "^0.4.0",
     "chalk": "^2.3.2",
@@ -73,6 +67,10 @@
     "extends": [
       "standard"
     ],
+    "globals": {
+      "bot": true,
+      "consts": true
+    },
     "rules": {
       "curly": [
         "error",

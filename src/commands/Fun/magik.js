@@ -8,7 +8,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   let keyword = parsed.leftover.join(' ')
-  let content = msg.content
+  const content = msg.content
   let imageURL
 
   try {

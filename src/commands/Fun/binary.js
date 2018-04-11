@@ -7,7 +7,7 @@ exports.methods = {
   },
   decode: input => {
     let _input = input
-    if (typeof _input === 'string') _input = input.split(' ')
+    if (typeof _input === 'string') { _input = input.split(' ') }
     return _input.map(c => parseInt(c, 2)).map(c => String.fromCharCode(c)).join('')
   }
 }

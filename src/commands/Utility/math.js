@@ -12,7 +12,7 @@ exports.run = async (bot, msg, args) => {
 
   const expressions = parsed.leftover.join(' ').split(/\n/)
   const pads = ' '.repeat(expressions.length.toString().length)
-  let results = []
+  const results = []
   for (const e of expressions) {
     try {
       const result = parsed.options.s ? mathjs.simplify(e) : mathjs.eval(e, parsed.options.l ? {} : mathjsScope)

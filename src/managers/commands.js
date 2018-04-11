@@ -127,14 +127,14 @@ class CommandManager {
 
         try {
           await msg.edit(`${consts.e}${text || 'Something failed!'}`)
-          if (timeout >= 0) return msg.delete(timeout)
+          if (timeout >= 0) { return msg.delete(timeout) }
         } catch (err) {}
       }
 
       msg.success = async (text, timeout = DELETE) => {
         try {
           await msg.edit(`${consts.s}${text || 'Success!'}`)
-          if (timeout >= 0) return msg.delete(timeout)
+          if (timeout >= 0) { return msg.delete(timeout) }
         } catch (err) {}
       }
 

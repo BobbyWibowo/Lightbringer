@@ -28,7 +28,7 @@ exports.run = async (bot, msg, args) => {
     paragraphs.length = Math.min(2, paragraphs.length)
   }
 
-  const source = `Wikipedia`
+  const source = 'Wikipedia'
 
   return msg.edit(
     `First search result of \`${query}\` on ${source}${parsed.options.v && ' (no paragraphs limit)'}:`,
@@ -42,7 +42,7 @@ exports.run = async (bot, msg, args) => {
         ],
         {
           footer: source,
-          footerIcon: 'https://s.fiery.me/44ilqyOFn2omAjX2wf0EIZO10Wh2NmtL.png',
+          footerIcon: 'https://the.fiery.me/YFA7.png',
           color: '#c7c8ca'
         }
       )

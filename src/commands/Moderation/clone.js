@@ -27,7 +27,7 @@ exports.run = async (bot, msg, args) => {
         return msg.error('No permission to use embed in this channel!')
       }
 
-      let author = { name: '' }
+      const author = { name: '' }
       if (richEmbed.author) {
         author.name = richEmbed.author.name
         author.icon = richEmbed.author.iconURL

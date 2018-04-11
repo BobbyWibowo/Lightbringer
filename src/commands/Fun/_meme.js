@@ -107,7 +107,7 @@ exports.run = async (bot, msg, args) => {
   }
 
   let url = `${meme.url}/${cleanInput(parts[1]) || '_'}/${cleanInput(parts[2]) || '_'}.jpg`
-  if (parts[3]) url += `?alt=${parts[3]}`
+  if (parts[3]) { url += `?alt=${parts[3]}` }
 
   await msg.edit('🔄')
   await msg.channel.send({

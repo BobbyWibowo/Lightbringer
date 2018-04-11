@@ -40,7 +40,7 @@ exports.run = async (bot, msg, args) => {
   return msg.edit(`Search results of \`${query}\` on ${source}:`, {
     embed: bot.utils.embed('', output, [], {
       footer: 'Google',
-      footerIcon: 'https://s.fiery.me/EX2vc7sG3z8SH7TNE4j77HrokyAWIjs6.png',
+      footerIcon: 'https://the.fiery.me/MQWx.png',
       color: '#4285f4'
     })
   })

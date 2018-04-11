@@ -50,7 +50,7 @@ exports.run = async (bot, msg, args) => {
 
     output = stats.sort((a, b) => {
       const count = b.count - a.count
-      if (count) return count
+      if (count) { return count }
       return a.tag.localeCompare(b.tag)
     }).map(s => `${s.tag} -- ${s.count}x`).join('\n')
   } else {

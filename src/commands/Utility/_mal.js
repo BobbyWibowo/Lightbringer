@@ -169,13 +169,16 @@ exports.run = async (bot, msg, args) => {
     footer += `${startDate} to ${endDate}`
   } else {
     // Is it appropriate to immediately assume this?
-    footer += `Not Yet Aired`
+    footer += 'Not Yet Aired'
   }
 
-  const embed = bot.utils.formatEmbed(item.title, stripIndents`
-    ${item.english ? `**Alternative Title:** ${item.english}` : ''}
+  const embed = bot.utils.formatEmbed(
+    item.title,
+    stripIndents`
+      ${item.english ? `**Alternative Title:** ${item.english}` : ''}
 
-    ${bbCodeToMarkdown(new XmlEntities().decode(item.synopsis.replace(/\r\n/g, '')))}`,
+      ${bbCodeToMarkdown(new XmlEntities().decode(item.synopsis.replace(/\r\n/g, '')))}
+    `,
     [
       {
         title: 'Information',
@@ -205,7 +208,7 @@ exports.run = async (bot, msg, args) => {
     {
       thumbnail: item.image,
       footer,
-      footerIcon: 'https://s.fiery.me/K38afEtuxP0ljX3oZ8vnIJWIUw3fykwo.png',
+      footerIcon: 'https://the.fiery.me/Znfh.png',
       color: '#1d439b'
     }
   )
