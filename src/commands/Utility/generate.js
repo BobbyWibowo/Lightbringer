@@ -1,4 +1,4 @@
-const COMMANDS = /^c(command(s)?)?$/i
+const COMMANDS = /^c(ommand(s)?)?$/i
 
 exports.run = async (bot, msg, args) => {
   const action = args[0]
@@ -27,28 +27,29 @@ exports.run = async (bot, msg, args) => {
 
     let content = `# Commands (${count})\n\n`
 
-    for (const category of Object.keys(formatted)) {
-      content += `## ${category} – ${formatted[category].length} command${count !== 1 ? 's' : ''}\n`
+    for (const category in formatted) {
+      content += `## ${category} – ${formatted[category].length} command${count !== 1 ? 's' : ''}\n\n`
 
       formatted[category] = formatted[category].sort((a, b) => {
         return a.info.name.localeCompare(b.info.name)
       }).forEach(c => {
-        content += `### \`${c.info.name}\`\n`
-        content += `*Description:* \`${(c.info.description || 'N/A').replace(/`/g, '"')}\`\n`
-        content += `*Usage:* \`${c.info.usage || 'N/A'}\`\n`
+        content += `### \`${c.info.name}\`\n\n`
+        content += `*Description:* ${(c.info.description || 'N/A')}\n\n`
+        content += `*Usage:* \`${c.info.usage || 'N/A'}\`\n\n`
 
         if (c.info.aliases) {
-          content += `*Aliases:* ${c.info.aliases.map(a => `\`${a}\``).join(', ')}\n`
+          content += `*Aliases:* ${c.info.aliases.map(a => `\`${a}\``).join(', ')}\n\n`
         }
 
         if (c.info.credits) {
-          content += `*Credits:* \`${c.info.credits}\`\n`
+          content += `*Credits:* \`${c.info.credits}\`\n\n`
         }
       })
-
-      content += '\n'
     }
 
+    content = content
+      .replace(/(https?:\/\/[^\s]*)/g, '[$&]($&)')
+      .replace(/\n\n$/, '\n')
     const url = await bot.utils.gists(content)
     return msg.success(`<${url}>`, { timeout: -1 })
   } else {

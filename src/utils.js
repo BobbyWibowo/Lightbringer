@@ -911,10 +911,6 @@ exports.gists = async (content, options = {}) => {
     snekpost.set('Authorization', `token ${bot.config[CONFIG_TOKEN]}`)
   }
 
-  if (!options.suffix || options.suffix === 'md') {
-    content = content.replace(/\n/g, '  \n')
-  }
-
   try {
     const res = await snekpost.send({
       description: pasteFooter.replace(/\n/g, ' '),

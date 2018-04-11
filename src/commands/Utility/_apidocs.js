@@ -118,7 +118,7 @@ const buildEmbed = (data, sub, type) => {
       color: '#2196f3',
       author: {
         name: `${TITLE}: ${docs._version}`,
-        icon: 'https://s.fiery.me/zEo5xHN07jMYpdLZESvRJc8i4Ikf8AKh.png',
+        icon: 'https://the.fiery.me/TJDR.png',
         url: `${DOCS_ROOT}/general/welcome`
       }
     },
@@ -129,9 +129,9 @@ const buildEmbed = (data, sub, type) => {
   switch (type) {
     case 0: {
       const find = [
-            { prop: 'props', title: 'Properties' },
-            { prop: 'methods', title: 'Methods' },
-            { prop: 'events', title: 'Events' }
+        { prop: 'props', title: 'Properties' },
+        { prop: 'methods', title: 'Methods' },
+        { prop: 'events', title: 'Events' }
       ]
 
       if (sub) {
