@@ -59,40 +59,46 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1"
   },
+  "standard": {
+    "globals": [
+      "bot",
+      "consts"
+    ]
+  },
   "eslintConfig": {
     "env": {
-      "browser": true,
-      "node": true
-    },
-    "extends": [
-      "standard"
-    ],
-    "globals": {
-      "bot": true,
-      "consts": true
-    },
-    "rules": {
-      "curly": [
-        "error",
-        "all"
-      ],
-      "prefer-const": [
-        "error",
-        {
-          "destructuring": "any",
-          "ignoreReadBeforeAssign": false
-        }
-      ],
-      "object-shorthand": [
-        "error",
-        "always"
-      ],
-      "quotes": [
-        "error",
-        "single"
-      ]
-    }
+    "browser": true,
+    "node": true
   },
+  "extends": [
+    "standard"
+  ],
+  "globals": {
+    "bot": false,
+    "consts": false
+  },
+  "rules": {
+    "curly": [
+      "error",
+      "all"
+    ],
+    "prefer-const": [
+      "error",
+      {
+        "destructuring": "any",
+        "ignoreReadBeforeAssign": false
+      }
+    ],
+    "object-shorthand": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ]
+  }
+},
   "eslintIgnore": [
     "**/*.min.js"
   ]
